@@ -6,8 +6,8 @@ const app = express();
 app.use(bodyParser.json()); // middleware 
 
 // routes des fichier 
-const userRoutes = require('./user'); 
-const soinRoutes = require('./reservations/soin'); 
+const userRoutes = require('./functions/user'); 
+const soinRoutes = require('./functions/reservations/soin'); 
 
 // routes
 app.use('/users', userRoutes); 
