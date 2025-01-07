@@ -26,9 +26,10 @@ db.connect((err) => {
 
 // Endpoint pour ajouter des données dans une table
 app.post('/add', (req, res) => {
-    const { nom, prenom, email } = req.body; // Exemple de champs à insérer id-utilisateur	nom-utilisateur	prenom-utilisateur
+    //console.log(req.body); 
+    const { nom_utilisateur, prenom_utilisateur, email } = req.body;
     const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email, is_admin) VALUES (?, ?, ?, true)';
-    db.query(sql, [nom, prenom, email], (err, result) => {
+    db.query(sql, [nom_utilisateur, prenom_utilisateur, email], (err, result) => {
         if (err) {
             console.error('Erreur lors de l\'ajout des données :', err);
             res.status(500).send('Erreur serveur');
@@ -37,6 +38,7 @@ app.post('/add', (req, res) => {
         res.send({ message: 'Données ajoutées avec succès', id: result.insertId });
     });
 });
+
 
 const port = process.env.PORT || 3000;
 
