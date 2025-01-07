@@ -1,0 +1,40 @@
+/* Footer.css */
+footer {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;  /* le footer bien en bas de l'écran */
+    left: 0;     /* il prend bien toute la largeur */
+    z-index: 100; /* évite que d'autres éléments masquent */
+  }
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer-content .links {
+  margin-bottom: 10px;
+}
+
+.footer-content .links a {
+  color: #fff;
+  text-decoration: none; /*no bulletpoint*/
+  margin: 0 10px;
+  font-weight: 500;
+  transition: color 0.3s ease; /*petit effet*/
+}
+
+.footer-content .links a:hover {
+  color: #ff7f50;  /* couleur quand survol */
+}
+
+.footer-content p {
+  font-size: 14px;
+  color: #bbb;
+  margin-top: 10px;
+}  
