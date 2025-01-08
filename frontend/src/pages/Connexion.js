@@ -70,7 +70,7 @@ const Connexion = () => {
         if (data.success) {
           console.log('Connexion réussie !'); // Afficher dans la console
           console.log('Utilisateur connecté :', data.user); // Afficher les informations de l'utilisateur, si fournies par le backend
-          
+          console.log(data.token);
           // Redirection ou stockage du token JWT, selon la logique de votre application
           localStorage.setItem('authToken', data.token); // Sauvegarder le token dans localStorage
           alert('Connexion réussie !');

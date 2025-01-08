@@ -62,6 +62,7 @@ router.post('/login', (req, res) => {
 
             // generer un token
             const token = generateToken(result[0]);
+            console.log(token);
 
             // renvoyer le token dans la reponse
             return res.status(200).json({ success: true, message: 'Login successful', token });
