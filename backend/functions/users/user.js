@@ -3,8 +3,11 @@ const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/auth'); // import du middleware
+require('dotenv').config();
 const secretKey = process.env.TOKEN_KEY;
-const saltRounds = process.env.SALT_ROUNDS;
+//const saltRounds = process.env.SALT_ROUNDS;
+const saltRounds = 12;
 
 
 const generateToken = (user) => {//creation du token
@@ -82,42 +85,50 @@ router.get('/profile', verifyToken, (req, res) => {
 
 // ajouter un nouvel utilisateur
 router.post('/add-user', (req, res) => {
+
     const { nom, prenom, email, password } = req.body;
+   
 
     if (!email || !password || !nom || !prenom) {
+        console.log('Un ou plusieurs champs sont manquants');
         return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
-       // regarde si l'email existe deja dans la bdd
-       const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email_utilisateur = ?';
-       db.query(checkEmailSql, [email], (err, result) => {
-           if (err) {
-               console.error('Erreur lors de la vérification de l\'email :', err);
-               return res.status(500).json({ message: 'Erreur serveur' });
-           }
-   
-           if (result.length > 0) {
-               return res.status(400).json({ message: 'L\'email existe déjà.' });
-           }
 
-    // hashe le mot de passe avant de le mettre dans la base de données
-    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email_utilisateur = ?';
+    
+
+    db.query(checkEmailSql, [email], (err, result) => {
         if (err) {
-            console.error('Erreur lors du hashage du mot de passe :', err);
-            return res.status(500).json({ message: 'Erreur serveur' });
+            console.error('Erreur lors de la vérification de l\'email:', err);
+            return res.status(500).json({ message: 'Erreur serveurr' });
         }
 
-        const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password) VALUES (?, ?, ?, false, ?)';
-        db.query(sql, [nom, prenom, email, hashedPassword], (err, result) => {
+        if (result.length > 0) {
+            console.log('L\'email existe déjà.');
+            return res.status(400).json({ message: 'L\'email existe déjà.' });
+        }
+
+        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
             if (err) {
-                console.error('Erreur lors de l\'ajout de l\'utilisateur :', err);
-                return res.status(500).json({ message: 'Erreur serveur' });
+                console.error('Erreur lors du hashage du mot de passe:', err);
+                return res.status(500).json({ message: 'Erreur serveuur' });
             }
-            res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
-            }); 
+
+            const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password) VALUES (?, ?, ?, false, ?)';
+            
+
+            db.query(sql, [nom, prenom, email, hashedPassword], (err, result) => {
+                if (err) {
+                    console.error('Erreur lors de l\'ajout de l\'utilisateur:', err);
+                    return res.status(500).json({ message: 'Erreur servveur' });
+                }
+
+                console.log('Utilisateur ajouté avec succès, ID:', result.insertId);
+                res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
+            });
         });
     });
 });
-
 
 // supprimer un utilisateur
 router.post('/remove-user', (req, res) => {

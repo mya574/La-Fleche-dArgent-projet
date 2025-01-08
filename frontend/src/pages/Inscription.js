@@ -4,6 +4,7 @@ import './Inscription.css';
 const Inscription = () => {
   // etats pour chaque champ du formulaire
   const [username, setUsername] = useState('');
+  const [prenom, setPrenom] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
@@ -19,12 +20,13 @@ const Inscription = () => {
     const { id, value } = e.target;
     if (id === 'username') setUsername(value);
     if (id === 'email') setEmail(value);
+    if (id === 'prenom') setPrenom(value);
     if (id === 'password') setPassword(value);
     if (id === 'address') setAddress(value);
     if (id === 'phoneNumber') setPhoneNumber(value);
   };
 
-  // Validation de l'adresse e-mail
+  // validation de l'adresse e-mail
   const validateEmail = () => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!regex.test(email)) {
@@ -35,9 +37,9 @@ const Inscription = () => {
     return true;
   };
 
-  // Validation du nom d'utilisateur
+  // validation du nom d'utilisateur
   const validateUsername = () => {
-    const regex = /^[a-zA-Z0-9_]{3,15}$/; // Entre 3 et 15 caractères, uniquement lettres, chiffres et underscore
+    const regex = /^[a-zA-Z0-9_]{3,15}$/; // entre 3 et 15 caractères, uniquement lettres, chiffres et underscore
     if (!regex.test(username)) {
       setUsernameError('Le pseudo doit contenir entre 3 et 15 caractères alphanumériques.');
       return false;
@@ -46,9 +48,9 @@ const Inscription = () => {
     return true;
   };
 
-  // Validation du mot de passe
+  // validation du mot de passe
   const validatePassword = () => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // Minimum 8 caractères, 1 lettre, 1 chiffre
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // minimum 8 caractères, 1 lettre, 1 chiffre
     if (!regex.test(password)) {
       setPasswordError('Le mot de passe doit contenir au moins 8 caractères, une lettre et un chiffre.');
       return false;
@@ -57,7 +59,7 @@ const Inscription = () => {
     return true;
   };
 
-  // Validation du numéro de téléphone 
+  // validation du numero de telephone 
   const validatePhoneNumber = () => {
     const regex = /^\d{10}$/; //uniquement des chiffres
     if (!regex.test(phoneNumber)) {
@@ -68,24 +70,24 @@ const Inscription = () => {
     return true;
   };
 
-  // Fonction pour empecher l'entrée de caractères non numériques dans le champ téléphone
+  // empecher les caractères qui ne sont pas des chiffres pour num de tel
   const handlePhoneNumberKeyDown = (e) => {
-    // Autoriser uniquement "Backspace", "Tab", et les chiffres
+
     if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
       e.preventDefault();
     }
   };
 
-  // Fonction de soumission du formulaire
+  // soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validation du formulaire
+  
+    // validation du formulaire
     if (!username || !email || !password || !address || !phoneNumber) {
       setFormError('Veuillez remplir tous les champs.');
       return;
     }
-
+  
     if (
       !validateUsername() ||
       !validateEmail() ||
@@ -95,10 +97,41 @@ const Inscription = () => {
       setFormError('Il y a des erreurs dans le formulaire.');
       return;
     }
-
+  
     setFormError('');
-    alert('Inscription réussie ! Bienvenue à notre hôtel de luxe.');
+  
+    // envoi des données au backend
+    const userData = {
+      nom: username, 
+      prenom,  
+      email,
+      password,
+    };
+      
+    fetch('http://localhost:3000/users/add-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+      
+    })
+    
+      .then((response) => response.json())
+      .then((data) => {
+        // verifier la reponse du serveur
+        if (data.message === 'Utilisateur ajouté avec succès') {
+          alert('Inscription réussie ! Bienvenue à notre hôtel de luxe.');
+        } else {
+          alert('Erreur lors de l\'inscription : ' + data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de l\'inscription.');
+      });
   };
+  
 
   return (
     <div className="inscription-form">
@@ -113,6 +146,20 @@ const Inscription = () => {
             type="text"
             id="username"
             value={username}
+            onChange={handleChange}
+            placeholder="Entrez votre nom d'utilisateur"
+            onBlur={validateUsername}
+          />
+          {usernameError && <p className="error">{usernameError}</p>}
+        </div>
+
+          {/* Prenom d'utilisateur */}
+          <div className="form-group">
+          <label htmlFor="prenom">Prenom d'utilisateur :</label>
+          <input
+            type="text"
+            id="prenom"
+            value={prenom}
             onChange={handleChange}
             placeholder="Entrez votre nom d'utilisateur"
             onBlur={validateUsername}
