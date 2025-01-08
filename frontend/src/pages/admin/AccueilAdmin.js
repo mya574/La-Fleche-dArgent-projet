@@ -10,17 +10,13 @@ const AdminAccueil = () => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      //alert('Vous devez être connecté pour accéder à cette page.');
-      navigate('/connexion'); // vers la page de connexion
+      navigate('/connexion'); // rediriger vers la page de connexion
       return;
     }
     const decodedToken = jwtDecode(token);
-    if (decodedToken.is_admin == 0) {//si pas admin pas droit a la page
-        //alert('Vous devez être administrateur');
-        navigate('/'); 
+    if (decodedToken.is_admin == 0) { // si pas admin, pas droit à la page
+      navigate('/');
     }
-    
-
 
     fetchUsers();
   }, [navigate]);
@@ -47,6 +43,30 @@ const AdminAccueil = () => {
       });
   };
 
+  const removeUser = (id_utilisateur) => {
+    fetch('http://localhost:3000/users/remove-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify({ id_utilisateur })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message);
+          fetchUsers(); // recharger la liste après suppression
+        } else {
+          alert('Erreur lors de la suppression de l\'utilisateur.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la suppression de l\'utilisateur.');
+      });
+  };
+
   return (
     <div className="admin-page">
       <h1>Page d'administration</h1>
@@ -60,6 +80,7 @@ const AdminAccueil = () => {
               <th>Email</th>
               <th>Adresse</th>
               <th>Numéro de téléphone</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -70,6 +91,9 @@ const AdminAccueil = () => {
                 <td>{user.email_utilisateur}</td>
                 <td>{user.address}</td>
                 <td>{user.phoneNumber}</td>
+                <td>
+                  <button onClick={() => removeUser(user.id_utilisateur)}>Supprimer</button>
+                </td>
               </tr>
             ))}
           </tbody>
