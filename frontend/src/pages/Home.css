@@ -17,16 +17,20 @@
   }
   
 /*superposition*/
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /*pour centrer*/
-    color: white;
-    text-align: center;
-    z-index: 2;  /* met overlay au-dessus de la vidéo pour pouvoir appuyer sur le bouton par exemple  */
-    backdrop-filter: blur(2.5px); /*flou texte milieu*/
-  }
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2; /* overlay au-dessus de la vidéo */
+  backdrop-filter: blur(2.5px); /* flou texte milieu */
+  display: flex;
+  flex-direction: column; /* Les éléments s'alignent verticalement */
+  align-items: center; /* Centrage horizontal */
+  gap: 20px; /* Espacement entre les éléments */
+}
   
   .reserve-button {
     margin-top: 20px;

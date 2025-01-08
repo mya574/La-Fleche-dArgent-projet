@@ -1,15 +1,13 @@
-/* Footer.css */
 footer {
-    background-color: #1e1e1e;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0;  /* le footer bien en bas de l'écran */
-    left: 0;     /* il prend bien toute la largeur */
-    z-index: 100; /* évite que d'autres éléments masquent */
-  }
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  margin-top: 30px; /* espace entre bas du contenu et footer */
+  z-index: 100;
+}
 
 .footer-content {
   max-width: 1200px;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import video1 from '../assets/video1.mp4';  
 import './Home.css';
 
@@ -13,11 +14,13 @@ function Home() {
         <div className="overlay">
           <h1>Bienvenue à l'Hôtel La Flèche d'Argent</h1>
           <p>Découvrez notre hôtel haut de gamme à Bordeaux.</p>
-          <button className="reserve-button">Réserver</button>
+          <Link to="/about">
+            <button className="know-more-button">Nous connaître</button>
+          </Link>
         </div>
       </div>
     </div>
   );
 }
 
-export default Home; 
+export default Home;

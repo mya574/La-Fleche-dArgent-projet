@@ -9,7 +9,7 @@
         position: fixed; /* pour que la vidéo reste en haut, sans effet accordéon */
         top: 0; /* fixe la vidéo tout en haut */
         left: 0; /* à gauche aussi */
-        width: 100%; /* la vidéo prend toute la largeur de l'écran */
+        width: 100%; 
         height: 100vh; /* toute la hauteur de l'écran */
         object-fit: cover; /* remplie l'écran */
         z-index: -1; /*  vidéo bien est en arrière-plan */
@@ -153,7 +153,7 @@ header {
     }
   
     ul.main-nav {
-      display: none; /* Masquer burger en plein écran */
+      display: none; /* masque burger en plein écran */
     }
   
     ul.main-nav.active {
@@ -197,14 +197,14 @@ header {
     }
   
     ul.main-nav li a {
-      font-size: 2rem; /* réduis taille sur mobile */
+      font-size: 2rem; 
       padding: 1.5rem 2.5rem;
     }
   }
   
   /* pour les autres éléments de la page, padding-top pour éviter que la navbar cache le contenu */
   body {
-    padding-top: 12vh; 
+    padding-top: 5vh; 
   }
 
 
