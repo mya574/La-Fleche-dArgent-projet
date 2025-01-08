@@ -13,7 +13,6 @@ const soinRoutes = require('./functions/reservations/soin');
 const chambreRoutes = require('./functions/reservations/chambre'); 
 const restaurantRoutes = require('./functions/reservations/restaurant');
 
-
 const ServicesSoinRoutes = require('./functions/services/soins'); 
 const ServicesChambreRoutes = require('./functions/services/chambres'); 
 
