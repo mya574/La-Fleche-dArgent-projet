@@ -186,4 +186,16 @@ router.post('/update-user', (req, res) => {
     });
 });
 
+router.get('/get-all-users',  (req, res) => {
+    const sql = 'SELECT * FROM utilisateurs';
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
+        res.status(200).json({ success: true, users: result });
+    });
+});
+
+
 module.exports = router;
