@@ -177,14 +177,24 @@ router.post('/update-user', (req, res) => {
 });
 
 router.get('/get-all-users',  verifyToken,  (req, res) => {
-    const sql = 'SELECT * FROM utilisateurs';
-    db.query(sql, (err, result) => {
+    const id_admin = req.user.is_admin;
+    console.log(id_admin);
+    if (id_admin == 1) {
+        console.log("admin");
+        const sql = 'SELECT * FROM utilisateurs';
+        db.query(sql, (err, result) => {
         if (err) {
             console.error('Database query error:', err);
             return res.status(500).json({ success: false, message: 'Server error' });
         }
         res.status(200).json({ success: true, users: result });
     });
+
+    }
+    else {
+        console.log("pas admin");
+    }
+    
 });
 
 
