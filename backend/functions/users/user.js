@@ -10,7 +10,7 @@ const secretKey = process.env.TOKEN_KEY;
 const saltRounds = 12;
 
 
-const generateToken = (user) => {//creation du token
+const generateToken = (user) => {
     const payload = {
         id: user.id_utilisateur,
         email: user.email_utilisateur,
@@ -21,17 +21,7 @@ const generateToken = (user) => {//creation du token
     return jwt.sign(payload, secretKey, { expiresIn: '5h' }); // token expire après 5h
 };
 
-//middleware pour vérifier et décoder le token
-const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // recupérer le token depuis le header : Authorization
-    if (!token) return res.status(403).send('Access denied.');
-
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) return res.status(401).send('Invalid or expired token.');
-        req.user = decoded; // stocker les données récuperees dans : req.user
-        next();
-    });
-};
+const verifyToken = require('../middleware/auth'); // import du middleware
 
 // route pour se connecter à son compte
 router.post('/login', (req, res) => {
@@ -62,7 +52,7 @@ router.post('/login', (req, res) => {
 
             // generer un token
             const token = generateToken(result[0]);
-            console.log(token);
+            //console.log(token);
 
             // renvoyer le token dans la reponse
             return res.status(200).json({ success: true, message: 'Login successful', token });
