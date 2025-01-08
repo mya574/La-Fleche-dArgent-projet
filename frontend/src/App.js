@@ -9,6 +9,7 @@ import UserProfile from './pages/UserProfile';
 import Admin from './pages/Admin';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Connexion from './pages/Connexion';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -30,6 +31,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/inscription" element={<Inscription />} />
+          <Route path="/connexion" element={<Connexion />} />
           <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
       </main>
