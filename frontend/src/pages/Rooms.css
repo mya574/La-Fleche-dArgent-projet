@@ -1,0 +1,100 @@
+
+.page-wrapper {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 0;
+    margin: 0;
+}
+
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background-color: white;
+    margin-bottom: 3rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+}
+
+
+section h1, section h2 {
+    font-size: 2.2rem;
+    color: #444;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+
+section p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+
+section img {
+    width: 100%;
+    max-width: 750px;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+
+.contact-section {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+
+.experience-button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.experience-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.experience-button:hover {
+    background-color: #45a049;
+}
+
+/* pour les petits écrans */
+@media screen and (max-width: 768px) {
+    section {
+        padding: 2rem 1rem;
+    }
+
+    section h1, section h2 {
+        font-size: 1.8rem;
+    }
+
+    section p {
+        font-size: 1rem;
+    }
+
+    section img {
+        max-width: 100%;
+    }
+
+    .experience-button {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+}
