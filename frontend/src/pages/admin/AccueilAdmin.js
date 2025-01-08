@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import './AdminAccueil.css';
 
 const AdminAccueil = () => {
@@ -9,10 +10,17 @@ const AdminAccueil = () => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      alert('Vous devez être connecté pour accéder à cette page.');
-      navigate('/connexion'); // Rediriger vers la page de connexion
+      //alert('Vous devez être connecté pour accéder à cette page.');
+      navigate('/connexion'); // vers la page de connexion
       return;
     }
+    const decodedToken = jwtDecode(token);
+    if (decodedToken.is_admin == 0) {//si pas admin pas droit a la page
+        //alert('Vous devez être administrateur');
+        navigate('/'); 
+    }
+    
+
 
     fetchUsers();
   }, [navigate]);
