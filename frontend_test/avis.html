@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un avis</title>
+</head>
+<body>
+    <h1>Ajouter un avis</h1>
+    <form id="avisForm">
+        <label for="contenu">Contenu de l'avis:</label>
+        <textarea id="contenu" name="contenu" required></textarea>
+        <br>
+   
+       
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <script>
+        document.getElementById('avisForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // empeche la soumission classique du formulaire
+
+            const contenu = document.getElementById('contenu').value;
+           
+            const token = localStorage.getItem('token'); // recuperer le token depuis le localStorage
+
+            if (!token) {
+                alert('Vous devez être connecté pour soumettre un avis.');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/avis/add-avis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // ajouter le token dans l'en-tete Authorization
+                    },
+                    body: JSON.stringify({ contenu})
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert(`Erreur : ${error.message}`);
+                    return;
+                }
+
+                const data = await response.json();
+                alert('Avis soumis avec succès.');
+                console.log('ID Avis:', data.id_avis);
+            } catch (error) {
+                console.error('Erreur lors de la soumission de l\'avis:', error);
+                alert('Une erreur est survenue.');
+            }
+        });
+    </script>
+</body>
+</html>

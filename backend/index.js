@@ -14,7 +14,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
 }));
 
-
+app.use(bodyParser.json());
  
 // routes des fichier 
 const userRoutes = require('./functions/users/user'); 
