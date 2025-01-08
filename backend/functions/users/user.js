@@ -186,7 +186,7 @@ router.post('/update-user', (req, res) => {
     });
 });
 
-router.get('/get-all-users',  (req, res) => {
+router.get('/get-all-users',  verifyToken,  (req, res) => {
     const sql = 'SELECT * FROM utilisateurs';
     db.query(sql, (err, result) => {
         if (err) {

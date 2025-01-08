@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AdminAccueil.css';
 
 const AdminAccueil = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('Vous devez être connecté pour accéder à cette page.');
+      navigate('/connexion'); // Rediriger vers la page de connexion
+      return;
+    }
+
     fetchUsers();
-  }, []);
+  }, [navigate]);
 
   const fetchUsers = () => {
     fetch('http://localhost:3000/users/get-all-users', {
