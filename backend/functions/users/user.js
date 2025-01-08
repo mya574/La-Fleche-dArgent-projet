@@ -3,8 +3,8 @@ const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secretKey = 'j8G84fJv4fdG4z';
-const saltRounds = 10;
+const secretKey = process.env.TOKEN_KEY;
+const saltRounds = process.env.SALT_ROUNDS;
 
 
 const generateToken = (user) => {//creation du token
@@ -75,7 +75,7 @@ router.get('/profile', verifyToken, (req, res) => {
             console.error('Database query error:', err);
             return res.status(500).send('Error connecting to the database');
         }
-        res.status(200).send(result[0]); // Retourner le profil de l'utilisateur
+        res.status(200).send(result[0]); // retourne les infos de l'user
     });
 });
 
