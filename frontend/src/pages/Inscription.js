@@ -59,7 +59,7 @@ const Inscription = () => {
     return true;
   };
 
-  // validation du numero de telephone 
+  // validation du numero de telephone
   const validatePhoneNumber = () => {
     const regex = /^\d{10}$/; //uniquement des chiffres
     if (!regex.test(phoneNumber)) {
@@ -72,7 +72,6 @@ const Inscription = () => {
 
   // empecher les caractères qui ne sont pas des chiffres pour num de tel
   const handlePhoneNumberKeyDown = (e) => {
-
     if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
       e.preventDefault();
     }
@@ -81,13 +80,13 @@ const Inscription = () => {
   // soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // validation du formulaire
     if (!username || !email || !password || !address || !phoneNumber) {
       setFormError('Veuillez remplir tous les champs.');
       return;
     }
-  
+
     if (
       !validateUsername() ||
       !validateEmail() ||
@@ -97,26 +96,26 @@ const Inscription = () => {
       setFormError('Il y a des erreurs dans le formulaire.');
       return;
     }
-  
+
     setFormError('');
-  
+
     // envoi des données au backend
     const userData = {
-      nom: username, 
-      prenom,  
+      nom: username,
+      prenom,
       email,
       password,
+      address,
+      phoneNumber,
     };
-      
+
     fetch('http://localhost:3000/users/add-user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
-      
     })
-    
       .then((response) => response.json())
       .then((data) => {
         // verifier la reponse du serveur
@@ -131,14 +130,12 @@ const Inscription = () => {
         alert('Une erreur est survenue lors de l\'inscription.');
       });
   };
-  
 
   return (
     <div className="inscription-form">
       <h1>Formulaire d'inscription</h1>
       {formError && <p className="error">{formError}</p>}
       <form onSubmit={handleSubmit}>
-
         {/* Nom d'utilisateur */}
         <div className="form-group">
           <label htmlFor="username">Nom d'utilisateur :</label>
@@ -153,15 +150,15 @@ const Inscription = () => {
           {usernameError && <p className="error">{usernameError}</p>}
         </div>
 
-          {/* Prenom d'utilisateur */}
-          <div className="form-group">
+        {/* Prenom d'utilisateur */}
+        <div className="form-group">
           <label htmlFor="prenom">Prenom d'utilisateur :</label>
           <input
             type="text"
             id="prenom"
             value={prenom}
             onChange={handleChange}
-            placeholder="Entrez votre nom d'utilisateur"
+            placeholder="Entrez votre prénom"
             onBlur={validateUsername}
           />
           {usernameError && <p className="error">{usernameError}</p>}

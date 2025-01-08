@@ -86,51 +86,48 @@ router.get('/profile', verifyToken, (req, res) => {
 
 // ajouter un nouvel utilisateur
 router.post('/add-user', (req, res) => {
-
-    const { nom, prenom, email, password } = req.body;
-   
-
-    if (!email || !password || !nom || !prenom) {
-        console.log('Un ou plusieurs champs sont manquants');
-        return res.status(400).json({ message: 'Tous les champs sont requis.' });
+    console.log('Route /add-user atteinte');
+    console.log('Données reçues :', req.body); // Ajoutez cette ligne pour voir les données reçues
+    const { nom, prenom, email, password, address, phoneNumber } = req.body;
+  
+    if (!nom || !prenom || !email || !password || !address || !phoneNumber) {
+      console.log('Un ou plusieurs champs sont manquants');
+      return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
-
+  
     const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email_utilisateur = ?';
-    
-
+  
     db.query(checkEmailSql, [email], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la vérification de l\'email:', err);
+        return res.status(500).json({ message: 'Erreur serveur' });
+      }
+  
+      if (result.length > 0) {
+        console.log('L\'email existe déjà.');
+        return res.status(400).json({ message: 'L\'email existe déjà.' });
+      }
+  
+      bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         if (err) {
-            console.error('Erreur lors de la vérification de l\'email:', err);
-            return res.status(500).json({ message: 'Erreur serveurr' });
+          console.error('Erreur lors du hashage du mot de passe:', err);
+          return res.status(500).json({ message: 'Erreur serveur' });
         }
-
-        if (result.length > 0) {
-            console.log('L\'email existe déjà.');
-            return res.status(400).json({ message: 'L\'email existe déjà.' });
-        }
-
-        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-            if (err) {
-                console.error('Erreur lors du hashage du mot de passe:', err);
-                return res.status(500).json({ message: 'Erreur serveuur' });
-            }
-
-            const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password) VALUES (?, ?, ?, false, ?)';
-            
-
-            db.query(sql, [nom, prenom, email, hashedPassword], (err, result) => {
-                if (err) {
-                    console.error('Erreur lors de l\'ajout de l\'utilisateur:', err);
-                    return res.status(500).json({ message: 'Erreur servveur' });
-                }
-
-                console.log('Utilisateur ajouté avec succès, ID:', result.insertId);
-                res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
-            });
+  
+        const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password, address, phoneNumber) VALUES (?, ?, ?, false, ?, ?, ?)';
+  
+        db.query(sql, [nom, prenom, email, hashedPassword, address, phoneNumber], (err, result) => {
+          if (err) {
+            console.error('Erreur lors de l\'ajout de l\'utilisateur:', err);
+            return res.status(500).json({ message: 'Erreur serveur' });
+          }
+  
+          console.log('Utilisateur ajouté avec succès, ID:', result.insertId);
+          res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
         });
+      });
     });
-});
-
+  });
 // supprimer un utilisateur
 router.post('/remove-user', (req, res) => {
     const { id_utilisateur } = req.body;
