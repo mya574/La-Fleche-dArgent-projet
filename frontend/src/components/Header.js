@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-import logo from '../assets/logo.png'; 
+import logo from '../assets/logo.png';
 
 const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false); // état du menu
@@ -14,11 +14,11 @@ const Header = () => {
     <header>
       <nav>
         <div className="logo">
-          <img src={logo} alt="Logo" className="logo-image" /> 
-          <h1>La Flèche d'Argent</h1> 
+          <img src={logo} alt="Logo" className="logo-image" />
+          <h1>La Flèche d'Argent</h1>
         </div>
 
-        {/* ajoute la classe 'active' pour afficher le menu qd clic */}
+        {/* ajoute la classe 'active' pour afficher le menu quand on clique */}
         <ul className={`main-nav ${isMenuActive ? 'active' : ''}`}>
           <li><Link to="/">Home</Link></li>
           <li className="dropdown">
@@ -29,8 +29,10 @@ const Header = () => {
               <Link to="/chambres">Rooms</Link>
             </div>
           </li>
-          <li><Link to="/inscription">Inscription</Link></li>
+          <li><Link to="/inscription" className="inscription-button">Inscription</Link></li>
+          <li><Link to="/connexion" className="connexion-button">Connexion</Link></li>
         </ul>
+
 
         <div className="burger" onClick={toggleMenu}>
           &#9776; {/* symbole burger */}
@@ -41,3 +43,4 @@ const Header = () => {
 };
 
 export default Header;
+

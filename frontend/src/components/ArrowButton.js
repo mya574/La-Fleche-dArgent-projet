@@ -6,7 +6,7 @@ const ArrowButton = ({ targetId }) => {
   return (
     <div className="scroll-button-container">
       <Link
-        to={targetId}
+        to={targetId} //cible du défilement
         smooth={true}
         duration={1000} // en millisecondes
         className="scroll-button"

@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import "./Carousel.css";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
+/* composant Carousel */
 const Carousel = ({ data }) => {
-  const [slide, setSlide] = useState(0);
+  const [slide, setSlide] = useState(0); /* etat pour la diapositive active */
 
   const nextSlide = () => {
-    setSlide((prevSlide) => (prevSlide === data.length - 1 ? 0 : prevSlide + 1));
+    setSlide((prevSlide) => (prevSlide === data.length - 1 ? 0 : prevSlide + 1)); /* passe à la diapositive suivante */
   };
 
   const prevSlide = () => {
-    setSlide((prevSlide) => (prevSlide === 0 ? data.length - 1 : prevSlide - 1));
+    setSlide((prevSlide) => (prevSlide === 0 ? data.length - 1 : prevSlide - 1)); /* passe à la diapositive précédente */
   };
 
   return (
     <div className="carousel luxury-carousel">
-      {/* Images avec overlay */}
+      {/* images avec overlay */}
       {data.map((item, idx) => (
         <div
           key={idx}
@@ -28,7 +29,7 @@ const Carousel = ({ data }) => {
         </div>
       ))}
 
-      {/* Flèches de navigation */}
+      {/* fleches de navigation */}
       <BsArrowLeftCircle className="arrow arrow-left" onClick={prevSlide} />
       <BsArrowRightCircle className="arrow arrow-right" onClick={nextSlide} />
     </div>

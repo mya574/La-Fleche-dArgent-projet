@@ -5,8 +5,14 @@ footer {
   text-align: center;
   width: 100%;
   position: relative;
-  margin-top: 30px; /* espace entre bas du contenu et footer */
   z-index: 100;
+}
+
+footer.fixed {
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+  width: 100%; 
 }
 
 .footer-content {
@@ -21,18 +27,18 @@ footer {
 
 .footer-content .links a {
   color: #fff;
-  text-decoration: none; /*no bulletpoint*/
+  text-decoration: none;
   margin: 0 10px;
   font-weight: 500;
-  transition: color 0.3s ease; /*petit effet*/
+  transition: color 0.3s ease;
 }
 
 .footer-content .links a:hover {
-  color: #ff7f50;  /* couleur quand survol */
+  color: #ce9810;
 }
 
 .footer-content p {
   font-size: 14px;
   color: #bbb;
   margin-top: 10px;
-}  
+}

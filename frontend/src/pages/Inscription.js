@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Inscription.css';
 
 const Inscription = () => {
-  // etats pour chaque champ du formulaire
+  // Etats pour chaque champ du formulaire
+  const [firstname, setFirstname] = useState(''); 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,16 +13,28 @@ const Inscription = () => {
   const [emailError, setEmailError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [firstnameError, setFirstnameError] = useState(''); 
   const [formError, setFormError] = useState('');
 
-  // fonction pour gérer les changements dans les champs du formulaire
+  // Fonction pour gérer les changements dans les champs du formulaire
   const handleChange = (e) => {
     const { id, value } = e.target;
+    if (id === 'firstname') setFirstname(value); 
     if (id === 'username') setUsername(value);
     if (id === 'email') setEmail(value);
     if (id === 'password') setPassword(value);
     if (id === 'address') setAddress(value);
     if (id === 'phoneNumber') setPhoneNumber(value);
+  };
+
+  // Validation du prénom
+  const validateFirstname = () => {
+    if (!firstname.trim()) {
+      setFirstnameError('Le prénom est requis.');
+      return false;
+    }
+    setFirstnameError('');
+    return true;
   };
 
   // Validation de l'adresse e-mail
@@ -57,7 +70,7 @@ const Inscription = () => {
     return true;
   };
 
-  // Validation du numéro de téléphone 
+  // Validation du numéro de téléphone
   const validatePhoneNumber = () => {
     const regex = /^\d{10}$/; //uniquement des chiffres
     if (!regex.test(phoneNumber)) {
@@ -81,12 +94,13 @@ const Inscription = () => {
     e.preventDefault();
 
     // Validation du formulaire
-    if (!username || !email || !password || !address || !phoneNumber) {
+    if (!firstname || !username || !email || !password || !address || !phoneNumber) {
       setFormError('Veuillez remplir tous les champs.');
       return;
     }
 
     if (
+      !validateFirstname() ||
       !validateUsername() ||
       !validateEmail() ||
       !validatePassword() ||
@@ -104,7 +118,21 @@ const Inscription = () => {
     <div className="inscription-form">
       <h1>Formulaire d'inscription</h1>
       {formError && <p className="error">{formError}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='inscription-form'>
+
+        {/* Prénom */}
+        <div className="form-group">
+          <label htmlFor="firstname">Prénom :</label>
+          <input
+            type="text"
+            id="firstname"
+            value={firstname}
+            onChange={handleChange}
+            placeholder="Entrez votre prénom"
+            onBlur={validateFirstname}
+          />
+          {firstnameError && <p className="error">{firstnameError}</p>}
+        </div>
 
         {/* Nom d'utilisateur */}
         <div className="form-group">
@@ -114,7 +142,7 @@ const Inscription = () => {
             id="username"
             value={username}
             onChange={handleChange}
-            placeholder="Entrez votre nom d'utilisateur"
+            placeholder="Entrez votre nom"
             onBlur={validateUsername}
           />
           {usernameError && <p className="error">{usernameError}</p>}
@@ -126,6 +154,7 @@ const Inscription = () => {
           <input
             type="email"
             id="email"
+            name="email"
             value={email}
             onChange={handleChange}
             placeholder="Entrez votre adresse e-mail"
@@ -140,6 +169,7 @@ const Inscription = () => {
           <input
             type="password"
             id="password"
+            name="password"
             value={password}
             onChange={handleChange}
             placeholder="Entrez votre mot de passe"

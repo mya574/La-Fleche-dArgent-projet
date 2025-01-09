@@ -1,22 +1,22 @@
-
 .video-background {
-    position: relative;
-    width: 100%;
-    height: 100vh;  
-    overflow: hidden;
-    
-  }
-  
-  .video-banner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  
-  }
-  
-/*superposition*/
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Vidéo en arrière-plan */
+.video-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; /* Vidéo derrière tout */
+}
+
+/* superposition (overlay) */
 .overlay {
   position: absolute;
   top: 50%;
@@ -24,44 +24,75 @@
   transform: translate(-50%, -50%);
   color: white;
   text-align: center;
-  z-index: 2; /* overlay au-dessus de la vidéo */
-  backdrop-filter: blur(2.5px); /* flou texte milieu */
+  z-index: 2; /* L'overlay doit être au-dessus de la vidéo */
+  backdrop-filter: blur(5px); /* Effet de flou */
   display: flex;
-  flex-direction: column; /* Les éléments s'alignent verticalement */
-  align-items: center; /* Centrage horizontal */
-  gap: 20px; /* Espacement entre les éléments */
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
 }
-  
-  .reserve-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #ff5733; 
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .reserve-button:hover {
-    background-color: #c74424;  /* couleur bouton au survol légèrement plus foncé*/
-  }
 
-  .home-container {
-    position: relative;
-    z-index: 0;  /* conteneur de fond a un index inférieur à celui du bouton */
+/* effet ombre sur texte du header */
+.overlay h1, .overlay p {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+}
+
+.overlay h1 {
+  font-size: 3rem; /* taille plus grande pour le titre */
+  font-family: 'Playfair Display', serif;  
+  font-weight: bold;
+}
+
+.overlay p {
+  font-size: 1.25rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  margin-top: 10px;
+}
+
+/* bouton "Nous connaître" */
+.know-more-button {
+  padding: 12px 30px;
+  background-color: #b8860b; 
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease; 
+  z-index: 3; /* Le bouton doit être au-dessus de l'overlay */
+}
+
+.know-more-button:hover {
+  background-color: #a07509;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);  /* élévation un peu du bouton */
+}
+
+.know-more-button:focus {
+  outline: none;  /* Supprime le contour au focus */
+}
+
+/* Animation texte header */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    z-index: 2;  /* overlay au-dessus de la vidéo */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .reserve-button {
-    position: relative;
-    z-index: 3;  /*  bouton au-dessus de l'overlay */
-  }
-  
+}
+
+.overlay h1, .overlay p {
+  animation: fadeIn 1.2s ease-out; /* Animation texte */
+}
+
+.home-container {
+  position: relative; /* Ajouté pour s'assurer que les éléments enfants sont correctement positionnés */
+  z-index: 0; /* Pour que tout soit derrière le bouton */
+}

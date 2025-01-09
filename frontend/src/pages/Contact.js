@@ -9,30 +9,36 @@ function Contact() {
     e.preventDefault(); // empeche le rechargement de la page lors de l'envoi du formulaire
 
     emailjs
-      .sendForm('service_ioqjhwn', 'template_ir6s8ft', form.current, {
-        publicKey: 'c-AiRYUr1-9Qtd7Zc', 
-      })
-      .then(
-        () => {
-          console.log('SUCCESS!'); 
-        },
-        (error) => {
-          console.log('FAILED...', error.text); 
-        }
-      );
-    e.target.reset(); // réinitialise le formulaire après envoi
-  };
+    .sendForm(
+      "service_qsgrpqg", 
+      "template_ir6s8ft", 
+      form.current,
+      "Nja4YsdIWrPgIq5p7" 
+    )
+    .then(
+      () => {
+        console.log("SUCCESS!");
+        alert("Votre message a été envoyé avec succès !");
+      },
+      (error) => {
+        console.error("FAILED...", error.text);
+        alert("Une erreur est survenue. Veuillez réessayer.");
+      }
+    );
+
+  e.target.reset(); // réinitialise le formulaire après l'envoi
+};
 
   return (
     <div>
 
-      <h1>Contactez-Nous</h1>
+      <h1 className="contact-title">Contactez-Nous</h1>
       <p className="contact-message">
   Votre confort est notre priorité. Pour toute question ou demande particulière, notre équipe dédiée
   est à votre disposition. Contactez-nous et laissez-nous sublimer votre expérience.
 </p>
 
-      {/* Formulaire de contact */}
+      {/* formulaire de contact */}
       <section>
         <div className="container">
           <h2 className="--text-center">Contactez-Nous !</h2>

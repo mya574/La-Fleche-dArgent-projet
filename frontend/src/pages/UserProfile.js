@@ -1,14 +1,15 @@
-
 import React from 'react';
+import Header2 from '../components/Header2';  
 
-function UserProfile() {
+
+const UserProfile = () => {
   return (
     <div>
-      <h1>Mon Espace Personnel</h1>
-      <p>Consultez et modifiez vos informations personnelles, ainsi que l'historique de vos réservations.</p>
-      {/* informations de l'utilisateur */}
+      <Header2 /> 
+      {/* Contenu de la page UserProfile */}
     </div>
   );
-}
+};
 
 export default UserProfile;
+

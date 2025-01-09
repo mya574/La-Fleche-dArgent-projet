@@ -1,0 +1,229 @@
+header {
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-image {
+    width: 40px;
+    height: 40px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.main-nav {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav li {
+    margin: 0 1rem;
+}
+
+/* liens de la nav */
+.main-nav li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;  
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; 
+}
+
+/* effet survol des liens */
+.main-nav li a:hover {
+    background-color: grey; /* couleur de fond au survol */
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+}
+
+/* bouton de déconnexion */
+.logout-btn {
+    background-color: black; 
+    color: white;
+    font-size: 1.2rem;
+    padding: 1rem 2vw;
+    cursor: pointer;
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; 
+}
+
+/* effet survol du bouton de déconnexion */
+.logout-btn:hover {
+    background-color: red; 
+    color: white; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
+}
+
+/* menu déroulant */
+.dropdown {
+    position: relative;
+}
+
+/* bouton du menu déroulant */
+.dropbtn {
+    color: white;
+    font-size: 1.2rem;
+    padding: 1rem 2vw;
+    cursor: pointer;
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; 
+}
+
+/* effet survol du bouton "Services" (dropdown) */
+.dropbtn:hover {
+    background-color: grey; 
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
+}
+
+/* contenu du menu déroulant */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* liens dans le menu déroulant */
+.dropdown-content a {
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    display: block;
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; 
+}
+
+/* effet survol dans le dropdown */
+.dropdown-content a:hover {
+    background-color: grey;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+/* affiche le contenu du dropdown au survol */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* burger pour les petits écrans */
+.burger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* menu hamburger pour petits écrans */
+.main-nav.active {
+    display: flex;
+}
+
+/* pour les petits écrans */
+@media screen and (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .main-nav li {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    /* liens du menu mobile */
+    .main-nav li a {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 1.5rem 2.5rem;
+        text-decoration: none;
+        color: white;
+        border-radius: 5px; 
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+
+    /* effet survol des liens mobiles */
+    .main-nav li a:hover {
+        background-color: grey;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* liens du menu déroulant mobile */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #444;
+        min-width: 100%;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 1rem 2.5rem;
+        border-radius: 5px; 
+    }
+}
+
+/* pastille verte */
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: green;
+}

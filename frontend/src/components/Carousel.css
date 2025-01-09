@@ -1,26 +1,27 @@
 .carousel {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative; /* position par rapport aux éléments enfants */
+    display: flex; /* pour la mise en page */
+    justify-content: center; /* centre horizontalement */
+    align-items: center; /* centre verticalement */
     width: 100%;
     max-width: 1200px; 
     height: 60vh; 
-    margin: 5vh auto 0; /* descend le carousel pour laisser espace sous navbar */
-    overflow: hidden;
+    margin: 5vh auto 0; /* pour descendre le carrousel sous la navbar */
+    /* overflow: hidden; */
     box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.4); 
     background-color: #f5f5f5; 
 }
 
+/*pour les diapositives du carrousel*/
 .slide {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
+    background-size: cover; /* couvre toute la zone */
     background-position: center;
-    transition: opacity 0.6s ease-in-out;
+    transition: opacity 0.6s ease-in-out; /* lentement, accélère au milieu, puis ralentit à la fin*/
     opacity: 0;
     z-index: 0;
 }
@@ -36,8 +37,8 @@
     left: 10%; 
     color: white;
     background: rgba(0, 0, 0, 0.7); 
-    padding: 1.5rem 2rem;
-    font-size: 1.8rem;
+    padding: 1.5rem 2rem; /* espacement interne */
+    font-size: 1.8rem;/* taille de la police */
     font-weight: bold;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.6);
@@ -45,11 +46,11 @@
 
 .arrow {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.9);
-    cursor: pointer;
+    /* transform: translateY(-50%); */
+    top: 50%; /* position au centre verticalement */
+    font-size: 3rem; /* taille de la police */
+    color: rgba(255, 255, 255, 0.9); /* couleur du texte */
+    cursor: pointer; /* change le curseur en pointeur */
     z-index: 2;
     opacity: 0.9;
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -57,7 +58,7 @@
 
 .arrow:hover {
     opacity: 1;
-    transform: translateY(-50%) scale(1.2); 
+    transform: translateY(-50%) scale(1.2); /* agrandit légèrement la flèche */
 }
 
 .arrow-left {
@@ -81,7 +82,7 @@
 
     .slide-content {
         font-size: 1.2rem;
-        padding: 1rem 1.5rem;
+        padding: 1rem 1.5rem;/* espacement interne */
         bottom: 7%;
         left: 7%;
     }

@@ -1,10 +1,7 @@
 import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import './About.css';
 
 const About = () => {
-  const hotelLocation = { lat: 44.8378, lng: -0.5792 }; // Coordonnées de l'hôtel 
-
   return (
     <div className="about-container">
       <section className="about-section">
@@ -22,22 +19,23 @@ const About = () => {
         </p>
       </section>
 
-      {/* Carte Google Maps */}
+      {/* Carte */}
       <section className="map-section">
         <h2>Notre Emplacement</h2>
         <p>
-          Retrouvez-nous à l'adresse suivante : 123 Rue de Bordeaux, 33000 Bordeaux, France.
+          Retrouvez-nous à l'adresse suivante : 45 Rue Leyteire, 33000 Bordeaux, France.
         </p>
         <div className="google-map">
-          <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
-            <GoogleMap
-              mapContainerStyle={{ height: "400px", width: "100%" }}
-              center={hotelLocation}
-              zoom={15}
-            >
-              <Marker position={hotelLocation} />
-            </GoogleMap>
-          </LoadScript>
+          <iframe
+            width="100%"
+            height="400"
+            frameBorder="0"
+            scrolling="no"
+            marginHeight="0"
+            marginWidth="0"
+            src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=45%20Rue%20Leyteire,%2033000,%20Bordeaux%20France+(Fleche%20d'argent%20)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+            title="Location Map"
+          />
         </div>
       </section>
     </div>
