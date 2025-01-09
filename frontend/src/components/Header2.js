@@ -33,6 +33,7 @@ const Header2 = ({ onLogout }) => {
             <span className="dropbtn">Services</span>
             <div className="dropdown-content">
               <Link to="/restaurant">Restaurant</Link>
+              <Link to="/opendate">Calendrier Restaurant</Link>
               <Link to="/massage">Massage</Link>
               <Link to="/chambres">Rooms</Link>
             </div>

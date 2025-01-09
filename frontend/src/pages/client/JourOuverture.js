@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './JourOuverture.css'; 
+import './JourOuverture.css';
+import { useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
 const OpenDatesCalendar = () => {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOpenDates = async () => {
@@ -30,6 +32,11 @@ const OpenDatesCalendar = () => {
     fetchOpenDates();
   }, []);
 
+  const handleSelectEvent = (event) => {
+    const date = moment(event.start).format('YYYY-MM-DD');
+    navigate(`/reservation?date=${date}`);
+  };
+
   return (
     <div className="calendar-container">
       <h1>Calendrier des Ouvertures du Restaurant</h1>
@@ -39,6 +46,7 @@ const OpenDatesCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}
+        onSelectEvent={handleSelectEvent}
       />
     </div>
   );
