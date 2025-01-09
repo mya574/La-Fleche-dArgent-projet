@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
- 
-// Route pour ajouter ou modifier une réservation
+const verifyToken = require('../middleware/auth'); // import du middleware
+//  ajouter ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
     console.log(req.body)
     //console.log(req.body);
  
-    // Vérifie si l'utilisateur a déjà réservé pour cette date
+    // verifie si l'utilisateur a deja réservé pour cette date
     const userReservationCheckSql = `
         SELECT *
         FROM reservation_restaurant
@@ -123,7 +123,7 @@ router.post('/reserve', (req, res) => {
 router.delete('/supprimer', (req, res) => {
     const { id_utilisateur, id_reservation } = req.body;
 
-    // Vérifie si la réservation existe
+    //  si la réservation existe
     const checkReservationSql = `
         SELECT *
         FROM reservation_restaurant
@@ -141,7 +141,7 @@ router.delete('/supprimer', (req, res) => {
             return;
         }
 
-        // Supprime la réservation
+        // supprime la réservation
         const deleteReservationSql = `
             DELETE FROM reservation_restaurant
             WHERE id_reservation = ? AND id_utilisateur = ?
@@ -176,10 +176,47 @@ router.post('/get-all-res-resto', (req, res) => {
             return;
         }
 
-        console.log('Résultats de la requête :', results); // Ajouter un log pour voir les résultats
+        console.log('Résultats de la requête :', results); 
 
         res.json({ reservations: results });
     });
 });
 
+// recuperer toutes les réservations
+router.get('/get-all-reservations', verifyToken, (req, res) => {
+    const id_admin = req.user.is_admin;
+    if (id_admin == 1) {
+      const sql = 'SELECT * FROM reservation_restaurant';
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.error('Database query error:', err);
+          return res.status(500).json({ success: false, message: 'Server error' });
+        }
+        res.status(200).json({ success: true, reservations: result });
+      });
+    } else {
+      res.sendStatus(403);
+    }
+  });
+  
+  // recuperer les emails des utilisateurs avec leur id
+  router.post('/get-emails', verifyToken, (req, res) => {
+    const { userIds } = req.body;
+  
+    if (!userIds || !Array.isArray(userIds)) {
+      return res.status(400).json({ message: 'IDs des utilisateurs manquants ou invalides.' });
+    }
+  
+    const placeholders = userIds.map(() => '?').join(',');
+    const sql = `SELECT id_utilisateur, email_utilisateur FROM utilisateurs WHERE id_utilisateur IN (${placeholders})`;
+  
+    db.query(sql, userIds, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des emails des utilisateurs :', err);
+        return res.status(500).send('Erreur serveur');
+      }
+      res.status(200).json({ success: true, users: result });
+    });
+  });
+  
 module.exports = router;

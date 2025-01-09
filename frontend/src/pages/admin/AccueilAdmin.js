@@ -6,6 +6,7 @@ import './AdminAccueil.css';
 const AdminAccueil = () => {
   const [users, setUsers] = useState([]);
   const [avis, setAvis] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [userEmails, setUserEmails] = useState({});
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const AdminAccueil = () => {
 
     fetchUsers();
     fetchAvis();
+    fetchReservations();
   }, [navigate]);
 
   const fetchUsers = () => {
@@ -67,6 +69,31 @@ const AdminAccueil = () => {
       .catch((error) => {
         console.error('Erreur réseau :', error);
         //alert('Une erreur est survenue lors de la récupération des avis.');
+      });
+  };
+
+  const fetchReservations = () => {
+    fetch('http://localhost:3000/restaurant/get-all-reservations', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success && data.reservations) {
+          setReservations(data.reservations);
+          
+          fetchUserEmails(data.reservations.map(res => res.id_utilisateur));
+          //console.log(data.reservations)
+        } else {
+          //alert('Erreur lors de la récupération des réservations.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        //alert('Une erreur est survenue lors de la récupération des réservations.');
       });
   };
 
@@ -183,7 +210,7 @@ const AdminAccueil = () => {
       .then((data) => {
         if (data.message) {
           //alert(data.message);
-          fetchAvis(); // Recharger la liste après désactivation
+          fetchAvis(); // recharger la liste après désactivation
         } else {
           //alert('Erreur lors de la désactivation de l\'avis.');
         }
@@ -249,6 +276,31 @@ const AdminAccueil = () => {
                   <button className='bouton-activer' onClick={() => unableAvis(av.id_avis)}>Activer</button>
                   <button className='bouton-desactiver' onClick={() => disableAvis(av.id_avis)}>Désactiver</button>
                   <button className='bouton-suppr' onClick={() => removeAvis(av.id_avis)}>Supprimer</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="user-list">
+        <h2 className='soustitreadmin'>Liste des réservations</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Email Utilisateur</th>
+              <th>Nombre de Couverts</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservations.map((res) => (
+              <tr key={res.id_reservation}>
+                <td>{userEmails[res.id_utilisateur] || 'Email non trouvé'}</td>
+                <td>{res.nombre_couverts}</td>
+                <td>{res.date_reservation}</td>
+                <td>
+                  
                 </td>
               </tr>
             ))}
