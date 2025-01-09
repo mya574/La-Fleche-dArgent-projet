@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './Reservation.css';
+import { jwtDecode } from 'jwt-decode';
 
 const Reservation = () => {
   const [selectedService, setSelectedService] = useState('');
@@ -10,9 +11,10 @@ const Reservation = () => {
   const [selectedRestaurantService, setSelectedRestaurantService] = useState('');
   const [numAdults, setNumAdults] = useState(1);
   const [numChildren, setNumChildren] = useState(0);
-  const [arrivalDate, setArrivalDate] = useState(null);  
-  const [departureDate, setDepartureDate] = useState(null);  
-  const [selectedDate, setSelectedDate] = useState(null); 
+  const [arrivalDate, setArrivalDate] = useState(null);
+  const [departureDate, setDepartureDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [numCouverts, setNumCouverts] = useState(0);
 
   const services = [
     { name: 'Chambre', options: ['Classique', 'Confort', 'Standing', 'Suite'] },
@@ -22,12 +24,12 @@ const Reservation = () => {
 
   const handleServiceChange = (e) => {
     setSelectedService(e.target.value);
-    setSelectedRoomType(''); 
-    setSelectedSpaService(''); 
-    setSelectedRestaurantService(''); 
-    setArrivalDate(null); 
-    setDepartureDate(null); 
-    setSelectedDate(null); 
+    setSelectedRoomType('');
+    setSelectedSpaService('');
+    setSelectedRestaurantService('');
+    setArrivalDate(null);
+    setDepartureDate(null);
+    setSelectedDate(null);
   };
 
   const handleRoomTypeChange = (e) => {
@@ -43,17 +45,25 @@ const Reservation = () => {
   };
 
   const handleAdultsChange = (e) => {
-    setNumAdults(e.target.value);
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value)) {
+      setNumAdults(value);
+      setNumCouverts(value + numChildren);
+    }
   };
 
   const handleChildrenChange = (e) => {
-    setNumChildren(e.target.value);
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value)) {
+      setNumChildren(value);
+      setNumCouverts(numAdults + value);
+    }
   };
 
   const handleArrivalDateChange = (date) => {
     setArrivalDate(date);
     if (departureDate && date > departureDate) {
-      setDepartureDate(null); 
+      setDepartureDate(null);
     }
   };
 
@@ -62,28 +72,92 @@ const Reservation = () => {
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);  
+    setSelectedDate(date);
   };
 
-  const handleSubmit = () => {
-    if (!selectedService || 
-        (selectedService === 'Chambre' && (!selectedRoomType || !arrivalDate || !departureDate)) || 
-        (selectedService !== 'Chambre' && !selectedDate) ||  
+  const getToken = () => {
+    const token = localStorage.getItem('token');
+    console.log('Token from localStorage:', token); // Ajoutez ce log
+    return token;
+  };
+
+  const getUserIdFromToken = (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      console.log('Decoded Token:', decodedToken); // Ajoutez ce log
+      return decodedToken.id; // Assurez-vous que votre token contient un champ 'id'
+    } catch (error) {
+      console.error('Erreur lors du décodage du token :', error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedService ||
+        (selectedService === 'Chambre' && (!selectedRoomType || !arrivalDate || !departureDate)) ||
+        (selectedService !== 'Chambre' && !selectedDate) ||
         (selectedService === 'Spa' && !selectedSpaService) ||
-        (selectedService === 'Restauration' && !selectedRestaurantService) || 
+        (selectedService === 'Restauration' && !selectedRestaurantService) ||
         numAdults <= 0) {
       alert('Veuillez remplir tous les champs correctement');
       return;
     }
-    alert('Réservation confirmée !');
+
+    const reservationData = {
+      nombre_couverts: numCouverts,
+      date_reservation: selectedDate,
+      service: selectedService,
+      details: {
+        roomType: selectedRoomType,
+        spaService: selectedSpaService,
+        restaurantService: selectedRestaurantService,
+        numAdults,
+        numChildren
+      }
+    };
+
+    const token = getToken();
+
+    if (!token) {
+      alert('Vous devez être connecté pour effectuer une réservation.');
+      return;
+    }
+
+    const userId = getUserIdFromToken(token);
+
+    if (!userId) {
+      alert('Impossible de récupérer l\'ID de l\'utilisateur.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3001/restaurent/reserve', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ...reservationData, userId })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('Réservation confirmée !');
+      } else {
+        alert(`Erreur : ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la réservation :', error);
+      alert('Erreur lors de la réservation');
+    }
   };
 
   const isFormValid = () => {
-    return selectedService && 
-           (selectedService !== 'Chambre' || (selectedRoomType && arrivalDate && departureDate)) && 
-           (selectedService !== 'Chambre' || selectedDate) &&  
-           (selectedService !== 'Spa' || selectedSpaService) && 
-           (selectedService !== 'Restauration' || selectedRestaurantService) && 
+    return selectedService &&
+           (selectedService !== 'Chambre' || (selectedRoomType && arrivalDate && departureDate)) &&
+           (selectedService !== 'Chambre' || selectedDate) &&
+           (selectedService !== 'Spa' || selectedSpaService) &&
+           (selectedService !== 'Restauration' || selectedRestaurantService) &&
            numAdults > 0;
   };
 
@@ -240,4 +314,3 @@ const Reservation = () => {
 };
 
 export default Reservation;
-
