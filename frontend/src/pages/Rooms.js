@@ -24,7 +24,7 @@ const Rooms = () => {
                       <>
                        Découvrez nos différentes catégories de chambres, chacune offrant un confort et un service irréprochable. Que vous recherchiez une chambre standard, un espace plus confortable, ou une suite de luxe, nous avons une option qui répondra à vos attentes.
                        <div className="reserve-button-container">
-                    <Link to="/reservation">
+                    <Link to="/reservation-chambre">
                       <button className="reserve-button">Réserver maintenant</button>
                     </Link>
                   </div>

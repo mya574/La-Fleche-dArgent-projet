@@ -16,7 +16,7 @@ const AdminAccueil = () => {
       return;
     }
     const decodedToken = jwtDecode(token);
-    if (decodedToken.is_admin == 0) { // Si pas admin, pas droit à la page
+    if (decodedToken.is_admin === 0) { // Si pas admin, pas droit à la page
       navigate('/');
     }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Inscription.css';
 
 const Inscription = () => {
-  // etats pour chaque champ du formulaire
+  // États pour chaque champ du formulaire
   const [username, setUsername] = useState('');
   const [prenom, setPrenom] = useState('');
   const [email, setEmail] = useState('');
@@ -15,18 +15,18 @@ const Inscription = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [formError, setFormError] = useState('');
 
-  // fonction pour gérer les changements dans les champs du formulaire
+  // Fonction pour gérer les changements dans les champs du formulaire
   const handleChange = (e) => {
     const { id, value } = e.target;
     if (id === 'username') setUsername(value);
-    if (id === 'email') setEmail(value);
     if (id === 'prenom') setPrenom(value);
+    if (id === 'email') setEmail(value);
     if (id === 'password') setPassword(value);
     if (id === 'address') setAddress(value);
     if (id === 'phoneNumber') setPhoneNumber(value);
   };
 
-  // validation de l'adresse e-mail
+  // Validation de l'adresse e-mail
   const validateEmail = () => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!regex.test(email)) {
@@ -37,7 +37,7 @@ const Inscription = () => {
     return true;
   };
 
-  // validation du nom d'utilisateur
+  // Validation du nom d'utilisateur
   const validateUsername = () => {
     const regex = /^[a-zA-Z0-9_]{3,15}$/; // entre 3 et 15 caractères, uniquement lettres, chiffres et underscore
     if (!regex.test(username)) {
@@ -48,7 +48,7 @@ const Inscription = () => {
     return true;
   };
 
-  // validation du mot de passe
+  // Validation du mot de passe
   const validatePassword = () => {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // minimum 8 caractères, 1 lettre, 1 chiffre
     if (!regex.test(password)) {
@@ -59,9 +59,9 @@ const Inscription = () => {
     return true;
   };
 
-  // validation du numero de telephone
+  // Validation du numéro de téléphone
   const validatePhoneNumber = () => {
-    const regex = /^\d{10}$/; //uniquement des chiffres
+    const regex = /^\d{10}$/; // uniquement des chiffres
     if (!regex.test(phoneNumber)) {
       setPhoneNumberError('Le numéro de téléphone doit être composé uniquement de 10 chiffres.');
       return false;
@@ -70,18 +70,18 @@ const Inscription = () => {
     return true;
   };
 
-  // empecher les caractères qui ne sont pas des chiffres pour num de tel
+  // Empêcher les caractères qui ne sont pas des chiffres pour le numéro de téléphone
   const handlePhoneNumberKeyDown = (e) => {
     if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
       e.preventDefault();
     }
   };
 
-  // soumission du formulaire
+  // Soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // validation du formulaire
+    // Validation du formulaire
     if (!username || !email || !password || !address || !phoneNumber) {
       setFormError('Veuillez remplir tous les champs.');
       return;
@@ -99,7 +99,7 @@ const Inscription = () => {
 
     setFormError('');
 
-    // envoi des données au backend
+    // Envoi des données au backend
     const userData = {
       nom: username,
       prenom,
@@ -118,7 +118,7 @@ const Inscription = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // verifier la reponse du serveur
+        // Vérifier la réponse du serveur
         if (data.message === 'Utilisateur ajouté avec succès') {
           alert('Inscription réussie ! Bienvenue à notre hôtel de luxe.');
         } else {
@@ -142,6 +142,7 @@ const Inscription = () => {
           <input
             type="text"
             id="username"
+            className="form-control"
             value={username}
             onChange={handleChange}
             placeholder="Entrez votre nom d'utilisateur"
@@ -150,18 +151,17 @@ const Inscription = () => {
           {usernameError && <p className="error">{usernameError}</p>}
         </div>
 
-        {/* Prenom d'utilisateur */}
+        {/* Prénom */}
         <div className="form-group">
-          <label htmlFor="prenom">Prenom d'utilisateur :</label>
+          <label htmlFor="prenom">Prénom :</label>
           <input
             type="text"
             id="prenom"
+            className="form-control"
             value={prenom}
             onChange={handleChange}
             placeholder="Entrez votre prénom"
-            onBlur={validateUsername}
           />
-          {usernameError && <p className="error">{usernameError}</p>}
         </div>
 
         {/* Adresse e-mail */}
@@ -170,6 +170,7 @@ const Inscription = () => {
           <input
             type="email"
             id="email"
+            className="form-control"
             value={email}
             onChange={handleChange}
             placeholder="Entrez votre adresse e-mail"
@@ -184,6 +185,7 @@ const Inscription = () => {
           <input
             type="password"
             id="password"
+            className="form-control"
             value={password}
             onChange={handleChange}
             placeholder="Entrez votre mot de passe"
@@ -197,6 +199,7 @@ const Inscription = () => {
           <label htmlFor="address">Adresse postale :</label>
           <textarea
             id="address"
+            className="form-control"
             value={address}
             onChange={handleChange}
             placeholder="Entrez votre adresse postale"
@@ -209,18 +212,19 @@ const Inscription = () => {
           <input
             type="text"
             id="phoneNumber"
+            className="form-control"
             value={phoneNumber}
             onChange={handleChange}
             placeholder="Entrez votre numéro de téléphone"
             onBlur={validatePhoneNumber}
-            onKeyDown={handlePhoneNumberKeyDown}  // onKeyDown pour filtrer les entrées
+            onKeyDown={handlePhoneNumberKeyDown}
           />
           {phoneNumberError && <p className="error">{phoneNumberError}</p>}
         </div>
 
         {/* Bouton de soumission */}
         <div className="form-group">
-          <button type="submit">S'inscrire</button>
+          <button type="submit" className="btn btn-primary">S'inscrire</button>
         </div>
       </form>
     </div>

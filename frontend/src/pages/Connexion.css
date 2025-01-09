@@ -1,98 +1,112 @@
-/* Style global pour le formulaire de connexion */
+/* Style global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+}
+
+/* Formulaire de connexion */
 .connexion-form {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 80px auto 0;
+  padding: 40px;
+  background-color: #1c1c1cc9;
+  border-radius: 10px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.721);
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #f5f5f5;
+  border: 1px solid #333;
+}
+
+.connexion-form h1 {
+  text-align: center;
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  font-family: 'Georgia', serif;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f9f6f6;
+  margin-bottom: 10px;
+  font-family: 'Georgia', serif;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #555;
+  background-color: transparent;
+  color: #f5f5f5;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-bottom: 2px solid #FFD700;
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group button {
+  width: 100%;
+  padding: 15px;
+  background-color: #fabe26;
+  color: #1c1c1c;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-group button:hover {
+  background-color: #d7a40c;
+  transform: translateY(-2px);
+}
+
+.form-group button:active {
+  transform: translateY(0);
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .connexion-form {
+      width: 90%;
+      padding: 20px;
   }
-  
+
   .connexion-form h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
+      font-size: 2rem;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-  }
-  
-  .form-group input:focus {
-    border-color: #007bff;
-  }
-  
-  .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    resize: vertical;
-    outline: none;
-  }
-  
-  .form-group textarea:focus {
-    border-color: #007bff;
-  }
-  
-  /* Erreur */
-  .error {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-  }
-  
-  /* Style pour le bouton de soumission */
-  .form-group button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .form-group button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Style de la page lorsqu'il y a une erreur générale */
-  .error-general {
-    color: red;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  /* Style pour le fond */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7fa;
-    margin: 0;
-    padding: 0;
-  }
-  
+}

@@ -8,7 +8,7 @@ import Massage from './pages/Massage';
 import Reservation from './pages/Reservation';
 import Inscription from './pages/Inscription';
 import UserProfile from './pages/UserProfile';
-import Admin from './pages/Admin';
+
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Connexion from './pages/Connexion';
@@ -16,6 +16,8 @@ import AdminAccueil from './pages/admin/AccueilAdmin';
 import Header2 from './components/Header2';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ReservationSoin from './pages/Reservation-spa';
+import ReservationChambre from './pages/Reservation-chambre';
 
 import './styles/global.css';
 
@@ -73,6 +75,9 @@ function App() {
             element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
           />
           <Route path="/user-profile" element={<UserProfile />} />
+
+          <Route path="/reservation-spa" element={<ReservationSoin />} />
+          <Route path="/reservation-chambre" element={< ReservationChambre/>} />
           <Route path="/administrateur" element={<AdminAccueil />} />
         </Routes>
       </main>

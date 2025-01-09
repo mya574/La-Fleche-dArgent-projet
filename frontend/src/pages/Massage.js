@@ -28,7 +28,7 @@ const Massage = () => {
             <>
               Bienvenue dans notre salon de massage, un endroit paisible où chaque soin est conçu pour vous offrir relaxation et bien-être. Découvrez notre large gamme de services, allant des massages relaxants aux soins tonifiants. Nous vous garantissons un moment de détente absolue dans un cadre calme et apaisant.
               <div className="en-savoir-plus-container">
-                <Link to="/reservation">
+                <Link to="/reservation-spa">
                   <button className="reserve-button">Réserver maintenant</button>
                 </Link>
               </div>
