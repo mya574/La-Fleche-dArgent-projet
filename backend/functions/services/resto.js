@@ -37,4 +37,17 @@ router.post('/add_resto', (req, res) => {
   });
 });
 
+
+router.get('/get_open_dates', (req, res) => {// récupérer toutes les dates d'ouverture
+    const query = 'SELECT date, nombre_couverts FROM restaurant';
+    db.query(query, (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: 'Erreur lors de la récupération des dates.', error: err });
+      }
+  
+      return res.status(200).json(results);
+    });
+  });
+
+  
 module.exports = router;

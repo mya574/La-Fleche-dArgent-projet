@@ -18,6 +18,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ReservationsResto from './pages/client/ClientReserv';
 import CreateResto from './pages/admin/NewRestoAdmin';
+import OpenDatesCalendar from './pages/client/JourOuverture';
 
 import './styles/global.css';
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/reservresto" element={<ReservationsResto />} />
           <Route path="/administrateur" element={<AdminAccueil />} />
           <Route path="/createresto" element={<CreateResto />} />
+          <Route path="/opendate" element={<OpenDatesCalendar />} />
         </Routes>
       </main>
       <Footer />
