@@ -16,7 +16,7 @@ import AdminAccueil from './pages/admin/AccueilAdmin';
 import Header2 from './components/Header2';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ReservationsResto from './pages/admin/NewChambreAdmin';
+import ReservationsResto from './pages/client/ClientReserv';
 
 import './styles/global.css';
 

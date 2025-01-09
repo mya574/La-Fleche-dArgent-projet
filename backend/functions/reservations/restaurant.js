@@ -117,41 +117,39 @@ router.post('/reserve', (req, res) => {
         });
     });
 });
- 
-// Route pour supprimer une réservation
 router.delete('/supprimer', (req, res) => {
-    const { id_utilisateur, date_reservation } = req.body;
- 
+    const { id_utilisateur, id_reservation } = req.body;
+
     // Vérifie si la réservation existe
     const checkReservationSql = `
         SELECT *
         FROM reservation_restaurant
-        WHERE id_utilisateur = ? AND date_reservation = ?
+        WHERE id_reservation = ? AND id_utilisateur = ?
     `;
-    db.query(checkReservationSql, [id_utilisateur, date_reservation], (err, result) => {
+    db.query(checkReservationSql, [id_reservation, id_utilisateur], (err, result) => {
         if (err) {
             console.error('Erreur lors de la vérification de la réservation :', err);
             res.status(500).send('Erreur serveur');
             return;
         }
- 
+
         if (result.length === 0) {
             res.status(404).send('Aucune réservation trouvée pour cet utilisateur et cette date.');
             return;
         }
- 
+
         // Supprime la réservation
         const deleteReservationSql = `
             DELETE FROM reservation_restaurant
-            WHERE id_utilisateur = ? AND date_reservation = ?
+            WHERE id_reservation = ? AND id_utilisateur = ?
         `;
-        db.query(deleteReservationSql, [id_utilisateur, date_reservation], (err) => {
+        db.query(deleteReservationSql, [id_reservation, id_utilisateur], (err) => {
             if (err) {
                 console.error('Erreur lors de la suppression de la réservation :', err);
                 res.status(500).send('Erreur serveur');
                 return;
             }
- 
+
             res.send({
                 message: 'Votre réservation a été annulée avec succès.',
             });
