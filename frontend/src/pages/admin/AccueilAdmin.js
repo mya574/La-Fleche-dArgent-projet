@@ -117,6 +117,54 @@ const AdminAccueil = () => {
       });
   };
 
+  const unableAvis = (id_avis) => { //activer un avis
+    fetch('http://localhost:3000/avis/unable-avis', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify({ id_avis })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message);
+          fetchAvis(); // Recharger la liste après désactivation
+        } else {
+          alert('Erreur lors de la désactivation de l\'avis.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la désactivation de l\'avis.');
+      });
+    }
+
+      const disableAvis = (id_avis) => {
+        fetch('http://localhost:3000/avis/disable-avis', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify({ id_avis })
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message) {
+              alert(data.message);
+              fetchAvis(); // Recharger la liste après désactivation
+            } else {
+              alert('Erreur lors de la désactivation de l\'avis.');
+            }
+          })
+          .catch((error) => {
+            console.error('Erreur réseau :', error);
+            alert('Une erreur est survenue lors de la désactivation de l\'avis.');
+          });
+  };
+
   return (
     <div className="admin-page">
       <h1>Page d'administration</h1>
@@ -154,7 +202,7 @@ const AdminAccueil = () => {
         <table>
           <thead>
             <tr>
-              <th>ID Avis</th>
+            
               <th>ID Utilisateur</th>
               <th>Contenu</th>
               <th>Date</th>
@@ -165,12 +213,15 @@ const AdminAccueil = () => {
           <tbody>
             {avis.map((av) => (
               <tr key={av.id_avis}>
-                <td>{av.id_avis}</td>
+               
                 <td>{av.id_utilisateur}</td>
                 <td>{av.contenu_avis}</td>
                 <td>{av.date_avis}</td>
-                <td>{av.is_actif}</td>
+                <td>{av.is_actif === 1 ? 'Actif' : 'Désactivé'}</td>
                 <td>
+                 
+                  <button onClick={() => unableAvis(av.id_avis)}>Activer</button>
+                  <button onClick={() => disableAvis(av.id_avis)}>Désactiver</button>
                   <button onClick={() => removeAvis(av.id_avis)}>Supprimer</button>
                 </td>
               </tr>
