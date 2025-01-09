@@ -1,91 +1,87 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../../db'); 
+const db = require('../../db');
 
+// Route pour réserver ou modifier une réservation
+router.post('/reserver-ou-modifier-chambre', (req, res) => {
+    const { id_reservation_chambre, id_utilisateur, id_chambre, date_debut, date_fin } = req.body;
 
-router.post('/reserver-chambre', (req, res) => {
-    const { id_utilisateur, id_chambre, date_debut, date_fin } = req.body;
+    if (!id_utilisateur || !id_chambre || !date_debut || !date_fin) {
+        return res.status(400).json({ message: 'Tous les champs sont requis.' });
+    }
 
-   
+    // Vérification des informations de la chambre choisie
     const queryChambre = 'SELECT nom_chambre, prix_chambre FROM chambres WHERE id_chambre = ?';
     db.query(queryChambre, [id_chambre], (err, results) => {
         if (err) {
-            console.error('Erreur lors de la récupération de la chambre :', err);
-            res.status(500).send('Erreur serveur');
-            return;
+            console.error('Erreur lors de la récupération des informations de la chambre :', err);
+            return res.status(500).json({ message: 'Erreur serveur lors de la récupération des informations de la chambre.' });
         }
 
         if (results.length === 0) {
-            res.status(404).send('Chambre non trouvée');
-            return;
+            return res.status(404).json({ message: 'La chambre demandée est introuvable.' });
         }
 
         const { nom_chambre, prix_chambre } = results[0];
 
-        
-        const userReservationCheckQuery = `
+        // Vérification de la disponibilité de la chambre
+        const checkAvailabilityQuery = `
             SELECT * 
             FROM reservation_chambres 
-            WHERE id_utilisateur = ? 
-            AND id_chambre = ?
+            WHERE id_chambre = ? 
+            AND id_reservation_chambre != ? 
             AND (
                 (date_debut <= ? AND date_fin >= ?) OR 
                 (date_debut <= ? AND date_fin >= ?)
             )
         `;
-        db.query(userReservationCheckQuery, [id_utilisateur, id_chambre, date_debut, date_debut, date_fin, date_fin], (err, userReservations) => {
+        db.query(checkAvailabilityQuery, [id_chambre, id_reservation_chambre || 0, date_debut, date_debut, date_fin, date_fin], (err, conflictingReservations) => {
             if (err) {
-                console.error('Erreur lors de la vérification des réservations utilisateur :', err);
-                res.status(500).send('Erreur serveur');
-                return;
+                console.error('Erreur lors de la vérification des disponibilités :', err);
+                return res.status(500).json({ message: 'Erreur serveur lors de la vérification des disponibilités.' });
             }
 
-            if (userReservations.length > 0) {
-                res.status(400).send('Vous avez déjà réservé cette chambre pour cette période.');
-                return;
+            if (conflictingReservations.length > 0) {
+                return res.status(400).json({ message: 'La chambre est déjà réservée pour cette période.' });
             }
 
-            
-            const checkAvailabilityQuery = `
-                SELECT * 
-                FROM reservation_chambres 
-                WHERE id_chambre = ? 
-                AND (
-                    (date_debut <= ? AND date_fin >= ?) OR 
-                    (date_debut <= ? AND date_fin >= ?)
-                )
-            `;
-            db.query(checkAvailabilityQuery, [id_chambre, date_debut, date_debut, date_fin, date_fin], (err, reservations) => {
-                if (err) {
-                    console.error('Erreur lors de la vérification des disponibilités :', err);
-                    res.status(500).send('Erreur serveur');
-                    return;
-                }
+            if (id_reservation_chambre) {
+                // Mise à jour d'une réservation existante
+                const updateReservationQuery = `
+                    UPDATE reservation_chambres
+                    SET id_chambre = ?, nom_chambre = ?, prix_chambre = ?, date_debut = ?, date_fin = ?
+                    WHERE id_reservation_chambre = ? AND id_utilisateur = ?
+                `;
+                db.query(updateReservationQuery, [id_chambre, nom_chambre, prix_chambre, date_debut, date_fin, id_reservation_chambre, id_utilisateur], (err, result) => {
+                    if (err) {
+                        console.error('Erreur lors de la mise à jour de la réservation :', err);
+                        return res.status(500).json({ message: 'Erreur serveur lors de la mise à jour de la réservation.' });
+                    }
 
-                if (reservations.length > 0) {
-                    
-                    res.status(400).send('La chambre est déjà réservée pour cette période par une autre personne.');
-                    return;
-                }
+                    if (result.affectedRows === 0) {
+                        return res.status(404).json({ message: 'Réservation introuvable ou non modifiable par cet utilisateur.' });
+                    }
 
-                
-                const queryReservation = `
+                    return res.status(200).json({ message: 'Votre réservation a été mise à jour avec succès.' });
+                });
+            } else {
+                // Création d'une nouvelle réservation
+                const insertReservationQuery = `
                     INSERT INTO reservation_chambres (id_utilisateur, id_chambre, nom_chambre, prix_chambre, date_debut, date_fin)
                     VALUES (?, ?, ?, ?, ?, ?)
                 `;
-                db.query(queryReservation, [id_utilisateur, id_chambre, nom_chambre, prix_chambre, date_debut, date_fin], (err, result) => {
+                db.query(insertReservationQuery, [id_utilisateur, id_chambre, nom_chambre, prix_chambre, date_debut, date_fin], (err, result) => {
                     if (err) {
                         console.error('Erreur lors de l\'ajout de la réservation :', err);
-                        res.status(500).send('Erreur serveur');
-                        return;
+                        return res.status(500).json({ message: 'Erreur serveur lors de l\'ajout de la réservation.' });
                     }
 
-                    res.send({
-                        message: 'Réservation de chambre effectuée avec succès',
-                        id_reservation_chambre: result.insertId
+                    return res.status(200).json({
+                        message: 'Réservation de chambre effectuée avec succès.',
+                        id_reservation_chambre: result.insertId,
                     });
                 });
-            });
+            }
         });
     });
 });

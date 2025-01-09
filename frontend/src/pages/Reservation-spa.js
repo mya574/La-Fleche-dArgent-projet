@@ -1,47 +1,43 @@
 import React, { useState } from "react";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 
-const Restaurent = () => {
-  const [nombreCouverts, setNombreCouverts] = useState("");
+const ReservationSoin = () => {
+  const [idSoin, setIdSoin] = useState("");
   const [dateReservation, setDateReservation] = useState("");
   const [message, setMessage] = useState("");
+
+  // Liste des soins statiques
+  const soins = [
+    { id_soin: 1, nom_soin: "Massage Relaxant", prix_soin: 50 },
+    { id_soin: 2, nom_soin: "Gommage corps en cabine", prix_soin: 60 },
+    { id_soin: 3, nom_soin: "Massage relaxant aux huiles essentielles", prix_soin: 40 },
+  ];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Récupérer le token JWT depuis le localStorage
     const token = localStorage.getItem("authToken");
-    //console.log(token, "brrb");
-
     if (!token) {
-      setMessage("Vous devez être connecté pour réserver.");
+      setMessage("Vous devez être connecté pour réserver un soin.");
       return;
     }
 
     try {
-      // Décoder le token pour vérifier son contenu
+      // Décoder le token pour obtenir l'id_utilisateur
       const decodedToken = jwtDecode(token);
-      //console.log(decodedToken);
-
-      // Si le token a expiré ou est invalide, la date d'expiration sera inférieure à l'heure actuelle
-      if (decodedToken.exp * 1000 < Date.now()) {
-        setMessage("Votre session a expiré. Veuillez vous reconnecter.");
-        return;
-      }
-
-      // Récupérer l'id_utilisateur à partir du token
       const id_utilisateur = decodedToken.id;
 
-      // Faire la requête à l'API
-      const response = await fetch("http://localhost:3000/restaurant/reserve", {
+      // Envoyer la requête à l'API backend pour réserver un soin
+      const response = await fetch("http://localhost:3000/soin/reserver-soin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          id_utilisateur,      // Utilisateur à partir du token
-          nombre_couverts: nombreCouverts,
+          id_utilisateur,
+          id_soin: idSoin,
           date_reservation: dateReservation,
         }),
       });
@@ -49,31 +45,36 @@ const Restaurent = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage(data.message || "Réservation effectuée avec succès !");
+        setMessage(data.message || "Réservation de soin effectuée avec succès.");
       } else {
         setMessage(data.message || "Une erreur est survenue lors de la réservation.");
       }
     } catch (error) {
       console.error("Erreur :", error);
-      setMessage("Erreur lors de la réservation.");
+      setMessage("Erreur lors de la réservation du soin.");
     }
   };
 
   return (
     <div>
-      <h1>Réservez votre table</h1>
+      <h1>Réserver un soin</h1>
       <form onSubmit={handleSubmit}>
-        {/* Nombre de couverts */}
-        <label htmlFor="nombre_couverts">Nombre de couverts :</label>
-        <input
-          type="number"
-          id="nombre_couverts"
-          name="nombre_couverts"
-          value={nombreCouverts}
-          onChange={(e) => setNombreCouverts(e.target.value)}
-          min="1"
+        {/* Sélectionner le soin */}
+        <label htmlFor="id_soin">Choisissez un soin :</label>
+        <select
+          id="id_soin"
+          name="id_soin"
+          value={idSoin}
+          onChange={(e) => setIdSoin(e.target.value)}
           required
-        />
+        >
+          <option value="">-- Sélectionner un soin --</option>
+          {soins.map((soin) => (
+            <option key={soin.id_soin} value={soin.id_soin}>
+              {soin.nom_soin} - {soin.prix_soin} €
+            </option>
+          ))}
+        </select>
         <br />
 
         {/* Date de réservation */}
@@ -98,4 +99,4 @@ const Restaurent = () => {
   );
 };
 
-export default Restaurent;
+export default ReservationSoin;

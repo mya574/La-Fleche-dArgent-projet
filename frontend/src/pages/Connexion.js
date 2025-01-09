@@ -1,34 +1,34 @@
-// Connexion.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import './Connexion.css';
 
-
-const Connexion = () => {
-  const [username, setUsername] = useState('');
+const Connexion = ({ onLogin }) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
   const [formError, setFormError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    if (id === 'username') setUsername(value);
+    if (id === 'email') setEmail(value);
     if (id === 'password') setPassword(value);
   };
 
-  const validateUsername = () => {
-    if (!username.trim()) {
-      setUsernameError('Le nom d\'utilisateur est requis.');
+  const validateEmail = () => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(email)) {
+      setEmailError('Veuillez entrer un e-mail valide.');
       return false;
     }
-    setUsernameError('');
+    setEmailError('');
     return true;
   };
 
   const validatePassword = () => {
-    if (!password.trim()) {
-      setPasswordError('Le mot de passe est requis.');
+    if (password.length < 8) {
+      setPasswordError('Le mot de passe doit contenir au moins 8 caractères.');
       return false;
     }
     setPasswordError('');
@@ -37,45 +37,77 @@ const Connexion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!username || !password) {
+    if (!email || !password) {
       setFormError('Veuillez remplir tous les champs.');
       return;
     }
-
-    if (!validateUsername() || !validatePassword()) {
+    if (!validateEmail() || !validatePassword()) {
       setFormError('Il y a des erreurs dans le formulaire.');
       return;
     }
-
     setFormError('');
-    alert('Connexion réussie !');
+
+    const userData = { email, password };
+
+    // Appel à l'API pour la connexion
+    fetch('http://localhost:3000/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erreur réseau ou problème côté serveur');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.token) {
+          // Stockez le token dans localStorage
+          localStorage.setItem('token', data.token);
+          console.log('Token stored:', data.token);
+          
+
+          // Mettez à jour l'état global ou redirigez l'utilisateur
+          onLogin(data.token); // Optionnel si vous utilisez un contexte ou Redux
+          navigate('/'); // Redirige vers la page d'accueil
+        } else {
+          setFormError(data.message || 'Erreur de connexion.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        setFormError('Une erreur est survenue lors de la connexion.');
+      });
   };
 
   return (
-    <div className="connexion-form">
-      <h1>Bienvenue</h1>
-      <p className="subheading"><i>Connectez-vous à votre compte pour accéder à nos services exclusifs.</i></p>
-        {formError && <p className="error">{formError}</p>}
-      <form onSubmit={handleSubmit} id="connexion-form">
-        <div className="form-group">
-          <label htmlFor="username">Nom d'utilisateur :</label>
+    <div className="connexion-form" id="connexion-form">
+      <h1 className="form-heading">Formulaire de Connexion</h1>
+      {formError && <p className="error">{formError}</p>}
+      <form onSubmit={handleSubmit}>
+        {/* Champ e-mail */}
+        <div className="form-group" id="email-group">
+          <label htmlFor="email">Adresse e-mail :</label>
           <input
-            type="text"
-            id="username"
-            value={username}
+            type="email"
+            id="email"
+            className="form-control"
+            value={email}
             onChange={handleChange}
-            placeholder="Entrez votre nom d'utilisateur"
-            onBlur={validateUsername}
+            placeholder="Entrez votre adresse e-mail"
+            onBlur={validateEmail}
           />
-          {usernameError && <p className="error">{usernameError}</p>}
+          {emailError && <p className="error">{emailError}</p>}
         </div>
 
-        <div className="form-group">
+        {/* Champ mot de passe */}
+        <div className="form-group" id="password-group">
           <label htmlFor="password">Mot de passe :</label>
           <input
             type="password"
             id="password"
+            className="form-control"
             value={password}
             onChange={handleChange}
             placeholder="Entrez votre mot de passe"
@@ -84,14 +116,13 @@ const Connexion = () => {
           {passwordError && <p className="error">{passwordError}</p>}
         </div>
 
-        <div className="form-group">
-          <button type="submit">Se connecter</button>
+        {/* Bouton de soumission */}
+        <div className="form-group" id="submit-group">
+          <button type="submit" className="btn-submit">
+            Se connecter
+          </button>
         </div>
       </form>
-
-      <div className="form-group">
-        <p>Pas encore inscrit ? <Link to="/inscription">S'inscrire</Link></p>
-      </div>
     </div>
   );
 };

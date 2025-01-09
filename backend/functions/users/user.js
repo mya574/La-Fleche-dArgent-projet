@@ -3,11 +3,14 @@ const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middleware/auth'); // import du middleware
+require('dotenv').config();
 const secretKey = process.env.TOKEN_KEY;
-const saltRounds = process.env.SALT_ROUNDS;
+//const saltRounds = process.env.SALT_ROUNDS;
+const saltRounds = 12;
 
 
-const generateToken = (user) => {//creation du token
+const generateToken = (user) => {
     const payload = {
         id: user.id_utilisateur,
         email: user.email_utilisateur,
@@ -18,17 +21,7 @@ const generateToken = (user) => {//creation du token
     return jwt.sign(payload, secretKey, { expiresIn: '5h' }); // token expire après 5h
 };
 
-//middleware pour vérifier et décoder le token
-const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // recupérer le token depuis le header : Authorization
-    if (!token) return res.status(403).send('Access denied.');
-
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) return res.status(401).send('Invalid or expired token.');
-        req.user = decoded; // stocker les données récuperees dans : req.user
-        next();
-    });
-};
+const verifyToken = require('../middleware/auth'); // import du middleware
 
 // route pour se connecter à son compte
 router.post('/login', (req, res) => {
@@ -59,6 +52,7 @@ router.post('/login', (req, res) => {
 
             // generer un token
             const token = generateToken(result[0]);
+            //console.log(token);
 
             // renvoyer le token dans la reponse
             return res.status(200).json({ success: true, message: 'Login successful', token });
@@ -82,43 +76,48 @@ router.get('/profile', verifyToken, (req, res) => {
 
 // ajouter un nouvel utilisateur
 router.post('/add-user', (req, res) => {
-    const { nom, prenom, email, password } = req.body;
-
-    if (!email || !password || !nom || !prenom) {
-        return res.status(400).json({ message: 'Tous les champs sont requis.' });
+    console.log('Route /add-user atteinte');
+    console.log('Données reçues :', req.body); // Ajoutez cette ligne pour voir les données reçues
+    const { nom, prenom, email, password, address, phoneNumber } = req.body;
+  
+    if (!nom || !prenom || !email || !password || !address || !phoneNumber) {
+      console.log('Un ou plusieurs champs sont manquants');
+      return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
-       // regarde si l'email existe deja dans la bdd
-       const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email_utilisateur = ?';
-       db.query(checkEmailSql, [email], (err, result) => {
-           if (err) {
-               console.error('Erreur lors de la vérification de l\'email :', err);
-               return res.status(500).json({ message: 'Erreur serveur' });
-           }
-   
-           if (result.length > 0) {
-               return res.status(400).json({ message: 'L\'email existe déjà.' });
-           }
-
-    // hashe le mot de passe avant de le mettre dans la base de données
-    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+  
+    const checkEmailSql = 'SELECT * FROM utilisateurs WHERE email_utilisateur = ?';
+  
+    db.query(checkEmailSql, [email], (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la vérification de l\'email:', err);
+        return res.status(500).json({ message: 'Erreur serveur' });
+      }
+  
+      if (result.length > 0) {
+        console.log('L\'email existe déjà.');
+        return res.status(400).json({ message: 'L\'email existe déjà.' });
+      }
+  
+      bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         if (err) {
-            console.error('Erreur lors du hashage du mot de passe :', err);
-            return res.status(500).json({ message: 'Erreur serveur' });
+          console.error('Erreur lors du hashage du mot de passe:', err);
+          return res.status(500).json({ message: 'Erreur serveur' });
         }
-
-        const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password) VALUES (?, ?, ?, false, ?)';
-        db.query(sql, [nom, prenom, email, hashedPassword], (err, result) => {
-            if (err) {
-                console.error('Erreur lors de l\'ajout de l\'utilisateur :', err);
-                return res.status(500).json({ message: 'Erreur serveur' });
-            }
-            res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
-            }); 
+  
+        const sql = 'INSERT INTO utilisateurs (nom_utilisateur, prenom_utilisateur, email_utilisateur, is_admin, password, address, phoneNumber) VALUES (?, ?, ?, false, ?, ?, ?)';
+  
+        db.query(sql, [nom, prenom, email, hashedPassword, address, phoneNumber], (err, result) => {
+          if (err) {
+            console.error('Erreur lors de l\'ajout de l\'utilisateur:', err);
+            return res.status(500).json({ message: 'Erreur serveur' });
+          }
+  
+          console.log('Utilisateur ajouté avec succès, ID:', result.insertId);
+          res.status(201).json({ message: 'Utilisateur ajouté avec succès', id_utilisateur: result.insertId });
         });
+      });
     });
-});
-
-
+  });
 // supprimer un utilisateur
 router.post('/remove-user', (req, res) => {
     const { id_utilisateur } = req.body;
@@ -176,5 +175,27 @@ router.post('/update-user', (req, res) => {
         res.send({ message: 'Utilisateur mis à jour avec succès' });
     });
 });
+
+router.get('/get-all-users',  verifyToken,  (req, res) => {
+    const id_admin = req.user.is_admin;
+    //console.log(id_admin);
+    if (id_admin === 1) {
+        //console.log("admin");
+        const sql = 'SELECT * FROM utilisateurs';
+        db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
+        res.status(200).json({ success: true, users: result });
+    });
+
+    }
+    else {
+        console.log("pas admin");
+    }
+    
+});
+
 
 module.exports = router;

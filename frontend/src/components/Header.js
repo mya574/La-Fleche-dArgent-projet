@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import logo from '../assets/logo.png';
+import logo from '../assets/logo.png';
 
 const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false); // état du menu
@@ -18,6 +19,7 @@ const Header = () => {
           <h1>La Flèche d'Argent</h1>
         </div>
 
+        {/* ajoute la classe 'active' pour afficher le menu quand on clique */}
         {/* ajoute la classe 'active' pour afficher le menu quand on clique */}
         <ul className={`main-nav ${isMenuActive ? 'active' : ''}`}>
           <li><Link to="/">Home</Link></li>
