@@ -5,7 +5,7 @@ import Carousel from "../components/Carousel";
 import room1 from '../assets/room.jpg';
 import room2 from '../assets/room2.jpg';
 import room3 from '../assets/room3.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const carouselData = [
   { src: room1, alt: 'Chambre spacieuse et confortable' },
@@ -14,13 +14,23 @@ const carouselData = [
 ];
 
 const Restaurant = () => {
+
+  const navigate = useNavigate();
+
+  const handleReserveClick = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate('/connexion'); // Rediriger vers la page de connexion
+    } else {
+      navigate('/reservation'); // Rediriger vers la page de réservation
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <main>
         
-        
-
-        
+      
         <Section
           id="first-section"
           title="Notre Restaurant"
@@ -28,9 +38,9 @@ const Restaurant = () => {
             <>
               Le Restaurant La Flèche d'Argent incarne l’essence du luxe et de la sophistication. Niché au cœur de la ville, notre restaurant propose une expérience gastronomique inoubliable, alliant des plats raffinés à un cadre élégant. Que vous soyez ici pour une soirée romantique ou pour un dîner d'affaires, notre équipe se dévouera pour rendre chaque moment unique. Nos équipes de service vous offrent un accueil chaleureux et un service impeccable pour garantir une expérience sans pareil.
               <div className="reserve-button-container">
-          <Link to="/reservation">
-            <button className="reserve-button">Réserver maintenant</button>
-          </Link>
+         
+            <button className="reserve-button" onClick={handleReserveClick}>Réserver maintenant</button>
+          
         </div>
             </>
           }

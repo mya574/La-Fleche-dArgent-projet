@@ -198,7 +198,7 @@ const AdminAccueil = () => {
     <div className="admin-page">
       <h1>Page d'administration</h1>
       <div className="user-list">
-        <h2>Liste des utilisateurs</h2>
+        <h2 className='soustitreadmin'>Liste des utilisateurs</h2>
         <table>
           <thead>
             <tr>
@@ -227,7 +227,7 @@ const AdminAccueil = () => {
         </table>
       </div>
       <div className="user-list">
-        <h2>Liste des avis</h2>
+        <h2 className='soustitreadmin'>Liste des avis</h2>
         <table>
           <thead>
             <tr>

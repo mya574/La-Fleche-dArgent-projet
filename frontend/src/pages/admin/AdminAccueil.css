@@ -43,4 +43,6 @@
   .bouton-activer:hover{
     background-color: rgb(21, 138, 35);
   }
- 
+ .soustitreadmin{
+    padding-bottom: 20px;
+ }

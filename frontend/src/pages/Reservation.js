@@ -11,7 +11,7 @@ const Restaurent = () => {
 
     // Récupérer le token JWT depuis le localStorage
     const token = localStorage.getItem("authToken");
-    //console.log(token, "brrb");
+    console.log(token, "brrb");
 
     if (!token) {
       setMessage("Vous devez être connecté pour réserver.");
@@ -21,7 +21,7 @@ const Restaurent = () => {
     try {
       // Décoder le token pour vérifier son contenu
       const decodedToken = jwtDecode(token);
-      //console.log(decodedToken);
+      console.log(decodedToken);
 
       // Si le token a expiré ou est invalide, la date d'expiration sera inférieure à l'heure actuelle
       if (decodedToken.exp * 1000 < Date.now()) {

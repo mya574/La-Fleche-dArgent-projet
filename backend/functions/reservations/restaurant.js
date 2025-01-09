@@ -158,5 +158,27 @@ router.delete('/supprimer', (req, res) => {
         });
     });
 });
- 
+
+router.post('/get-all-res-resto', (req, res) => {
+    const { id_utilisateur } = req.body;
+    console.log(req.body);
+
+    const getReservationsQuery = `
+        SELECT *
+        FROM reservation_restaurant
+        WHERE id_utilisateur = ?
+    `;
+    db.query(getReservationsQuery, [id_utilisateur], (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des réservations :', err);
+            res.status(500).send('Erreur serveur');
+            return;
+        }
+
+        console.log('Résultats de la requête :', results); // Ajouter un log pour voir les résultats
+
+        res.json({ reservations: results });
+    });
+});
+
 module.exports = router;

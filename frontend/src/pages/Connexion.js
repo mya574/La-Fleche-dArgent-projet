@@ -64,8 +64,8 @@ const Connexion = ({ onLogin }) => {
       .then((data) => {
         if (data.token) {
           // Stockez le token dans localStorage
-          localStorage.setItem('token', data.token);
-          console.log('Token stored:', data.token);
+          //localStorage.setItem('token', data.token);
+          //console.log('Token stored:', data.token);
           
 
           // Mettez à jour l'état global ou redirigez l'utilisateur

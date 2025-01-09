@@ -76,8 +76,8 @@ router.get('/profile', verifyToken, (req, res) => {
 
 // ajouter un nouvel utilisateur
 router.post('/add-user', (req, res) => {
-    console.log('Route /add-user atteinte');
-    console.log('Données reçues :', req.body); // Ajoutez cette ligne pour voir les données reçues
+    //console.log('Route /add-user atteinte');
+    //console.log('Données reçues :', req.body); 
     const { nom, prenom, email, password, address, phoneNumber } = req.body;
   
     if (!nom || !prenom || !email || !password || !address || !phoneNumber) {

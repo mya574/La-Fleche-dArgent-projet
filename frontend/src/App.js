@@ -16,6 +16,7 @@ import AdminAccueil from './pages/admin/AccueilAdmin';
 import Header2 from './components/Header2';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ReservationsResto from './pages/admin/NewChambreAdmin';
 
 import './styles/global.css';
 
@@ -73,6 +74,7 @@ function App() {
             element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
           />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/reservresto" element={<ReservationsResto />} />
           <Route path="/administrateur" element={<AdminAccueil />} />
         </Routes>
       </main>
