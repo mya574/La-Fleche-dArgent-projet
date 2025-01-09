@@ -140,7 +140,9 @@ router.post('/get-emails', verifyToken, (req, res) => {
       res.status(200).json({ success: true, users: result });
     });
   });
-  // Route pour récupérer les emails des utilisateurs en fonction de leurs IDs
+
+  
+  // récupérer les prenoms des utilisateurs en fonction de leurs id (pour page avisform)
   router.post('/get-prenom', verifyToken, (req, res) => {
     const { userIds } = req.body;
   

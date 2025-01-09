@@ -6,6 +6,15 @@ const AvisForm = () => {
     const [message, setMessage] = useState('');
     const [avis, setAvis] = useState([]);
     const [error, setError] = useState('');
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            setUserId(decodedToken.id);
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,14 +32,14 @@ const AvisForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 setMessage('Avis ajouté avec succès');
-                setContenu(''); // Réinitialiser le champ de texte
-                fetchAvis(); // Recharge les avis après l'ajout
+                setContenu(''); // reinitialiser le champ de texte après soumission
+                fetchAvis(); // recharge les avis après l'ajout
             } else {
-                setMessage('Erreur lors de l\'ajout de l\'avis');
+                setMessage('Erreur lors de lajout de lavis');
             }
         } catch (error) {
-            setMessage('Erreur lors de l\'ajout de l\'avis');
-            console.error('Erreur lors de l\'ajout de l\'avis :', error);
+            setMessage('Erreur lors de lajout de lavis');
+            console.error('Erreur lors de lajout de lavis :', error);
         }
     };
 
@@ -48,7 +57,7 @@ const AvisForm = () => {
                 const avisWithIds = data.avis;
                 const userIds = avisWithIds.map(item => item.id_utilisateur);
 
-                // Récupérer les prénoms des utilisateurs
+                // prenoms des users
                 const prenomsResponse = await fetch('http://localhost:3000/avis/get-prenom', {
                     method: 'POST',
                     headers: {
@@ -62,7 +71,7 @@ const AvisForm = () => {
                     const prenomsData = await prenomsResponse.json();
                     const users = prenomsData.users;
 
-                    // Mettre à jour les avis avec les prénoms des utilisateurs
+                    //avis avec prenom des users
                     const avisWithPrenoms = avisWithIds.map(item => {
                         const user = users.find(user => user.id_utilisateur === item.id_utilisateur);
                         return {
@@ -81,6 +90,30 @@ const AvisForm = () => {
         } catch (error) {
             setError('Erreur lors de la récupération des avis');
             console.error('Erreur lors de la récupération des avis :', error);
+        }
+    };
+
+    const handleDelete = async (id_avis) => {
+        try {
+            const response = await fetch('http://localhost:3000/avis/remove-avis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assurez-vous que le token est stocké dans le localStorage
+                },
+                body: JSON.stringify({ id_avis })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setMessage(data.message);
+                fetchAvis(); // recharge les avis après la suppression
+            } else {
+                setMessage('Erreur lors de la suppression de lavis');
+            }
+        } catch (error) {
+            setMessage('Erreur lors de la suppression de lavis');
+            console.error('Erreur lors de la suppression de lavis :', error);
         }
     };
 
@@ -113,6 +146,7 @@ const AvisForm = () => {
                             <th>Utilisateur</th>
                             <th>Contenu</th>
                             <th>Date</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,6 +155,11 @@ const AvisForm = () => {
                                 <td>{item.prenom_utilisateur}</td>
                                 <td>{item.contenu_avis}</td>
                                 <td>{item.date_avis}</td>
+                                <td>
+                                    {userId === item.id_utilisateur && (
+                                        <button onClick={() => handleDelete(item.id_avis)}>Supprimer</button>
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
