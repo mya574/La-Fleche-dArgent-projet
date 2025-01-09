@@ -33,7 +33,7 @@ const Rooms = () => {
             <>
               Explorez nos chambres, conçues pour offrir confort et élégance. Chaque chambre est équipée pour répondre à vos besoins de relaxation et de commodité, tout en offrant une vue imprenable.
               <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-                <Link to="/reservation">
+                <Link to="/reservation-chambre">
                   <button 
                     style={{
                       backgroundColor: 'green', 

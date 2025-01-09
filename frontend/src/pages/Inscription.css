@@ -1,7 +1,7 @@
 /* Nouveau style pour le formulaire */
 .inscription-form {
   max-width: 600px;  /* Taille plus large pour un effet premium */
-  margin: 80px auto 0; /* Réduction de la marge supérieure pour remonter le formulaire */
+  margin: 150px auto 0; /* Réduction de la marge supérieure pour remonter le formulaire */
   padding: 40px;
   background-color: #1c1c1cc9;  /* Couleur sombre pour un look sophistiqué */
   border-radius: 10px;

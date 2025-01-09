@@ -1,21 +1,29 @@
-/* Style global */
+/* Styles généraux */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
   }
-   
+  
   body {
     background-color: #f4f4f4;
     font-family: 'Open Sans', sans-serif;
     color: #333;
   }
-   
+  
+  /* Conteneur global */
+  .connexion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 100px; /* Ajuster pour espacer de la partie supérieure */
+  }
+  
   /* Formulaire de connexion */
   .connexion-form {
     max-width: 600px;
-    margin: 80px auto 0;
     padding: 40px;
     background-color: #1c1c1cc9;
     border-radius: 10px;
@@ -24,7 +32,7 @@
     color: #f5f5f5;
     border: 1px solid #333;
   }
-   
+  
   .connexion-form h1 {
     text-align: center;
     color: #ffffff;
@@ -34,11 +42,11 @@
     letter-spacing: 1px;
     font-family: 'Georgia', serif;
   }
-   
+  
   .form-group {
     margin-bottom: 25px;
   }
-   
+  
   .form-group label {
     display: block;
     font-size: 1rem;
@@ -47,7 +55,7 @@
     margin-bottom: 10px;
     font-family: 'Georgia', serif;
   }
-   
+  
   .form-group input,
   .form-group textarea {
     width: 100%;
@@ -60,18 +68,14 @@
     box-sizing: border-box;
     transition: border-color 0.3s ease, background-color 0.3s ease;
   }
-   
+  
   .form-group input:focus,
   .form-group textarea:focus {
     border-bottom: 2px solid #FFD700;
     outline: 2px solid #000;
     outline-offset: 2px;
   }
-   
-  .form-group textarea {
-    resize: vertical;
-  }
-   
+  
   .form-group button {
     width: 100%;
     padding: 15px;
@@ -84,30 +88,43 @@
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
-   
+  
   .form-group button:hover {
     background-color: #d7a40c;
     transform: translateY(-2px);
   }
-   
+  
   .form-group button:active {
     transform: translateY(0);
   }
-   
+  
   .error {
     color: #ff4d4d;
     font-size: 0.9rem;
     margin-top: 5px;
   }
-   
+  
+  /* Styles spécifiques pour l'image en dessous du formulaire */
+  .connexion-image {
+    text-align: center;
+    margin-top: 30px; /* Ajout d'un espacement entre le formulaire et l'image */
+  }
+  
+  .connexion-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Optionnel : arrondir les bords de l'image */
+  }
+  
+  /* Adaptation responsive */
   @media (max-width: 768px) {
     .connexion-form {
-        width: 90%;
-        padding: 20px;
+      width: 90%;
+      padding: 20px;
     }
-   
+  
     .connexion-form h1 {
-        font-size: 2rem;
+      font-size: 2rem;
     }
   }
-   
+  

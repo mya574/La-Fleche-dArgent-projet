@@ -8,7 +8,7 @@ import Massage from './pages/Massage';
 import Reservation from './pages/Reservation';
 import Inscription from './pages/Inscription';
 import UserProfile from './pages/UserProfile';
-
+import Avis from './pages/Avis';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Connexion from './pages/Connexion';
@@ -68,7 +68,7 @@ function App() {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          
+          <Route path="/avis" element={<Avis />} />
           <Route path="/inscription" element={<Inscription />} />
           <Route
             path="/connexion"

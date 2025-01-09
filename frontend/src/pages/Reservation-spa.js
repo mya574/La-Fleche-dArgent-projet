@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import './Reservation-spa.css';
+
 
 const ReservationSoin = () => {
   const [idSoin, setIdSoin] = useState("");
@@ -56,7 +58,8 @@ const ReservationSoin = () => {
   };
 
   return (
-    <div>
+    <div className="reservation-soin-container">
+    <div className="reservation-soin">
       <h1>Réserver un soin</h1>
       <form onSubmit={handleSubmit}>
         {/* Sélectionner le soin */}
@@ -95,6 +98,7 @@ const ReservationSoin = () => {
 
       {/* Message utilisateur */}
       {message && <p>{message}</p>}
+    </div>
     </div>
   );
 };

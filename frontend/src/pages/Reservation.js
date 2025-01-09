@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
+import './Reservation.css';
 
 const Restaurent = () => {
   const [nombreCouverts, setNombreCouverts] = useState("");
@@ -60,40 +61,42 @@ const Restaurent = () => {
   };
 
   return (
-    <div>
-      <h1>Réservez votre table</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Nombre de couverts */}
-        <label htmlFor="nombre_couverts">Nombre de couverts :</label>
-        <input
-          type="number"
-          id="nombre_couverts"
-          name="nombre_couverts"
-          value={nombreCouverts}
-          onChange={(e) => setNombreCouverts(e.target.value)}
-          min="1"
-          required
-        />
-        <br />
+    <div className="reservation-restaurent-container">
+      <div className="reservation-restaurent">
+        <h1>Réservez votre table</h1>
+        <form onSubmit={handleSubmit}>
+          {/* Nombre de couverts */}
+          <label htmlFor="nombre_couverts">Nombre de couverts :</label>
+          <input
+            type="number"
+            id="nombre_couverts"
+            name="nombre_couverts"
+            value={nombreCouverts}
+            onChange={(e) => setNombreCouverts(e.target.value)}
+            min="1"
+            required
+          />
+          <br />
 
-        {/* Date de réservation */}
-        <label htmlFor="date_reservation">Date de réservation :</label>
-        <input
-          type="date"
-          id="date_reservation"
-          name="date_reservation"
-          value={dateReservation}
-          onChange={(e) => setDateReservation(e.target.value)}
-          required
-        />
-        <br />
+          {/* Date de réservation */}
+          <label htmlFor="date_reservation">Date de réservation :</label>
+          <input
+            type="date"
+            id="date_reservation"
+            name="date_reservation"
+            value={dateReservation}
+            onChange={(e) => setDateReservation(e.target.value)}
+            required
+          />
+          <br />
 
-        {/* Bouton de soumission */}
-        <button type="submit">Réserver</button>
-      </form>
+          {/* Bouton de soumission */}
+          <button type="submit">Réserver</button>
+        </form>
 
-      {/* Message utilisateur */}
-      {message && <p>{message}</p>}
+        {/* Message utilisateur */}
+        {message && <p>{message}</p>}
+      </div>
     </div>
   );
 };
