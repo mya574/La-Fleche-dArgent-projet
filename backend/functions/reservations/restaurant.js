@@ -5,6 +5,7 @@ const db = require('../../db');
 // Route pour ajouter ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
+    //console.log(req.body);
  
     // Vérifie si l'utilisateur a déjà réservé pour cette date
     const userReservationCheckSql = `

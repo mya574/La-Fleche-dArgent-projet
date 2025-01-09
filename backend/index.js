@@ -19,7 +19,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    console.log('CORS Headers:', req.headers);
+    //console.log('CORS Headers:', req.headers);
     res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
