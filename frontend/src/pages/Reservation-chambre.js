@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import {jwtDecode} from "jwt-decode"; 
+import './Reservation-chambre.css';
+
 
 const ReservationChambre = () => {
   const [idChambre, setIdChambre] = useState("");
@@ -54,7 +56,8 @@ const ReservationChambre = () => {
   };
 
   return (
-    <div>
+    <div className="reservation-chambre-container">
+    <div className="reservation-chambre">
       <h1>Réserver une chambre</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="id_chambre">Choisissez une chambre :</label>
@@ -96,6 +99,7 @@ const ReservationChambre = () => {
         <button type="submit">Réserver</button>
       </form>
       {message && <p>{message}</p>}
+    </div>
     </div>
   );
 };

@@ -71,7 +71,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/Avis" element={<Avis />} />
 
-          
+         
           <Route path="/inscription" element={<Inscription />} />
           <Route
             path="/connexion"

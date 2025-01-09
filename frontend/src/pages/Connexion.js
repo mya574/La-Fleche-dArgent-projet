@@ -49,7 +49,6 @@ const Connexion = ({ onLogin }) => {
 
     const userData = { email, password };
 
-    // Appel à l'API pour la connexion
     fetch('http://localhost:3000/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,14 +62,9 @@ const Connexion = ({ onLogin }) => {
       })
       .then((data) => {
         if (data.token) {
-          // Stockez le token dans localStorage
           localStorage.setItem('token', data.token);
-          console.log('Token stored:', data.token);
-          
-
-          // Mettez à jour l'état global ou redirigez l'utilisateur
-          onLogin(data.token); // Optionnel si vous utilisez un contexte ou Redux
-          navigate('/'); // Redirige vers la page d'accueil
+          onLogin(data.token);
+          navigate('/');
         } else {
           setFormError(data.message || 'Erreur de connexion.');
         }
@@ -82,47 +76,48 @@ const Connexion = ({ onLogin }) => {
   };
 
   return (
-    <div className="connexion-form" id="connexion-form">
-      <h1 className="form-heading">Formulaire de Connexion</h1>
-      {formError && <p className="error">{formError}</p>}
-      <form onSubmit={handleSubmit}>
-        {/* Champ e-mail */}
-        <div className="form-group" id="email-group">
-          <label htmlFor="email">Adresse e-mail :</label>
-          <input
-            type="email"
-            id="email"
-            className="form-control"
-            value={email}
-            onChange={handleChange}
-            placeholder="Entrez votre adresse e-mail"
-            onBlur={validateEmail}
-          />
-          {emailError && <p className="error">{emailError}</p>}
-        </div>
+    <div className="page-connexion">
+      <div className="connexion-container">
+        <div className="connexion-form" id="connexion-form">
+          <h1 className="form-heading">Formulaire de Connexion</h1>
+          {formError && <p className="error">{formError}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group" id="email-group">
+              <label htmlFor="email">Adresse e-mail :</label>
+              <input
+                type="email"
+                id="email"
+                className="form-control"
+                value={email}
+                onChange={handleChange}
+                placeholder="Entrez votre adresse e-mail"
+                onBlur={validateEmail}
+              />
+              {emailError && <p className="error">{emailError}</p>}
+            </div>
 
-        {/* Champ mot de passe */}
-        <div className="form-group" id="password-group">
-          <label htmlFor="password">Mot de passe :</label>
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            value={password}
-            onChange={handleChange}
-            placeholder="Entrez votre mot de passe"
-            onBlur={validatePassword}
-          />
-          {passwordError && <p className="error">{passwordError}</p>}
-        </div>
+            <div className="form-group" id="password-group">
+              <label htmlFor="password">Mot de passe :</label>
+              <input
+                type="password"
+                id="password"
+                className="form-control"
+                value={password}
+                onChange={handleChange}
+                placeholder="Entrez votre mot de passe"
+                onBlur={validatePassword}
+              />
+              {passwordError && <p className="error">{passwordError}</p>}
+            </div>
 
-        {/* Bouton de soumission */}
-        <div className="form-group" id="submit-group">
-          <button type="submit" className="btn-submit">
-            Se connecter
-          </button>
+            <div className="form-group" id="submit-group">
+              <button type="submit" className="btn-submit">
+                Se connecter
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
