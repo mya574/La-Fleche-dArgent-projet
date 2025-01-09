@@ -17,10 +17,7 @@ function Home() {
         <meta property="og:description" content="Découvrez notre hôtel haut de gamme à Bordeaux. Réservez votre séjour dès maintenant et profitez de nos services exclusifs." />
         <meta property="og:image" content="URL_DE_VOTRE_IMAGE" />
         <meta property="og:url" content="URL_DE_VOTRE_PAGE" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Hôtel La Flèche d'Argent - Accueil" />
-        <meta name="twitter:description" content="Découvrez notre hôtel haut de gamme à Bordeaux. Réservez votre séjour dès maintenant et profitez de nos services exclusifs." />
-        <meta name="twitter:image" content="URL_DE_VOTRE_IMAGE" />
+        
       </Helmet>
 
 

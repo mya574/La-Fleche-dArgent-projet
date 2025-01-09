@@ -73,7 +73,7 @@
 }
 
 .know-more-button:focus {
-  outline: none;  /* Supprime le contour au focus */
+  outline: none;  /* supprime le contour au focus */
 }
 
 /* Animation texte header */
