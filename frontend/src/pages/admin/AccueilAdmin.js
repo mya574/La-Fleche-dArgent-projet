@@ -92,6 +92,31 @@ const AdminAccueil = () => {
       });
   };
 
+  const removeAvis = (id_avis) => {
+    fetch('http://localhost:3000/avis/remove-avis', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify({ id_avis })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message) {
+          alert(data.message);
+          fetchAvis(); // Recharger la liste après suppression
+        } else {
+          alert('Erreur lors de la suppression de l\'avis.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la suppression de l\'avis.');
+      });
+  };
+
   return (
     <div className="admin-page">
       <h1>Page d'administration</h1>
@@ -134,6 +159,7 @@ const AdminAccueil = () => {
               <th>Contenu</th>
               <th>Date</th>
               <th>Actif</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -144,6 +170,9 @@ const AdminAccueil = () => {
                 <td>{av.contenu_avis}</td>
                 <td>{av.date_avis}</td>
                 <td>{av.is_actif}</td>
+                <td>
+                  <button onClick={() => removeAvis(av.id_avis)}>Supprimer</button>
+                </td>
               </tr>
             ))}
           </tbody>

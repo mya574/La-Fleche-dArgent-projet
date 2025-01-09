@@ -37,15 +37,16 @@ router.post('/add-avis', authMiddleware, (req, res) => {
 // supprimer un avis
 router.post('/remove-avis', authMiddleware, (req, res) => {
     const { id_avis } = req.body;
+    //console.log(id_avis, "remove");
 
     if (!id_avis) {
-        return res.status(400).json({ message: 'ID de l\'avis manquant.' });
+        return res.status(400).json({ message: 'ID de lavis manquant.' });
     }
 
     const sql = 'DELETE FROM avis WHERE id_avis = ?';
     db.query(sql, [id_avis], (err, result) => {
         if (err) {
-            console.error('Erreur lors de la suppression de l\'avis :', err);
+            console.error('Erreur lors de la suppression de lavis :', err);
             return res.status(500).send('Erreur serveur');
         }
         res.status(200).json({ message: 'Avis supprimé avec succès' });
@@ -63,7 +64,7 @@ router.get('/get-all-avis',  verifyToken,  (req, res) => {
         }
         
         res.status(200).json({ success: true, avis: result });
-        console.log(result);
+        //console.log(result);
       });
     } else {
       res.sendStatus(403);
