@@ -16,10 +16,6 @@ const Header2 = ({ onLogout }) => {
     }
   }, []);
 
-  const handleDashboardClick = () => {
-    navigate('/administrateur'); // Rediriger vers la page de tableau de bord
-  };
-
   return (
     <header>
       <nav>
@@ -28,8 +24,8 @@ const Header2 = ({ onLogout }) => {
           <h1>La Flèche d'Argent</h1>
         </div>
         <ul className="main-nav">
-          <li><Link to="/">Home</Link></li>
-          <li className="dropdown">
+        {!isAdmin && (<li><Link to="/">Home</Link></li> )}
+        {!isAdmin && (<li className="dropdown">
             <span className="dropbtn">Services</span>
             <div className="dropdown-content">
               <Link to="/restaurant">Restaurant</Link>
@@ -37,14 +33,18 @@ const Header2 = ({ onLogout }) => {
               <Link to="/massage">Massage</Link>
               <Link to="/chambres">Rooms</Link>
             </div>
-          </li>
-          {isAdmin && (
-            <li>
-              <button onClick={handleDashboardClick} className="dashboard-button">Dashboard</button>
-            </li>
-          )}
-            <li><Link to="/reservresto">Reservations</Link></li>   
+          </li>)}
+          {isAdmin && (<li><Link to="/administrateur">Dashboard</Link></li>)}
+          {isAdmin && (<li className="dropdown">
+            <span className="dropbtn">Resto</span>
+            <div className="dropdown-content">
+            <Link to="/deletecal">Calendrier</Link>
+            <Link to="/createresto">Ajouter</Link>
+            </div>
+          </li>)}
 
+          {!isAdmin && (<li><Link to="/reservresto">Reservations</Link></li>   )} 
+            
           <li>
             <div className="status-badge">
               <span className="status-dot"></span>
