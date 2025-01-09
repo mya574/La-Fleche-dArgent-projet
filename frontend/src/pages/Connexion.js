@@ -49,25 +49,35 @@ const Connexion = ({ onLogin }) => {
 
     const userData = { email, password };
 
+    // Appel à l'API pour la connexion
     fetch('http://localhost:3000/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erreur réseau ou problème côté serveur');
+        }
+        return response.json();
+      })
       .then((data) => {
-        if (data.success) {
-          localStorage.setItem('token', data.token); // Stockez le token dans le localStorage
-          console.log('Token stored:', data.token); // Ajoutez ce log pour vérifier
-          onLogin(data.token); // Appelle la fonction de connexion pour mettre à jour le statut
+        if (data.token) {
+          // Stockez le token dans localStorage
+          localStorage.setItem('token', data.token);
+          console.log('Token stored:', data.token);
+          
+
+          // Mettez à jour l'état global ou redirigez l'utilisateur
+          onLogin(data.token); // Optionnel si vous utilisez un contexte ou Redux
           navigate('/'); // Redirige vers la page d'accueil
         } else {
-          alert('Erreur de connexion : ' + data.message);
+          setFormError(data.message || 'Erreur de connexion.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la connexion.');
+        setFormError('Une erreur est survenue lors de la connexion.');
       });
   };
 
