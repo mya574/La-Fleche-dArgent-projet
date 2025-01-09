@@ -43,6 +43,15 @@ const ReservationsResto = () => {
     fetchReservations();
   }, []);
 
+  // Fonction pour formater la date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div className="reservations-page">
       <h1>Mes Réservations</h1>
@@ -59,7 +68,7 @@ const ReservationsResto = () => {
             <tr key={reservation.id_reservation}>
               <td>{reservation.id_reservation}</td>
               <td>{reservation.nombre_couverts}</td>
-              <td>{reservation.date_reservation}</td>
+              <td>{formatDate(reservation.date_reservation)}</td>
             </tr>
           ))}
         </tbody>
