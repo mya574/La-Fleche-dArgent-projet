@@ -58,3 +58,15 @@
 }
 
 }
+
+.carousel-description {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .carousel-description p {
+    margin: 0;
+  }
+  

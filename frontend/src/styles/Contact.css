@@ -1,0 +1,102 @@
+/* Container principal */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Formulaire */
+  .--form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  /* Champs de texte et textarea */
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Empêche le redimensionnement intempestif */
+  textarea {
+    resize: none;
+  }
+  
+  /* Bouton principal */
+  .--btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .--btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Titres */
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+      margin: 10px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    input,
+    textarea {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .--btn {
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    input,
+    textarea {
+      font-size: 13px;
+      padding: 8px;
+    }
+  
+    .--btn {
+      font-size: 13px;
+      padding: 8px 10px;
+    }
+  }
+  

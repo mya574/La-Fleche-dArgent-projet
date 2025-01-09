@@ -1,8 +1,45 @@
 {
     "slides": [
-      { "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suire Royal d'argent.jpg", "alt": "Suite Royale d'argent" },
-      { "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suite business.jpeg", "alt": "Suite Business" },
-      { "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suite ViP.jpg", "alt": "Suite VIP Exclusif" }
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suire Royal d'argent.jpg",
+        "alt": "Suite Royale d'argent"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suite business.jpeg",
+        "alt": "Suite Business"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/Suite ViP.jpg",
+        "alt": "Suite VIP Exclusif"
+      }
+    ],
+    "restaurant": [
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/restaurant1.jpg",
+        "alt": "Restaurant gastronomique"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/restaurant2.jpg",
+        "alt": "Dîner romantique"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/restaurant3.jpg",
+        "alt": "Buffet international"
+      }
+    ],
+    "spa": [
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/spa1.jpg",
+        "alt": "Spa détente"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/spa2.jpg",
+        "alt": "Massage relaxant"
+      },
+      {
+        "src": "La-Fleche-dArgent-projet/frontend/src/assets/spa3.jpg",
+        "alt": "Jacuzzi luxueux"
+      }
     ]
   }
   

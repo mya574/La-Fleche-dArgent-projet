@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "./component/Carousel"; // Import du composant Carousel
 import { slides } from "./data/carouselData.json"; // Import des données du carrousel
-{/*import {Header} from ""*/}
+import {Header} from "./components/Header.js";
 function Rooms() {
   return (
     <div>
