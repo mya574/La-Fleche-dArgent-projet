@@ -5,20 +5,22 @@ import './AdminAccueil.css';
 
 const AdminAccueil = () => {
   const [users, setUsers] = useState([]);
+  const [avis, setAvis] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      navigate('/connexion'); // rediriger vers la page de connexion
+      navigate('/connexion'); // Rediriger vers la page de connexion
       return;
     }
     const decodedToken = jwtDecode(token);
-    if (decodedToken.is_admin == 0) { // si pas admin, pas droit à la page
+    if (decodedToken.is_admin == 0) { // Si pas admin, pas droit à la page
       navigate('/');
     }
 
     fetchUsers();
+    fetchAvis();
   }, [navigate]);
 
   const fetchUsers = () => {
@@ -43,6 +45,29 @@ const AdminAccueil = () => {
       });
   };
 
+  const fetchAvis = () => {
+    fetch('http://localhost:3000/avis/get-all-avis', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Réponse des avis :', data); // Ajouter un log pour voir la structure de la réponse
+        if (data.success && data.avis) {
+          setAvis(data.avis);
+        } else {
+          alert('Erreur lors de la récupération des avis.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la récupération des avis.');
+      });
+  };
+
   const removeUser = (id_utilisateur) => {
     fetch('http://localhost:3000/users/remove-user', {
       method: 'POST',
@@ -56,7 +81,7 @@ const AdminAccueil = () => {
       .then((data) => {
         if (data.message) {
           alert(data.message);
-          fetchUsers(); // recharger la liste après suppression
+          fetchUsers(); // Recharger la liste après suppression
         } else {
           alert('Erreur lors de la suppression de l\'utilisateur.');
         }
@@ -94,6 +119,31 @@ const AdminAccueil = () => {
                 <td>
                   <button onClick={() => removeUser(user.id_utilisateur)}>Supprimer</button>
                 </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="user-list">
+        <h2>Liste des avis</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID Avis</th>
+              <th>ID Utilisateur</th>
+              <th>Contenu</th>
+              <th>Date</th>
+              <th>Actif</th>
+            </tr>
+          </thead>
+          <tbody>
+            {avis.map((av) => (
+              <tr key={av.id_avis}>
+                <td>{av.id_avis}</td>
+                <td>{av.id_utilisateur}</td>
+                <td>{av.contenu_avis}</td>
+                <td>{av.date_avis}</td>
+                <td>{av.is_actif}</td>
               </tr>
             ))}
           </tbody>

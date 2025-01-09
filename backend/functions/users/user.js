@@ -179,7 +179,7 @@ router.post('/update-user', (req, res) => {
 router.get('/get-all-users',  verifyToken,  (req, res) => {
     const id_admin = req.user.is_admin;
     console.log(id_admin);
-    if (id_admin == 1) {
+    if (id_admin === 1) {
         console.log("admin");
         const sql = 'SELECT * FROM utilisateurs';
         db.query(sql, (err, result) => {

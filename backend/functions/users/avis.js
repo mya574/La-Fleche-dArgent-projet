@@ -4,6 +4,8 @@ const db = require('../../db');
 const authMiddleware = require('../middleware/auth'); // import du middleware
 require('dotenv').config();
 
+const verifyToken = require('../middleware/auth'); // import du middleware
+
 // ajouter un avis
 router.post('/add-avis', authMiddleware, (req, res) => {
     const { contenu} = req.body;
@@ -49,5 +51,23 @@ router.post('/remove-avis', authMiddleware, (req, res) => {
         res.status(200).json({ message: 'Avis supprimé avec succès' });
     });
 });
+
+router.get('/get-all-avis',  verifyToken,  (req, res) => {
+    const id_admin = req.user.is_admin;
+    if (id_admin == 1) {
+      const sql = 'SELECT * FROM avis';
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.error('Database query error:', err);
+          return res.status(500).json({ success: false, message: 'Server error' });
+        }
+        
+        res.status(200).json({ success: true, avis: result });
+        console.log(result);
+      });
+    } else {
+      res.sendStatus(403);
+    }
+  });
 
 module.exports = router;
