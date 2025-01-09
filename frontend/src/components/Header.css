@@ -104,19 +104,20 @@ ul.main-nav li a.connexion-button {
 
 ul.main-nav li a.inscription-button:hover,
 ul.main-nav li a.connexion-button:hover {
-  background-color: black; 
+  background-color: grey; 
   color: white;
 }
 
 /* menu déroulant pour services */
 li.dropdown {
   position: relative;
+ 
   
 }
 
 /*bouton*/
 li.dropdown .dropbtn {
-  color: white;
+  color: rgb(240, 234, 234);
   font-size: 1.2rem;
   padding: 1rem 2vw;
   cursor: pointer;
@@ -127,7 +128,7 @@ li.dropdown .dropbtn {
 }
 
 li.dropdown .dropbtn:hover {
-  background-color: grey;
+  background-color:grey;
   color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* ombre */
   border-radius: 5px; /* bords arrondis au survol */
@@ -137,9 +138,9 @@ li.dropdown .dropbtn:hover {
 li.dropdown .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #1e1e1ed4;
+  margin-top: 14px;
+  background-color: #1f1e1ed4;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  min-width: 160px;
   z-index: 1;
 }
 

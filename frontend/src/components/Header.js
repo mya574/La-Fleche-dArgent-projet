@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import logo from '../assets/logo.png';
-import logo from '../assets/logo.png';
+
 
 const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false); // état du menu
