@@ -32,6 +32,7 @@ const Header2 = ({ onLogout }) => {
               <Link to="/opendate">Calendrier Restaurant</Link>
               <Link to="/massage">Massage</Link>
               <Link to="/chambres">Rooms</Link>
+              <Link to="/avisform">Avis</Link>
             </div>
           </li>)}
           {isAdmin && (<li><Link to="/administrateur">Dashboard</Link></li>)}
