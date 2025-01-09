@@ -109,6 +109,18 @@ router.get('/get-all-avis',  verifyToken,  (req, res) => {
     }
   });
 
+  // Récupérer tous les avis actifs
+router.get('/get-active-avis', authMiddleware, (req, res) => {
+    const sql = 'SELECT * FROM avis WHERE is_actif = 1';
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
+        res.status(200).json({ success: true, avis: result });
+    });
+});
+
   // Route pour récupérer les emails des utilisateurs en fonction de leurs IDs
 router.post('/get-emails', verifyToken, (req, res) => {
     const { userIds } = req.body;
@@ -128,5 +140,23 @@ router.post('/get-emails', verifyToken, (req, res) => {
       res.status(200).json({ success: true, users: result });
     });
   });
-
+  // Route pour récupérer les emails des utilisateurs en fonction de leurs IDs
+  router.post('/get-prenom', verifyToken, (req, res) => {
+    const { userIds } = req.body;
+  
+    if (!userIds || !Array.isArray(userIds)) {
+      return res.status(400).json({ message: 'IDs des utilisateurs manquants ou invalides.' });
+    }
+  
+    const placeholders = userIds.map(() => '?').join(',');
+    const sql = `SELECT id_utilisateur, prenom_utilisateur FROM utilisateurs WHERE id_utilisateur IN (${placeholders})`;
+  
+    db.query(sql, userIds, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des prenom des utilisateurs :', err);
+        return res.status(500).send('Erreur serveur');
+      }
+      res.status(200).json({ success: true, users: result });
+    });
+  });
 module.exports = router;

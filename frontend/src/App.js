@@ -20,6 +20,7 @@ import ReservationsResto from './pages/client/ClientReserv';
 import CreateResto from './pages/admin/NewRestoAdmin';
 import OpenDatesCalendar from './pages/client/JourOuverture';
 import DeleteDatesCalendar from './pages/admin/SupprCalendrier';
+import AvisForm from './pages/client/Avis';
 
 import './styles/global.css';
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           
           <Route path="/reservresto" element={<ReservationsResto />} />
+          <Route path="/avisform" element={<AvisForm />} />
           <Route path="/administrateur" element={<AdminAccueil />} />
           <Route path="/createresto" element={<CreateResto />} />
           <Route path="/opendate" element={<OpenDatesCalendar />} />

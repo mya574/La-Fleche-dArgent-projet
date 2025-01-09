@@ -1,0 +1,92 @@
+.avis-form-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
+}
+
+.avis-form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.avis-form-container form {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5vh;
+}
+
+.avis-form-container .containterformavis {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.avis-form-container label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+    align-self: flex-start;
+}
+
+.avis-form-container textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    resize: vertical;
+    font-size: 16px;
+    flex: 1;
+}
+
+.avis-form-container button {
+    padding: 15px 30px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    align-self: center;
+}
+
+.avis-form-container button:hover {
+    background-color: #555;
+}
+
+.avis-form-container p {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.avis-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.avis-table th, .avis-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.avis-table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.avis-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.avis-table tr:hover {
+    background-color: #e9e9e9;
+}
