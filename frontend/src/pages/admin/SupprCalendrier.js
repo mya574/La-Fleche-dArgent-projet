@@ -24,7 +24,7 @@ const DeleteDatesCalendar = () => {
           title: `Couverts: ${item.nombre_couverts}`,
           start: new Date(item.date),
           end: new Date(item.date),
-          date: item.date, 
+          date: item.date, // date comme identifiant unique
         }));
 
         setEvents(events);
@@ -43,15 +43,16 @@ const DeleteDatesCalendar = () => {
     fetchOpenDates();
   }, []);
 
-
+  
     if (!isAdmin) {
       navigate('/connexion'); //  page de connexion si l'utilisateur n'est pas administrateur
     }
-
+  
 
   const handleDeleteEvent = async (eventDate) => {
+    const formattedDate = moment(eventDate).format('YYYY-MM-DD');
     try {
-      const response = await fetch(`http://localhost:3000/services/delete_open_date/${eventDate}`, {
+      const response = await fetch(`http://localhost:3000/services/delete_open_date/${formattedDate}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

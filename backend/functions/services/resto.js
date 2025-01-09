@@ -46,18 +46,26 @@ router.get('/get_open_dates', (req, res) => {
   });
 });
 
-// Route pour supprimer une date d'ouverture
-router.delete('/delete_open_date/:date', (req, res) => {
+
+router.delete('/delete_open_date/:date', (req, res) => {//supprimer une date et toutes ses reservations
     const { date } = req.params;
   
-    const deleteQuery = 'DELETE FROM restaurant WHERE date = ?';
-    db.query(deleteQuery, [date], (err, results) => {
+    // suppr les reservations
+    const deleteReservationsQuery = 'DELETE FROM reservation_restaurant WHERE date_reservation = ?';
+    db.query(deleteReservationsQuery, [date], (err, results) => {
       if (err) {
-        return res.status(500).json({ message: 'Erreur lors de la suppression de la date.', error: err });
+        return res.status(500).json({ message: 'Erreur lors de la suppression des réservations.', error: err });
       }
   
-      return res.status(200).json({ message: 'Date supprimée avec succès.' });
+      // Supprimer la date 
+      const deleteOpenDateQuery = 'DELETE FROM restaurant WHERE date = ?';
+      db.query(deleteOpenDateQuery, [date], (err, results) => {
+        if (err) {
+          return res.status(500).json({ message: 'Erreur lors de la suppression de la date.', error: err });
+        }
+  
+        return res.status(200).json({ message: 'Date et réservations supprimées avec succès.' });
+      });
     });
   });
-  
 module.exports = router;
