@@ -54,7 +54,7 @@ nav {
 
 /* effet survol des liens */
 .main-nav li a:hover {
-    background-color: grey; /* couleur de fond au survol */
+    background-color: grey; 
     color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
 }
@@ -185,14 +185,14 @@ nav {
         transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
     }
 
-    /* effet survol des liens mobiles */
+    /* effet survol des liens */
     .main-nav li a:hover {
         background-color: grey;
         color: white;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    /* liens du menu déroulant mobile */
+    /* liens du menu déroulant */
     .dropdown-content {
         display: none;
         position: absolute;

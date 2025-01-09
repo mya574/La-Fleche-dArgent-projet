@@ -8,6 +8,7 @@
     padding-bottom: 50px; 
   }
   
+  /*pour petits écrans*/
   @media (max-width: 1200px) {
     .avis-container {
       grid-template-columns: repeat(2, 1fr);  /* 2 cartes par ligne sur des écrans plus petits */

@@ -2,28 +2,29 @@ import React, { useEffect, useState } from "react";
 import "./Footer.css";
 
 const Footer = () => {
-  const [isFixed, setIsFixed] = useState(false);
+  const [isFixed, setIsFixed] = useState(false);// etat pour determiner si le footer est fixé
 
   useEffect(() => {
     const footer = document.querySelector('footer');
     const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight; 
-      const scrollPosition = window.innerHeight + window.scrollY; 
+      const scrollHeight = document.documentElement.scrollHeight; // hauteur totale de la page
+      const scrollPosition = window.innerHeight + window.scrollY; //// position de défilement actuelle
 
+      // verifie si lutilisateur est tout en bas de la page
       if (scrollPosition >= scrollHeight - 1) { 
-        setIsFixed(true); 
+        setIsFixed(true); // fixe le footer
       } else {
-        setIsFixed(false); 
+        setIsFixed(false); // défixe le footer
       }
     };
 
-    
+     // ajoute un écouteur d'événement pour le défilement
     window.addEventListener('scroll', handleScroll);
 
-    
+    // appelle handleScroll une fois pour initialiser l'état
     handleScroll();
 
-    
+    // nettoie l'écouteur d'événement 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };

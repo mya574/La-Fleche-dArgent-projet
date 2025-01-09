@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import "./Carousel.css";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
-/* composant Carousel */
+/* Composant Carousel */
 const Carousel = ({ data }) => {
-  const [slide, setSlide] = useState(0); /* etat pour la diapositive active */
+  const [slide, setSlide] = useState(0); /* État pour la diapositive active */
 
   const nextSlide = () => {
-    setSlide((prevSlide) => (prevSlide === data.length - 1 ? 0 : prevSlide + 1)); /* passe à la diapositive suivante */
+    setSlide((prevSlide) => 
+      prevSlide === data.length - 1 ? 0 : prevSlide + 1
+    ); /* Passe à la diapositive suivante */
   };
 
   const prevSlide = () => {
-    setSlide((prevSlide) => (prevSlide === 0 ? data.length - 1 : prevSlide - 1)); /* passe à la diapositive précédente */
+    setSlide((prevSlide) => 
+      prevSlide === 0 ? data.length - 1 : prevSlide - 1
+    ); /* Passe à la diapositive précédente */
   };
 
   return (
     <div className="carousel luxury-carousel">
-      {/* images avec overlay */}
+      {/* Récupération des données de data */}
       {data.map((item, idx) => (
         <div
           key={idx}
@@ -29,7 +33,7 @@ const Carousel = ({ data }) => {
         </div>
       ))}
 
-      {/* fleches de navigation */}
+      {/* Boutons droite et gauche */}
       <BsArrowLeftCircle className="arrow arrow-left" onClick={prevSlide} />
       <BsArrowRightCircle className="arrow arrow-right" onClick={nextSlide} />
     </div>
@@ -37,3 +41,4 @@ const Carousel = ({ data }) => {
 };
 
 export default Carousel;
+

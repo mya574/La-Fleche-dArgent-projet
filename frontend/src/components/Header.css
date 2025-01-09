@@ -6,9 +6,9 @@
 }
 
 .video-background {
-  position: fixed; /* pour que la vidéo reste en haut, sans effet accordéon */
-  top: 0; /* fixe la vidéo tout en haut */
-  left: 0; /* à gauche aussi */
+  position: fixed; 
+  top: 0; 
+  left: 0;
   width: 100%;
   height: 100vh; /* toute la hauteur de l'écran */
   object-fit: cover; /* remplie l'écran */
@@ -23,7 +23,7 @@
 
 header {
   background-color: #1e1e1ed4;
-  padding: 0; /* espace interne #margin */
+  padding: 0; /* espace interne # margin */
   position: fixed;
   top: 0;
   left: 0;
@@ -48,7 +48,7 @@ nav {
 .logo {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Espace entre l'image et le titre */
+  gap: 1rem; /* espace entre l'image et le titre */
 }
 
 /* image du logo */
@@ -95,7 +95,7 @@ ul.main-nav li a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
 }
 
-/* boutons inscription et connexion */
+
 ul.main-nav li a.inscription-button,
 ul.main-nav li a.connexion-button {
   background-color: transparent; 

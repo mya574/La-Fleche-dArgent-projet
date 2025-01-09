@@ -1,13 +1,14 @@
 footer {
   background-color: #1e1e1e;
   color: #fff;
-  padding: 20px 0;
+  padding: 20px 0; /* espacement interne en haut et en bas */
   text-align: center;
   width: 100%;
   position: relative;
   z-index: 100;
 }
 
+/* footer lorsqu'il est fixé en bas de la page */
 footer.fixed {
   position: fixed; 
   bottom: 0;
@@ -18,7 +19,7 @@ footer.fixed {
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 15px;/* espacement interne à gauche et à droite */
 }
 
 .footer-content .links {
@@ -27,8 +28,8 @@ footer.fixed {
 
 .footer-content .links a {
   color: #fff;
-  text-decoration: none;
-  margin: 0 10px;
+  text-decoration: none;/* pas de soulignement des liens */
+  margin: 0 10px; /* espacement entre les liens */
   font-weight: 500;
   transition: color 0.3s ease;
 }
@@ -40,5 +41,5 @@ footer.fixed {
 .footer-content p {
   font-size: 14px;
   color: #bbb;
-  margin-top: 10px;
+  margin-top: 10px; 
 }
