@@ -6,6 +6,7 @@ import './AdminAccueil.css';
 const AdminAccueil = () => {
   const [users, setUsers] = useState([]);
   const [avis, setAvis] = useState([]);
+  const [userEmails, setUserEmails] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const AdminAccueil = () => {
         console.log('Réponse des avis :', data); // Ajouter un log pour voir la structure de la réponse
         if (data.success && data.avis) {
           setAvis(data.avis);
+          fetchUserEmails(data.avis.map(av => av.id_utilisateur));
         } else {
           alert('Erreur lors de la récupération des avis.');
         }
@@ -65,6 +67,33 @@ const AdminAccueil = () => {
       .catch((error) => {
         console.error('Erreur réseau :', error);
         alert('Une erreur est survenue lors de la récupération des avis.');
+      });
+  };
+
+  const fetchUserEmails = (userIds) => {
+    fetch('http://localhost:3000/avis/get-emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify({ userIds })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          const emailsMap = {};
+          data.users.forEach(user => {
+            emailsMap[user.id_utilisateur] = user.email_utilisateur;
+          });
+          setUserEmails(emailsMap);
+        } else {
+          alert('Erreur lors de la récupération des emails des utilisateurs.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la récupération des emails des utilisateurs.');
       });
   };
 
@@ -117,6 +146,30 @@ const AdminAccueil = () => {
       });
   };
 
+  const disableAvis = (id_avis) => {
+    fetch('http://localhost:3000/avis/disable-avis', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+      },
+      body: JSON.stringify({ id_avis })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message);
+          fetchAvis(); // Recharger la liste après désactivation
+        } else {
+          alert('Erreur lors de la désactivation de l\'avis.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erreur réseau :', error);
+        alert('Une erreur est survenue lors de la désactivation de l\'avis.');
+      });
+  };
+
   const unableAvis = (id_avis) => { //activer un avis
     fetch('http://localhost:3000/avis/unable-avis', {
       method: 'POST',
@@ -139,30 +192,6 @@ const AdminAccueil = () => {
         console.error('Erreur réseau :', error);
         alert('Une erreur est survenue lors de la désactivation de l\'avis.');
       });
-    }
-
-      const disableAvis = (id_avis) => {
-        fetch('http://localhost:3000/avis/disable-avis', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          },
-          body: JSON.stringify({ id_avis })
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.message) {
-              alert(data.message);
-              fetchAvis(); // Recharger la liste après désactivation
-            } else {
-              alert('Erreur lors de la désactivation de l\'avis.');
-            }
-          })
-          .catch((error) => {
-            console.error('Erreur réseau :', error);
-            alert('Une erreur est survenue lors de la désactivation de l\'avis.');
-          });
   };
 
   return (
@@ -190,7 +219,7 @@ const AdminAccueil = () => {
                 <td>{user.address}</td>
                 <td>{user.phoneNumber}</td>
                 <td>
-                  <button onClick={() => removeUser(user.id_utilisateur)}>Supprimer</button>
+                  <button className='bouton-suppr' onClick={() => removeUser(user.id_utilisateur)}>Supprimer</button>
                 </td>
               </tr>
             ))}
@@ -202,27 +231,24 @@ const AdminAccueil = () => {
         <table>
           <thead>
             <tr>
-            
-              <th>ID Utilisateur</th>
+              <th>Email Utilisateur</th>
               <th>Contenu</th>
               <th>Date</th>
               <th>Actif</th>
-              <th>Actions</th>
+              <th className='section-actions'>Actions</th>
             </tr>
           </thead>
           <tbody>
             {avis.map((av) => (
               <tr key={av.id_avis}>
-               
-                <td>{av.id_utilisateur}</td>
+                <td>{userEmails[av.id_utilisateur] || 'Email non trouvé'}</td>
                 <td>{av.contenu_avis}</td>
                 <td>{av.date_avis}</td>
                 <td>{av.is_actif === 1 ? 'Actif' : 'Désactivé'}</td>
                 <td>
-                 
-                  <button onClick={() => unableAvis(av.id_avis)}>Activer</button>
-                  <button onClick={() => disableAvis(av.id_avis)}>Désactiver</button>
-                  <button onClick={() => removeAvis(av.id_avis)}>Supprimer</button>
+                  <button className='bouton-activer' onClick={() => unableAvis(av.id_avis)}>Activer</button>
+                  <button className='bouton-desactiver' onClick={() => disableAvis(av.id_avis)}>Désactiver</button>
+                  <button className='bouton-suppr' onClick={() => removeAvis(av.id_avis)}>Supprimer</button>
                 </td>
               </tr>
             ))}

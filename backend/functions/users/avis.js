@@ -109,4 +109,24 @@ router.get('/get-all-avis',  verifyToken,  (req, res) => {
     }
   });
 
+  // Route pour récupérer les emails des utilisateurs en fonction de leurs IDs
+router.post('/get-emails', verifyToken, (req, res) => {
+    const { userIds } = req.body;
+  
+    if (!userIds || !Array.isArray(userIds)) {
+      return res.status(400).json({ message: 'IDs des utilisateurs manquants ou invalides.' });
+    }
+  
+    const placeholders = userIds.map(() => '?').join(',');
+    const sql = `SELECT id_utilisateur, email_utilisateur FROM utilisateurs WHERE id_utilisateur IN (${placeholders})`;
+  
+    db.query(sql, userIds, (err, result) => {
+      if (err) {
+        console.error('Erreur lors de la récupération des emails des utilisateurs :', err);
+        return res.status(500).send('Erreur serveur');
+      }
+      res.status(200).json({ success: true, users: result });
+    });
+  });
+
 module.exports = router;
