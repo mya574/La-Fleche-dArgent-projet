@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import ReservationsResto from './pages/client/ClientReserv';
 import CreateResto from './pages/admin/NewRestoAdmin';
 import OpenDatesCalendar from './pages/client/JourOuverture';
+import DeleteDatesCalendar from './pages/admin/SupprCalendrier';
 
 import './styles/global.css';
 
@@ -81,6 +82,7 @@ function App() {
           <Route path="/administrateur" element={<AdminAccueil />} />
           <Route path="/createresto" element={<CreateResto />} />
           <Route path="/opendate" element={<OpenDatesCalendar />} />
+          <Route path="/deletecal" element={<DeleteDatesCalendar />} />
         </Routes>
       </main>
       <Footer />
