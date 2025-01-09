@@ -5,6 +5,7 @@ const db = require('../../db');
 // Route pour ajouter ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
+    console.log(req.body)
     //console.log(req.body);
  
     // Vérifie si l'utilisateur a déjà réservé pour cette date
@@ -14,14 +15,16 @@ router.post('/reserve', (req, res) => {
         WHERE id_utilisateur = ? AND date_reservation = ?
     `;
     db.query(userReservationCheckSql, [id_utilisateur, date_reservation], (err, existingReservations) => {
+        
         if (err) {
             console.error('Erreur lors de la vérification des réservations utilisateur :', err);
             res.status(500).send('Erreur serveur');
             return;
         }
- 
+        
         if (existingReservations.length > 0) {
             const existingReservation = existingReservations[0];
+            
  
             // Cas 1 : Si le nombre de couverts est identique
             if (existingReservation.nombre_couverts === nombre_couverts) {
@@ -46,7 +49,7 @@ router.post('/reserve', (req, res) => {
                 }
  
                 const couvertsDisponibles = result.length > 0 ? result[0].couverts_disponibles + existingReservation.nombre_couverts : 0;
- 
+                
                 if (nombre_couverts > couvertsDisponibles) {
                     res.status(400).send('Pas assez de couverts disponibles pour cette date.');
                     return;
@@ -159,7 +162,7 @@ router.delete('/supprimer', (req, res) => {
 
 router.post('/get-all-res-resto', (req, res) => {
     const { id_utilisateur } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
 
     const getReservationsQuery = `
         SELECT *
