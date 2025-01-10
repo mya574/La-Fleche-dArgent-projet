@@ -1,3 +1,4 @@
+/*clemence*/
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -12,7 +13,7 @@ const AdminAccueil = () => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      navigate('/connexion'); // Rediriger vers la page de connexion
+      navigate('/connexion'); 
       return;
     }
     const decodedToken = jwtDecode(token);

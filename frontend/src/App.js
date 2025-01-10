@@ -1,3 +1,4 @@
+/*myriam maya clemence karlson*/
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
@@ -32,11 +33,11 @@ import './styles/global.css';
 function HeaderManager({ isAuthenticated, onLogout }) {
   const location = useLocation();
 
-  // Définir si Header2 est obligatoire pour certaines pages
+  // definir si Header2 est obligatoire pour certaines pages
   const isHeader2Forced =
     location.pathname === '/admin' || location.pathname === '/user-profile';
 
-  // Si utilisateur authentifié ou page nécessitant Header2, afficher Header2
+  // si utilisateur authentifie ou page necessitant Header2, afficher Header2
   if (isAuthenticated || isHeader2Forced) {
     return <Header2 onLogout={onLogout} />;
   }
@@ -47,20 +48,19 @@ function HeaderManager({ isAuthenticated, onLogout }) {
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('authToken'));
 
-  // Gérer la connexion
   const handleLogin = (token) => {
     localStorage.setItem('authToken', token);
     setIsAuthenticated(true);
   };
 
-  // Gérer la déconnexion
+
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     setIsAuthenticated(false);
   };
 
   useEffect(() => {
-    // Vérifier si un token est présent dans localStorage au chargement initial
+
     setIsAuthenticated(!!localStorage.getItem('authToken'));
   }, []);
 
@@ -73,7 +73,7 @@ function App() {
           <Route path="/avis" element={<Avis />} />
           <Route
             path="/connexion"
-            element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
+            element={<Connexion onLogin={handleLogin} />}
           />
           <Route path="/" element={<Home />} />
           <Route path="/chambres" element={<Rooms />} />

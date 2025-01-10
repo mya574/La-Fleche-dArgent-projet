@@ -1,4 +1,4 @@
-/* Styles généraux */
+/*maya*/
 * {
     margin: 0;
     padding: 0;
@@ -31,7 +31,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 100px; /* Ajuster pour espacer de la partie supérieure */
+    padding-top: 100px; 
   }
   
   /* Formulaire de connexion */
@@ -117,16 +117,16 @@
     margin-top: 5px;
   }
   
-  /* Styles spécifiques pour l'image en dessous du formulaire */
+
   .connexion-image {
     text-align: center;
-    margin-top: 30px; /* Ajout d'un espacement entre le formulaire et l'image */
+    margin-top: 30px;
   }
   
   .connexion-image img {
     max-width: 100%;
     height: auto;
-    border-radius: 10px; /* Optionnel : arrondir les bords de l'image */
+    border-radius: 10px;
   }
   
   /* Adaptation responsive */

@@ -1,3 +1,4 @@
+/*karlson*/
 import React, { useState } from "react";
 import "./Carousel.css";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";

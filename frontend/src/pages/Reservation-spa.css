@@ -1,4 +1,4 @@
-
+/*myriam*/
 body {
     margin: 0;
     padding: 0;
@@ -129,7 +129,7 @@ body {
   }
   
   main {
-    flex-grow: 1; /*  contenu va remplir l'espace disponible */
+    flex-grow: 1; 
   }
   
   
