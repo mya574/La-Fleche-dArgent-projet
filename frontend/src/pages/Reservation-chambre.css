@@ -1,4 +1,4 @@
-/* Réinitialisation des marges et du padding */
+
 body {
     margin: 0;
     padding: 0;
@@ -8,10 +8,10 @@ body {
     flex-direction: column;
   }
   
-  /* Image d'arrière-plan spécifique à la page de réservation */
+
   .reservation-chambre-container {
     position: relative;
-    min-height: 100vh; /* Le conteneur prend toute la hauteur de la page */
+    min-height: 100vh; 
   }
   
   .reservation-chambre-container::before {
@@ -88,7 +88,7 @@ body {
     box-shadow: 0 0 4px rgba(244, 162, 97, 0.2);
   }
   
-  /* Bouton de soumission */
+  
   .reservation-chambre button {
     padding: 10px 20px;
     font-size: 16px;
@@ -104,7 +104,7 @@ body {
     background-color: #d65f45;
   }
   
-  /* Message d'information */
+ 
   .reservation-chambre p {
     margin-top: 20px;
     font-size: 14px;

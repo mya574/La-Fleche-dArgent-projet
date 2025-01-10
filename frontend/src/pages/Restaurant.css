@@ -4,6 +4,8 @@
     background-color: #f9f9f9;
     padding: 0;
     margin: 0;
+    
+    
 }
 
 
@@ -79,6 +81,11 @@ section img {
     background-color: #555;
   }
   
+  section:last-of-type {
+    margin-bottom: 5rem; /* Plus d'espace sous la dernière section */
+    padding-bottom: 3rem; /* Plus d'espace à l'intérieur de la section */
+}
+
   
 
 /* pour les petits écrans */

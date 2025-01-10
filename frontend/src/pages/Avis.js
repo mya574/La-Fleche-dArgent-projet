@@ -18,7 +18,7 @@ const Avis = () => {
     <div className="avis-container">
       {reviews.map((review, index) => (
         <Card 
-          key={index}  // Utilisation de l'index comme clé
+          key={index}  // utilisation de l'index comme clé
           firstName={review.firstName} 
           lastName={review.lastName} 
           comment={review.comment} 

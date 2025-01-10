@@ -18,8 +18,10 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ReservationSoin from './pages/Reservation-spa';
 import ReservationChambre from './pages/Reservation-chambre';
-
+import MentionsLegales from './pages/MentionsLegales';
+import ConditionsGeneralDeVente from './pages/ConditionsGeneralDeVente';
 import './styles/global.css';
+
 
 function HeaderManager({ isAuthenticated, onLogout }) {
   const location = useLocation();
@@ -61,24 +63,26 @@ function App() {
       <HeaderManager isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <main>
         <Routes>
+          <Route path="/about" element={<About />} />
+          <Route path="/avis" element={<Avis />} />
+          <Route
+            path="/connexion"
+            element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
+          />
           <Route path="/" element={<Home />} />
           <Route path="/chambres" element={<Rooms />} />
           <Route path="/restaurant" element={<Restaurant />} />
           <Route path="/massage" element={<Massage />} />
           <Route path="/reservation" element={<Reservation />} />
-          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/avis" element={<Avis />} />
           <Route path="/inscription" element={<Inscription />} />
-          <Route
-            path="/connexion"
-            element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
-          />
           <Route path="/user-profile" element={<UserProfile />} />
-
           <Route path="/reservation-spa" element={<ReservationSoin />} />
           <Route path="/reservation-chambre" element={< ReservationChambre/>} />
           <Route path="/administrateur" element={<AdminAccueil />} />
+          <Route path="/mentions-legales" element={<MentionsLegales/>} />
+          <Route path="/conditions-generales-vente" element={<ConditionsGeneralDeVente />} /> 
+
         </Routes>
       </main>
       <Footer />

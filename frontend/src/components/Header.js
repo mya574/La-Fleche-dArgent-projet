@@ -20,7 +20,6 @@ const Header = () => {
         </div>
 
         {/* ajoute la classe 'active' pour afficher le menu quand on clique */}
-        {/* ajoute la classe 'active' pour afficher le menu quand on clique */}
         <ul className={`main-nav ${isMenuActive ? 'active' : ''}`}>
           <li><Link to="/">Home</Link></li>
           <li className="dropdown">

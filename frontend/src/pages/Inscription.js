@@ -4,7 +4,7 @@ import './Inscription.css';
 const Inscription = () => {
   // États pour chaque champ du formulaire
   const [username, setUsername] = useState('');
-  const [firstname, setFirstname] = useState(''); // Correction du prénom
+  const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');

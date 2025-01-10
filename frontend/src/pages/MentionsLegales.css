@@ -1,0 +1,49 @@
+.mentions-legales-container { 
+    padding: 20px;
+    margin-top: 120px; 
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: 'Georgia', serif; 
+    margin-bottom:100px;
+}
+
+.mentions-legales-content h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Georgia', serif; 
+}
+
+.mentions-legales-content section {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-family: 'Georgia', serif; 
+}
+
+.mentions-legales-content h2 {
+    font-size: 1.4em;
+    color: black;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif; 
+}
+
+.mentions-legales-content p {
+    font-size: 1em;
+    color: #555;
+    font-family: 'Georgia', serif; 
+}
+
+.mentions-legales-content a {
+    color: #000000;
+    text-decoration: none;
+    font-family: 'Georgia', serif; 
+}
+
+.mentions-legales-content a:hover {
+    text-decoration: underline;
+    font-family: 'Georgia', serif; 
+}
