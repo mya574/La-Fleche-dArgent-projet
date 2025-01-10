@@ -25,7 +25,7 @@ const Massage = () => {
   return (
     <div className="page-wrapper">
       <main>
-        {/* carousel */}
+      
         <Carousel data={massageServices} />
 
         {/* première section */}

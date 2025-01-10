@@ -76,7 +76,7 @@
   outline: none;  /* supprime le contour au focus */
 }
 
-/* Animation texte header */
+/* animation texte header */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -89,10 +89,10 @@
 }
 
 .overlay h1, .overlay p {
-  animation: fadeIn 1.2s ease-out; /* Animation texte */
+  animation: fadeIn 1.2s ease-out; 
 }
 
 .home-container {
-  position: relative; /* Ajouté pour s'assurer que les éléments enfants sont correctement positionnés */
-  z-index: 0; /* Pour que tout soit derrière le bouton */
+  position: relative; 
+  z-index: 0; 
 }

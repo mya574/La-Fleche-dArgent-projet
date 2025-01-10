@@ -1,11 +1,11 @@
-/* Nouveau style pour le formulaire */
+
 .inscription-form {
   max-width: 600px;  /* Taille plus large pour un effet premium */
   margin: 200px auto 0; /* Réduction de la marge supérieure pour remonter le formulaire */
   padding: 40px;
-  background-color: #1c1c1cc9;  /* Couleur sombre pour un look sophistiqué */
+  background-color: #1c1c1cc9;  
   border-radius: 10px;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.721);  /* Ombre subtile pour une profondeur élégante */
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.721); 
   font-family: 'Helvetica Neue', sans-serif;
   color: #f5f5f5; /* Texte clair pour contraste */
   border: 1px solid #333; /* Bordure discrète */
@@ -29,11 +29,11 @@
 
 .inscription-form h1 {
   text-align: center;
-  color: #ffffff; /* Blanc pur pour le titre */
+  color: #ffffff; 
   font-size: 2.5rem;
-  font-weight: 300; /* Police légère pour élégance */
+  font-weight: 300; 
   margin-bottom: 30px;
-  letter-spacing: 1px; /* Espacement des lettres pour un style soigné */
+  letter-spacing: 1px;
   font-family: 'Georgia', serif;
 }
 
@@ -44,8 +44,8 @@
 .form-group label {
   display: block;
   font-size: 1rem;
-  font-weight: 500; /* Police légèrement plus audacieuse */
-  color: #f9f6f6; /* Couleur de texte plus douce */
+  font-weight: 500; 
+  color: #f9f6f6; 
   margin-bottom: 10px;
    font-family: 'Georgia', serif;
 }
@@ -56,8 +56,8 @@
   padding: 15px;
   font-size: 1rem;
   border: none;
-  border-bottom: 2px solid #555;  /* Ligne pour une esthétique plus nette */
-  background-color: transparent;  /* Fond transparent */
+  border-bottom: 2px solid #555;  
+  background-color: transparent;  
   color: #f5f5f5;
   box-sizing: border-box;
   transition: border-color 0.3s ease, background-color 0.3s ease;
@@ -65,22 +65,22 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-bottom: 2px solid #FFD700;  /* Accent doré au focus */
-  outline: 2px solid #000; /* Contour noir */
-  outline-offset: 2px; /* Optionnel : pour espacer légèrement le contour */
+  border-bottom: 2px solid #FFD700;  
+  outline: 2px solid #000; 
+  outline-offset: 2px; 
 }
 
 
 .form-group textarea {
   resize: vertical;
- /* min-height: 120px;*/
+
 }
 
 .form-group button {
   width: 100%;
   padding: 15px;
-  background-color: #fabe26;  /* Couleur dorée pour le bouton */
-  color: #1c1c1c; /* Texte sombre pour contraste inversé */
+  background-color: #fabe26; 
+  color: #1c1c1c; 
   font-size: 1.2rem;
   font-weight: bold;
   border: none;
@@ -90,7 +90,7 @@
 }
 
 .form-group button:hover {
-  background-color: #d7a40c; /* Couleur dorée plus foncée au survol */
+  background-color: #d7a40c;
   transform: translateY(-2px);
 }
 
@@ -99,7 +99,7 @@
 }
 
 .error {  
-  color: #ff4d4d;  /* Rouge vif pour les erreurs */
+  color: #ff4d4d;  
   font-size: 0.9rem;
   margin-top: 5px;
 }

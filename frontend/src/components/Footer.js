@@ -35,7 +35,7 @@ const Footer = () => {
       <div className="footer-content">
         <div className="links">
           <a href="/mentions-legales">Mentions Légales</a>
-          <a href="/cgv">Conditions Générales de Vente</a>
+          <a href="/conditions-generales-vente">Conditions Générales de Vente</a>
           <a href="/contact">Contact</a>
         </div>
         <p>

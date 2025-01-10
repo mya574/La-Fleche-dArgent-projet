@@ -12,11 +12,9 @@ function Home() {
         <title>Hôtel La Flèche d'Argent - Accueil</title>
         <meta name="description" content="Découvrez notre hôtel haut de gamme à Bordeaux. Réservez votre séjour dès maintenant et profitez de nos services exclusifs." />
         <meta name="keywords" content="Hôtel, Bordeaux, Luxe, Séjour, Réservation" />
-        <meta name="author" content="Votre Nom" />
+        <meta name="author" content="BTC" />
         <meta property="og:title" content="Hôtel La Flèche d'Argent - Accueil" />
         <meta property="og:description" content="Découvrez notre hôtel haut de gamme à Bordeaux. Réservez votre séjour dès maintenant et profitez de nos services exclusifs." />
-        <meta property="og:image" content="URL_DE_VOTRE_IMAGE" />
-        <meta property="og:url" content="URL_DE_VOTRE_PAGE" />
         
       </Helmet>
 

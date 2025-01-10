@@ -1,4 +1,4 @@
-/* Réinitialisation des marges et du padding */
+
 body {
   margin: 0;
   padding: 0;
@@ -8,10 +8,10 @@ body {
   flex-direction: column;
 }
 
-/* Image d'arrière-plan spécifique à la page de réservation */
+
 .reservation-restaurent-container {
   position: relative;
-  min-height: 100vh; /* Le conteneur prend toute la hauteur de la page */
+  min-height: 100vh; 
 }
 
 .reservation-restaurent-container::before {
@@ -21,14 +21,14 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../assets/background-form-2.png'); /* Remplacez par votre image */
+  background-image: url('../assets/background-form-2.png'); 
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: -1; /* Place l'image derrière le contenu */
+  z-index: -1; 
 }
 
-/* Conteneur pour toute la page */
+
 .reservation-restaurent-container {
   display: flex;
   flex-direction: column;
@@ -44,32 +44,31 @@ body {
   width: 100%;
   margin: auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.551); /* Fond semi-transparent */
+  background-color: rgba(255, 255, 255, 0.551); 
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Titre du formulaire */
+
 .reservation-restaurent h1 {
   text-align: center;
   color: #6b4e31;
   margin-bottom: 20px;
 }
 
-/* Formulaire */
+
 .reservation-restaurent form {
   display: flex;
   flex-direction: column;
 }
 
-/* Labels */
 .reservation-restaurent label {
   margin-bottom: 8px;
   font-weight: bold;
   color: #6e5635;
 }
 
-/* Champs de saisie */
+
 .reservation-restaurent input[type="number"],
 .reservation-restaurent input[type="date"] {
   padding: 8px 12px;
@@ -103,7 +102,7 @@ body {
   background-color: #b46900;
 }
 
-/* Message utilisateur */
+
 .reservation-restaurent p {
   margin-top: 20px;
   font-size: 14px;
@@ -111,7 +110,7 @@ body {
   color: #4a3a23;
 }
 
-/* Header fixe transparent */
+
 header {
   position: fixed;
   top: 0;
@@ -125,7 +124,7 @@ header {
   width: 100%;
 }
 
-/* Footer */
+
 footer {
   text-align: center;
   padding: 10px 0;

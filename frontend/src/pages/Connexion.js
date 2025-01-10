@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Connexion.css';
+import backgroundImage from '../assets/background-form.png';
 
 const Connexion = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -115,15 +116,19 @@ const Connexion = ({ onLogin }) => {
               {passwordError && <p className="error">{passwordError}</p>}
             </div>
 
-            <div className="form-group" id="submit-group">
-              <button type="submit" className="btn-submit">
-                Se connecter
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="form-group" id="submit-group">
+            <button type="submit" className="btn-submit">
+              Se connecter
+            </button>
+          </div>
+        </form>
       </div>
-    </div>
+
+      
+      <div className="connexion-image">
+      <img src={backgroundImage} alt="Description de l'image" />
+      </div>
+    </div></div>
   );
 };
 
