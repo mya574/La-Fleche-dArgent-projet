@@ -5,6 +5,15 @@ import './ClientReserv.css';
 const ReservationsResto = () => {
   const [reservationsResto, setReservationsResto] = useState([]);
   const [reservationsChambres, setReservationsChambres] = useState([]);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.id);
+    }
+  }, []);
 
   // Récupérer les réservations du restaurant
   const fetchReservationsResto = async () => {
@@ -88,8 +97,8 @@ const ReservationsResto = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Supprimer une réservation
-  const handleDeleteReservation = async (id_reservation, type) => {
+  // Supprimer une réservation de restaurant
+  const handleDeleteReservationResto = async (id_reservation) => {
     const token = localStorage.getItem('authToken');
     if (!token) {
       window.location.href = '/connexion';
@@ -100,7 +109,7 @@ const ReservationsResto = () => {
     const id_utilisateur = decodedToken.id;
 
     try {
-      const response = await fetch('http://localhost:3000/restaurant/supprimer-reservation', {
+      const response = await fetch('http://localhost:3000/restaurant/supprimer', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -113,11 +122,41 @@ const ReservationsResto = () => {
 
       if (response.ok) {
         alert(data.message);
-        if (type === 'resto') {
-          fetchReservationsResto();
-        } else {
-          fetchReservationsChambres();
-        }
+        fetchReservationsResto();
+      } else {
+        console.error('Erreur lors de la suppression de la réservation :', data.message);
+      }
+    } catch (error) {
+      console.error('Erreur :', error);
+    }
+  };
+
+  // Supprimer une réservation de chambre
+  const handleDeleteReservationChambre = async (id_reservation_chambre) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      window.location.href = '/connexion';
+      return;
+    }
+
+    const decodedToken = jwtDecode(token);
+    const id_utilisateur = decodedToken.id;
+
+    try {
+      const response = await fetch('http://localhost:3000/chambre//supprimer-reservation', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id_utilisateur, id_reservation_chambre }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        fetchReservationsChambres();
       } else {
         console.error('Erreur lors de la suppression de la réservation :', data.message);
       }
@@ -146,7 +185,9 @@ const ReservationsResto = () => {
               <td>{reservation.nombre_couverts}</td>
               <td>{formatDate(reservation.date_reservation)}</td>
               <td>
-                <button onClick={() => handleDeleteReservation(reservation.id_reservation, 'resto')}>Supprimer</button>
+                {userId === reservation.id_utilisateur && (
+                  <button onClick={() => handleDeleteReservationResto(reservation.id_reservation)}>Supprimer</button>
+                )}
               </td>
             </tr>
           ))}
@@ -172,7 +213,9 @@ const ReservationsResto = () => {
               <td>{formatDate(reservation.date_debut)}</td>
               <td>{formatDate(reservation.date_fin)}</td>
               <td>
-                <button onClick={() => handleDeleteReservation(reservation.id_reservation_chambre, 'chambre')}>Supprimer</button>
+                {userId === reservation.id_utilisateur && (
+                  <button onClick={() => handleDeleteReservationChambre(reservation.id_reservation_chambre)}>Supprimer</button>
+                )}
               </td>
             </tr>
           ))}
