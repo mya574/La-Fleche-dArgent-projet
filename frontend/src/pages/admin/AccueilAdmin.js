@@ -37,12 +37,12 @@ const AdminAccueil = () => {
         if (data.success) {
           setUsers(data.users);
         } else {
-          alert('Erreur lors de la récupération des utilisateurs.');
+          //alert('Erreur lors de la récupération des utilisateurs.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la récupération des utilisateurs.');
+        //alert('Une erreur est survenue lors de la récupération des utilisateurs.');
       });
   };
 
@@ -61,12 +61,12 @@ const AdminAccueil = () => {
           setAvis(data.avis);
           fetchUserEmails(data.avis.map(av => av.id_utilisateur));
         } else {
-          alert('Erreur lors de la récupération des avis.');
+          //alert('Erreur lors de la récupération des avis.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la récupération des avis.');
+        //alert('Une erreur est survenue lors de la récupération des avis.');
       });
   };
 
@@ -88,12 +88,12 @@ const AdminAccueil = () => {
           });
           setUserEmails(emailsMap);
         } else {
-          alert('Erreur lors de la récupération des emails des utilisateurs.');
+          //alert('Erreur lors de la récupération des emails des utilisateurs.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la récupération des emails des utilisateurs.');
+        //alert('Une erreur est survenue lors de la récupération des emails des utilisateurs.');
       });
   };
 
@@ -109,15 +109,15 @@ const AdminAccueil = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          alert(data.message);
+          //alert(data.message);
           fetchUsers(); // Recharger la liste après suppression
         } else {
-          alert('Erreur lors de la suppression de l\'utilisateur.');
+          //alert('Erreur lors de la suppression de l\'utilisateur.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la suppression de l\'utilisateur.');
+        //alert('Une erreur est survenue lors de la suppression de l\'utilisateur.');
       });
   };
 
@@ -134,15 +134,15 @@ const AdminAccueil = () => {
       .then((data) => {
         console.log(data);
         if (data.message) {
-          alert(data.message);
+          //alert(data.message);
           fetchAvis(); // Recharger la liste après suppression
         } else {
-          alert('Erreur lors de la suppression de l\'avis.');
+          //alert('Erreur lors de la suppression de l\'avis.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la suppression de l\'avis.');
+        //alert('Une erreur est survenue lors de la suppression de l\'avis.');
       });
   };
 
@@ -158,15 +158,15 @@ const AdminAccueil = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          alert(data.message);
+          //alert(data.message);
           fetchAvis(); // Recharger la liste après désactivation
         } else {
-          alert('Erreur lors de la désactivation de l\'avis.');
+          //alert('Erreur lors de la désactivation de l\'avis.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la désactivation de l\'avis.');
+        //alert('Une erreur est survenue lors de la désactivation de l\'avis.');
       });
   };
 
@@ -182,15 +182,15 @@ const AdminAccueil = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message) {
-          alert(data.message);
+          //alert(data.message);
           fetchAvis(); // Recharger la liste après désactivation
         } else {
-          alert('Erreur lors de la désactivation de l\'avis.');
+          //alert('Erreur lors de la désactivation de l\'avis.');
         }
       })
       .catch((error) => {
         console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de la désactivation de l\'avis.');
+        //alert('Une erreur est survenue lors de la désactivation de l\'avis.');
       });
   };
 
@@ -198,7 +198,7 @@ const AdminAccueil = () => {
     <div className="admin-page">
       <h1>Page d'administration</h1>
       <div className="user-list">
-        <h2>Liste des utilisateurs</h2>
+        <h2 className='soustitreadmin'>Liste des utilisateurs</h2>
         <table>
           <thead>
             <tr>
@@ -227,7 +227,7 @@ const AdminAccueil = () => {
         </table>
       </div>
       <div className="user-list">
-        <h2>Liste des avis</h2>
+        <h2 className='soustitreadmin'>Liste des avis</h2>
         <table>
           <thead>
             <tr>

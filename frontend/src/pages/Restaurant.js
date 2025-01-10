@@ -2,7 +2,7 @@ import React from "react";
 import Section from "../components/Section";
 import ArrowButton from "../components/ArrowButton";
 import Carousel from "../components/Carousel";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import restaurant from '../assets/restaurant0.jpg';
 import restaurant1 from '../assets/restaurant.jpg';
 import repas from '../assets/repas.jpg';
@@ -19,6 +19,18 @@ const carouselData = [
 ];
 
 const Restaurant = () => {
+
+  const navigate = useNavigate();
+
+  const handleReserveClick = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate('/connexion'); // Rediriger vers la page de connexion
+    } else {
+      navigate('/reservation'); // Rediriger vers la page de réservation
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <main>

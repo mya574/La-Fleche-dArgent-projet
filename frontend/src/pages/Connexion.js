@@ -62,9 +62,14 @@ const Connexion = ({ onLogin }) => {
       })
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('token', data.token);
-          onLogin(data.token);
-          navigate('/');
+          // Stockez le token dans localStorage
+          //localStorage.setItem('token', data.token);
+          //console.log('Token stored:', data.token);
+          
+
+          // Mettez à jour l'état global ou redirigez l'utilisateur
+          onLogin(data.token); // Optionnel si vous utilisez un contexte ou Redux
+          navigate('/'); // Redirige vers la page d'accueil
         } else {
           setFormError(data.message || 'Erreur de connexion.');
         }

@@ -1,0 +1,47 @@
+.create-reservation-page {
+    padding-top: 15vh;
+    
+    font-family: Arial, sans-serif;
+  }
+  
+  .create-reservation-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .create-reservation-page form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .create-reservation-page label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .create-reservation-page input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .create-reservation-page button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .create-reservation-page button:hover {
+    background-color: #45a049;
+  }
+  
+  .create-reservation-page p {
+    text-align: center;
+    color: red;
+  }
+  

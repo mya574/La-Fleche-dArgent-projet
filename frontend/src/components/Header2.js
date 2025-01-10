@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header2.css';
 import logo from '../assets/logo.png';
+import { jwtDecode } from 'jwt-decode';
 
 const Header2 = ({ onLogout }) => {
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setIsAdmin(decodedToken.is_admin === 1);
+    }
+  }, []);
+
   const [isMenuActive, setIsMenuActive] = useState(false); // état du menu burger
 
   const toggleMenu = () => {
@@ -20,15 +32,28 @@ const Header2 = ({ onLogout }) => {
         
         {/* Classe active pour le menu burger */}
        <ul className={`main-nav ${isMenuActive ? 'active' : ''}`}>
-  <li><Link to="/">Home</Link></li>
-  <li className="dropdown">
+{!isAdmin && (<li><Link to="/">Home</Link></li> )}
+{!isAdmin && (<li className="dropdown">
     <span className="dropbtn">Services</span>
     <div className="dropdown-content">
       <Link to="/restaurant">Restaurant</Link>
+              <Link to="/opendate">Calendrier Restaurant</Link>
       <Link to="/massage">Massage</Link>
       <Link to="/chambres">Rooms</Link>
+              <Link to="/avisform">Avis</Link>
+            </div>
+          </li>)}
+          {isAdmin && (<li><Link to="/administrateur">Dashboard</Link></li>)}
+          {isAdmin && (<li className="dropdown">
+            <span className="dropbtn">Resto</span>
+            <div className="dropdown-content">
+            <Link to="/deletecal">Calendrier</Link>
+            <Link to="/createresto">Ajouter</Link>
     </div>
-  </li>
+  </li>)}
+
+          {!isAdmin && (<li><Link to="/reservresto">Reservations</Link></li>   )} 
+            
   <li>
     {/* Pastille Connecté */}
     <div className="status-container">
@@ -40,6 +65,7 @@ const Header2 = ({ onLogout }) => {
     {/* Bouton Déconnexion */}
     <button onClick={onLogout} className="logout-button">Déconnexion</button>
   </li>
+
 </ul>
 
 

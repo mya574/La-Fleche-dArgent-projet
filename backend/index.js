@@ -37,6 +37,7 @@ const restaurantRoutes = require('./functions/reservations/restaurant');
 
 const ServicesSoinRoutes = require('./functions/services/soins');
 const ServicesChambreRoutes = require('./functions/services/chambres');
+const ServicesRestoRoutes = require('./functions/services/resto');
 
 app.use('/users', userRoutes);
 app.use('/avis', avisRoutes);
@@ -46,6 +47,7 @@ app.use('/restaurant', restaurantRoutes);
 
 app.use('/services', ServicesChambreRoutes);
 app.use('/services', ServicesSoinRoutes);
+app.use('/services', ServicesRestoRoutes);
 
 app.get('/', (req, res) => {
   res.send('Serveur fonctionnel');

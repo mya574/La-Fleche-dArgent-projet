@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './Inscription.css';
 
 const Inscription = () => {
-  const [username, setUsername] = useState('');
-  const [firstname, setFirstname] = useState('');
+  const [nom, setUsername] = useState('');
+  const [prenom, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
@@ -17,8 +17,8 @@ const Inscription = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    if (id === 'firstname') setFirstname(value);
-    if (id === 'username') setUsername(value);
+    if (id === 'prenom') setFirstname(value);
+    if (id === 'nom') setUsername(value);
     if (id === 'email') setEmail(value);
     if (id === 'password') setPassword(value);
     if (id === 'address') setAddress(value);
@@ -26,7 +26,7 @@ const Inscription = () => {
   };
 
   const validateFirstname = () => {
-    if (!firstname.trim()) {
+    if (!prenom.trim()) {
       setFirstnameError('Le prénom est requis.');
       return false;
     }
@@ -46,7 +46,7 @@ const Inscription = () => {
 
   const validateUsername = () => {
     const regex = /^[a-zA-Z0-9_]{3,15}$/;
-    if (!regex.test(username)) {
+    if (!regex.test(nom)) {
       setUsernameError('Le pseudo doit contenir entre 3 et 15 caractères alphanumériques.');
       return false;
     }
@@ -91,8 +91,8 @@ const Inscription = () => {
     setFormError('');
 
     const userData = {
-      firstname,
-      username,
+      nom,
+      prenom,
       email,
       password,
       address,
@@ -125,12 +125,12 @@ const Inscription = () => {
         {formError && <p className="error">{formError}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="firstname">Prénom :</label>
+            <label htmlFor="nom">nom :</label>
             <input
               type="text"
-              id="firstname"
+              id="nom"
               className="form-control"
-              value={firstname}
+              value={nom}
               onChange={handleChange}
               placeholder="Entrez votre prénom"
               onBlur={validateFirstname}
@@ -138,12 +138,12 @@ const Inscription = () => {
             {firstnameError && <p className="error">{firstnameError}</p>}
           </div>
           <div className="form-group">
-            <label htmlFor="username">Nom d'utilisateur :</label>
+            <label htmlFor="prenom">prenom d'utilisateur :</label>
             <input
               type="text"
-              id="username"
+              id="prenom"
               className="form-control"
-              value={username}
+              value={prenom}
               onChange={handleChange}
               placeholder="Entrez votre nom"
               onBlur={validateUsername}

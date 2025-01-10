@@ -1,39 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useLocation } from 'react-router-dom';
 import './Reservation.css';
 
 const Restaurent = () => {
   const [nombreCouverts, setNombreCouverts] = useState("");
   const [dateReservation, setDateReservation] = useState("");
   const [message, setMessage] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const date = params.get('date');
+    if (date) {
+      setDateReservation(date);
+    }
+  }, [location.search]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Récupérer le token JWT depuis le localStorage
     const token = localStorage.getItem("authToken");
-    //console.log(token, "brrb");
-
     if (!token) {
       setMessage("Vous devez être connecté pour réserver.");
       return;
     }
 
     try {
-      // Décoder le token pour vérifier son contenu
       const decodedToken = jwtDecode(token);
-      //console.log(decodedToken);
-
-      // Si le token a expiré ou est invalide, la date d'expiration sera inférieure à l'heure actuelle
       if (decodedToken.exp * 1000 < Date.now()) {
         setMessage("Votre session a expiré. Veuillez vous reconnecter.");
         return;
       }
 
-      // Récupérer l'id_utilisateur à partir du token
       const id_utilisateur = decodedToken.id;
 
-      // Faire la requête à l'API
       const response = await fetch("http://localhost:3000/restaurant/reserve", {
         method: "POST",
         headers: {
@@ -41,7 +42,7 @@ const Restaurent = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          id_utilisateur,      // Utilisateur à partir du token
+          id_utilisateur,
           nombre_couverts: nombreCouverts,
           date_reservation: dateReservation,
         }),

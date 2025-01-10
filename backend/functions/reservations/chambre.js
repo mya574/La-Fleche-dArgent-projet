@@ -86,4 +86,31 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
     });
 });
 
+// Route pour supprimer une réservation
+router.delete('/supprimer-reservation', (req, res) => {
+    const { id_reservation_chambre, id_utilisateur } = req.body;
+
+    const deleteReservationQuery = `
+        DELETE FROM reservation_chambres
+        WHERE id_reservation_chambre = ? AND id_utilisateur = ?
+    `;
+    db.query(deleteReservationQuery, [id_reservation_chambre, id_utilisateur], (err, result) => {
+        if (err) {
+            console.error('Erreur lors de la suppression de la réservation :', err);
+            res.status(500).send('Erreur serveur');
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).send('Réservation introuvable ou non supprimable par cet utilisateur.');
+            return;
+        }
+
+        res.send({ message: 'Votre réservation a été supprimée avec succès.' });
+    });
+});
+
+
+
+
 module.exports = router;

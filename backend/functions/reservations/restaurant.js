@@ -5,6 +5,7 @@ const db = require('../../db');
 // Route pour ajouter ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
+    console.log(req.body)
     //console.log(req.body);
  
     // Vérifie si l'utilisateur a déjà réservé pour cette date
@@ -14,14 +15,16 @@ router.post('/reserve', (req, res) => {
         WHERE id_utilisateur = ? AND date_reservation = ?
     `;
     db.query(userReservationCheckSql, [id_utilisateur, date_reservation], (err, existingReservations) => {
+        
         if (err) {
             console.error('Erreur lors de la vérification des réservations utilisateur :', err);
             res.status(500).send('Erreur serveur');
             return;
         }
- 
+        
         if (existingReservations.length > 0) {
             const existingReservation = existingReservations[0];
+            
  
             // Cas 1 : Si le nombre de couverts est identique
             if (existingReservation.nombre_couverts === nombre_couverts) {
@@ -46,7 +49,7 @@ router.post('/reserve', (req, res) => {
                 }
  
                 const couvertsDisponibles = result.length > 0 ? result[0].couverts_disponibles + existingReservation.nombre_couverts : 0;
- 
+                
                 if (nombre_couverts > couvertsDisponibles) {
                     res.status(400).send('Pas assez de couverts disponibles pour cette date.');
                     return;
@@ -117,46 +120,66 @@ router.post('/reserve', (req, res) => {
         });
     });
 });
- 
-// Route pour supprimer une réservation
 router.delete('/supprimer', (req, res) => {
-    const { id_utilisateur, date_reservation } = req.body;
- 
+    const { id_utilisateur, id_reservation } = req.body;
+
     // Vérifie si la réservation existe
     const checkReservationSql = `
         SELECT *
         FROM reservation_restaurant
-        WHERE id_utilisateur = ? AND date_reservation = ?
+        WHERE id_reservation = ? AND id_utilisateur = ?
     `;
-    db.query(checkReservationSql, [id_utilisateur, date_reservation], (err, result) => {
+    db.query(checkReservationSql, [id_reservation, id_utilisateur], (err, result) => {
         if (err) {
             console.error('Erreur lors de la vérification de la réservation :', err);
             res.status(500).send('Erreur serveur');
             return;
         }
- 
+
         if (result.length === 0) {
             res.status(404).send('Aucune réservation trouvée pour cet utilisateur et cette date.');
             return;
         }
- 
+
         // Supprime la réservation
         const deleteReservationSql = `
             DELETE FROM reservation_restaurant
-            WHERE id_utilisateur = ? AND date_reservation = ?
+            WHERE id_reservation = ? AND id_utilisateur = ?
         `;
-        db.query(deleteReservationSql, [id_utilisateur, date_reservation], (err) => {
+        db.query(deleteReservationSql, [id_reservation, id_utilisateur], (err) => {
             if (err) {
                 console.error('Erreur lors de la suppression de la réservation :', err);
                 res.status(500).send('Erreur serveur');
                 return;
             }
- 
+
             res.send({
                 message: 'Votre réservation a été annulée avec succès.',
             });
         });
     });
 });
- 
+
+router.post('/get-all-res-resto', (req, res) => {
+    const { id_utilisateur } = req.body;
+    //console.log(req.body);
+
+    const getReservationsQuery = `
+        SELECT *
+        FROM reservation_restaurant
+        WHERE id_utilisateur = ?
+    `;
+    db.query(getReservationsQuery, [id_utilisateur], (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des réservations :', err);
+            res.status(500).send('Erreur serveur');
+            return;
+        }
+
+        console.log('Résultats de la requête :', results); // Ajouter un log pour voir les résultats
+
+        res.json({ reservations: results });
+    });
+});
+
 module.exports = router;

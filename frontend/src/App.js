@@ -17,6 +17,11 @@ import AdminAccueil from './pages/admin/AccueilAdmin';
 import Header2 from './components/Header2';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ReservationsResto from './pages/client/ClientReserv';
+import CreateResto from './pages/admin/NewRestoAdmin';
+import OpenDatesCalendar from './pages/client/JourOuverture';
+import DeleteDatesCalendar from './pages/admin/SupprCalendrier';
+import AvisForm from './pages/client/Avis';
 import ReservationSoin from './pages/Reservation-spa';
 import ReservationChambre from './pages/Reservation-chambre';
 
@@ -78,10 +83,16 @@ function App() {
             element={<Connexion onLogin={handleLogin} />} // Passer handleLogin à Connexion
           />
           <Route path="/user-profile" element={<UserProfile />} />
+          
+          <Route path="/reservresto" element={<ReservationsResto />} />
+          <Route path="/avisform" element={<AvisForm />} />
 
           <Route path="/reservation-spa" element={<ReservationSoin />} />
           <Route path="/reservation-chambre" element={< ReservationChambre/>} />
           <Route path="/administrateur" element={<AdminAccueil />} />
+          <Route path="/createresto" element={<CreateResto />} />
+          <Route path="/opendate" element={<OpenDatesCalendar />} />
+          <Route path="/deletecal" element={<DeleteDatesCalendar />} />
         </Routes>
       </main>
       <Footer />
