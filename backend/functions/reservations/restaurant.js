@@ -5,7 +5,7 @@ const db = require('../../db');
 // Route pour ajouter ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
-    console.log(req.body)
+    //console.log(req.body)
     //console.log(req.body);
  
     // Vérifie si l'utilisateur a déjà réservé pour cette date
@@ -176,7 +176,7 @@ router.post('/get-all-res-resto', (req, res) => {
             return;
         }
 
-        console.log('Résultats de la requête :', results); // Ajouter un log pour voir les résultats
+        //console.log('Résultats de la requête :', results); // Ajouter un log pour voir les résultats
 
         res.json({ reservations: results });
     });

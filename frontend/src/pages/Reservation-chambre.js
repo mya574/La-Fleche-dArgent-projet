@@ -10,10 +10,10 @@ const ReservationChambre = () => {
   const [message, setMessage] = useState("");
 
   const chambres = [
-    { id_chambre: 1, nom_chambre: "Classique", prix_chambre: 100 },
-    { id_chambre: 2, nom_chambre: "Confort", prix_chambre: 200 },
-    { id_chambre: 3, nom_chambre: "Standing", prix_chambre: 300 },
-    { id_chambre: 4, nom_chambre: "Suite", prix_chambre: 400 },
+    { id_chambre: 2, nom_chambre: "Classique", prix_chambre: 100 },
+    { id_chambre: 3, nom_chambre: "Confort", prix_chambre: 200 },
+    { id_chambre: 4, nom_chambre: "Standing", prix_chambre: 300 },
+    { id_chambre: 5, nom_chambre: "Suite", prix_chambre: 400 },
   ];
 
   const handleSubmit = async (event) => {

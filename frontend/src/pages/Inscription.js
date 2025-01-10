@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './Inscription.css';
 
 const Inscription = () => {
@@ -14,6 +16,7 @@ const Inscription = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [firstnameError, setFirstnameError] = useState('');
   const [formError, setFormError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -26,7 +29,7 @@ const Inscription = () => {
   };
 
   const validateFirstname = () => {
-    if (!prenom.trim()) {
+    if (!nom.trim()) {
       setFirstnameError('Le prénom est requis.');
       return false;
     }
@@ -104,20 +107,33 @@ const Inscription = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === 'Utilisateur ajouté avec succès') {
-          alert('Inscription réussie ! Bienvenue à notre hôtel de luxe.');
-        } else {
-          alert('Erreur lors de l\'inscription : ' + data.message);
-        }
-      })
-      .catch((error) => {
-        console.error('Erreur réseau :', error);
-        alert('Une erreur est survenue lors de l\'inscription.');
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === 'Utilisateur ajouté avec succès') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Inscription réussie !',
+          text: 'Bienvenue à notre hôtel de luxe.',
+        }).then(() => {
+          navigate('/connexion'); 
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Erreur lors de l\'inscription : ' + data.message,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Erreur réseau :', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Une erreur est survenue lors de l\'inscription.',
       });
-  };
-
+    });
+};
   return (
     <div className="page-inscription">
       <div className="inscription-form">
