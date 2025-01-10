@@ -25,9 +25,9 @@ const Restaurant = () => {
   const handleReserveClick = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      navigate('/connexion'); // Rediriger vers la page de connexion
+      navigate('/connexion');
     } else {
-      navigate('/reservation'); // Rediriger vers la page de réservation
+      navigate('/reservation'); 
     }
   };
 

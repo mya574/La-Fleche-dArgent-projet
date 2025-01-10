@@ -8,7 +8,7 @@ const ReservationSoin = () => {
   const [dateReservation, setDateReservation] = useState("");
   const [message, setMessage] = useState("");
 
-  // Liste des soins statiques
+  //soins statiques
   const soins = [
     { id_soin: 1, nom_soin: "Massage Relaxant", prix_soin: 50 },
     { id_soin: 2, nom_soin: "Gommage corps en cabine", prix_soin: 60 },
@@ -18,7 +18,7 @@ const ReservationSoin = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Récupérer le token JWT depuis le localStorage
+    //recuperer token
     const token = localStorage.getItem("authToken");
     if (!token) {
       setMessage("Vous devez être connecté pour réserver un soin.");
@@ -26,11 +26,11 @@ const ReservationSoin = () => {
     }
 
     try {
-      // Décoder le token pour obtenir l'id_utilisateur
+      //decode toker
       const decodedToken = jwtDecode(token);
       const id_utilisateur = decodedToken.id;
 
-      // Envoyer la requête à l'API backend pour réserver un soin
+     
       const response = await fetch("http://localhost:3000/soin/reserver-soin", {
         method: "POST",
         headers: {

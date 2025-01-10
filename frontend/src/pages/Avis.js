@@ -3,7 +3,7 @@ import Card from '../components/Card';
 import './Avis.css';
 
 const Avis = () => {
-  // Exemple de données d'avis
+  //avis selectionnée
   const reviews = [
     { firstName: 'Alice', lastName: 'Dupont', comment: 'J’ai eu une expérience incroyable au salon. Le massage était absolument parfait, et l’environnement était tellement relaxant. Je me suis senti complètement détendu après une heure de soin. Je recommande vivement à tous ceux qui cherchent un moment de tranquillité et de bien-être. Bravo à toute l’équipe!' },
     { firstName: 'Bob', lastName: 'Martin', comment: 'Un service exceptionnel. Le massage aux huiles essentielles a été exactement ce dont javais besoin après une longue semaine de travail. L’atmosphère était calme, apaisante et très professionnelle. Je reviendrai certainement pour un autre massage relaxant.' },
