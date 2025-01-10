@@ -1,14 +1,16 @@
+//maya
+
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
  
-// Route pour ajouter ou modifier une réservation
+//réserver ou modifier une réservation
 router.post('/reserve', (req, res) => {
     const { id_utilisateur, nombre_couverts, date_reservation } = req.body;
     //console.log(req.body)
     //console.log(req.body);
  
-    // Vérifie si l'utilisateur a déjà réservé pour cette date
+    // vérifie si l'utilisateur a déjà réservé pour cette date
     const userReservationCheckSql = `
         SELECT *
         FROM reservation_restaurant
@@ -26,13 +28,13 @@ router.post('/reserve', (req, res) => {
             const existingReservation = existingReservations[0];
             
  
-            // Cas 1 : Si le nombre de couverts est identique
+            //Si le nombre de couverts est identique ca renvoi deja reserver a cette date 
             if (existingReservation.nombre_couverts === nombre_couverts) {
                 res.status(400).send('Vous avez déjà réservé à cette date avec ce nombre de couverts.');
                 return;
             }
  
-            // Cas 2 : Si le nombre de couverts a été modifié
+            //si nombre de couvers modifier modifie dans la bdd
             const checkAvailabilitySql = `
                 SELECT
                     restaurant.nombre_couverts - IFNULL(SUM(reservation_restaurant.nombre_couverts), 0) AS couverts_disponibles
@@ -55,7 +57,7 @@ router.post('/reserve', (req, res) => {
                     return;
                 }
  
-                // Met à jour la réservation avec les nouvelles informations
+                //mise a jour la reservation avec les nouvelle information
                 const updateReservationSql = `
                     UPDATE reservation_restaurant
                     SET nombre_couverts = ?
@@ -77,7 +79,7 @@ router.post('/reserve', (req, res) => {
             return;
         }
  
-        // Cas 3 : Nouvelle réservation
+        //nouvelle reservation
         const checkAvailabilitySql = `
             SELECT
                 restaurant.nombre_couverts - IFNULL(SUM(reservation_restaurant.nombre_couverts), 0) AS couverts_disponibles
@@ -100,7 +102,7 @@ router.post('/reserve', (req, res) => {
                 return;
             }
  
-            // Insère une nouvelle réservation
+            // insère la nouvelle réservation
             const insertReservationSql = `
                 INSERT INTO reservation_restaurant (id_utilisateur, nombre_couverts, date_reservation)
                 VALUES (?, ?, ?)
@@ -123,7 +125,7 @@ router.post('/reserve', (req, res) => {
 router.delete('/supprimer', (req, res) => {
     const { id_utilisateur, id_reservation } = req.body;
 
-    // Vérifie si la réservation existe
+    // vérifie si la réservation existe pour pouvoir la suprimmer 
     const checkReservationSql = `
         SELECT *
         FROM reservation_restaurant
@@ -141,7 +143,7 @@ router.delete('/supprimer', (req, res) => {
             return;
         }
 
-        // Supprime la réservation
+        // supprime la réservation 
         const deleteReservationSql = `
             DELETE FROM reservation_restaurant
             WHERE id_reservation = ? AND id_utilisateur = ?

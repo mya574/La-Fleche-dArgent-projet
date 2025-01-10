@@ -1,8 +1,10 @@
+//maya
+
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 
-// Ajouter une réservation de soin
+//je reserve le soin
 router.post('/reserver-soin', (req, res) => {
     const { id_utilisateur, id_soin, date_reservation } = req.body;
 
@@ -37,11 +39,11 @@ router.post('/reserver-soin', (req, res) => {
     });
 });
 
-// Modifier une réservation de soin
+// modifie la réservation de soin
 router.post('/modifier-reservation-soin', (req, res) => {
     const { id_utilisateur, id_soin, date_reservation } = req.body;
 
-    // Vérifier si la réservation existe pour cet utilisateur
+    
     const queryCheckByUser = `
         SELECT * FROM reservation_soins 
         WHERE id_utilisateur = ?
@@ -58,11 +60,11 @@ router.post('/modifier-reservation-soin', (req, res) => {
             return;
         }
 
-        // Vérifier si une réservation existe déjà pour l'ID de soin actuel
+        // verifie si une réservation existe 
         const existingReservation = results.find(r => r.id_soin === id_soin);
 
         if (existingReservation) {
-            // Mise à jour de la date uniquement si le soin reste le même
+            // mise à jour de la date uniquement si le soin reste le même
             const queryUpdateDate = `
                 UPDATE reservation_soins 
                 SET date_reservation = ? 
@@ -77,7 +79,7 @@ router.post('/modifier-reservation-soin', (req, res) => {
                 res.send({ message: 'Date de réservation modifiée avec succès.' });
             });
         } else {
-            // Mettre à jour l'ID du soin et ses informations
+            // mets a jour du soin et ses informations
             const queryNewSoin = 'SELECT nom_soin, prix_soin FROM soins WHERE id_soin = ?';
             db.query(queryNewSoin, [id_soin], (err, soinResults) => {
                 if (err) {
@@ -110,7 +112,7 @@ router.post('/modifier-reservation-soin', (req, res) => {
     });
 });
 
-// Supprimer une réservation de soin
+// supprimer la reservation
 router.delete('/supprimer-reservation-soin', (req, res) => {
     const { id_utilisateur, id_soin } = req.body;
 

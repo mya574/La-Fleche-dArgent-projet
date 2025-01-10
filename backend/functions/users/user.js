@@ -1,9 +1,10 @@
+//clemence
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middleware/auth'); // import du middleware
+const authMiddleware = require('../middleware/auth'); 
 require('dotenv').config();
 const secretKey = process.env.TOKEN_KEY;
 //const saltRounds = process.env.SALT_ROUNDS;
@@ -18,16 +19,16 @@ const generateToken = (user) => {
         nom: user.nom_utilisateur,
         is_admin: user.is_admin,
     };
-    return jwt.sign(payload, secretKey, { expiresIn: '5h' }); // token expire après 5h
+    return jwt.sign(payload, secretKey, { expiresIn: '5h' }); // le token expire après 5h donc je suis plus connecter apres 5h 
 };
 
-const verifyToken = require('../middleware/auth'); // import du middleware
+const verifyToken = require('../middleware/auth'); 
 
-// route pour se connecter à son compte
+//connexion au compt 
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
 
-    // verifier que l'utilisateur existe dans la bdd
+    //vas chercher le user dans la bdd  si il existe 
     const sql = 'SELECT id_utilisateur, email_utilisateur, password, nom_utilisateur, prenom_utilisateur, is_admin FROM utilisateurs WHERE email_utilisateur = ?';
     db.query(sql, [email], (err, result) => {
         if (err) {
@@ -60,7 +61,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-// route protegee pour récuperer les données de l'utilisateur connecté (requiert un token valide)
+// route protegee pour récuperer les données de l'utilisateur connecté 
 router.get('/profile', verifyToken, (req, res) => {
     const userId = req.user.id; // on récupère l'id de l'user depuis le token
     const sql = 'SELECT * FROM utilisateurs WHERE id_utilisateur = ?';
@@ -133,48 +134,7 @@ router.post('/remove-user', (req, res) => {
     });
 });
 
-// modifier un utilisateur
-router.post('/update-user', (req, res) => {
-    const { id_utilisateur, nom, prenom, email } = req.body;
 
-    if (!id_utilisateur) {
-        res.status(400).send({ message: 'ID utilisateur requis pour la modification.' });
-        return;
-    }
-
-    const updates = [];
-    const values = [];
-
-    if (nom) {
-        updates.push('nom_utilisateur = ?');
-        values.push(nom);
-    }
-    if (prenom) {
-        updates.push('prenom_utilisateur = ?');
-        values.push(prenom);
-    }
-    if (email) {
-        updates.push('email_utilisateur = ?');
-        values.push(email);
-    }
-
-    if (updates.length === 0) {
-        res.status(400).send({ message: 'Aucune information fournie pour la mise à jour.' });
-        return;
-    }
-
-    values.push(id_utilisateur);
-
-    const sql = `UPDATE utilisateurs SET ${updates.join(', ')} WHERE id_utilisateur = ?`;
-    db.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Erreur lors de la mise à jour de l\'utilisateur :', err);
-            res.status(500).send('Erreur serveur');
-            return;
-        }
-        res.send({ message: 'Utilisateur mis à jour avec succès' });
-    });
-});
 
 router.get('/get-all-users',  verifyToken,  (req, res) => {
     const id_admin = req.user.is_admin;

@@ -1,9 +1,11 @@
+//clemence 
+
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 
-// Route pour ajouter une réservation
-router.post('/add_resto', (req, res) => {
+
+router.post('/add_resto', (req, res) => {//j'ajoute la reservation restaurent 
   const { date_reservation, nombre_couverts } = req.body;
   console.log('Received data:', req.body);
 
@@ -34,8 +36,8 @@ router.post('/add_resto', (req, res) => {
   });
 });
 
-// Route pour récupérer toutes les dates d'ouverture
-router.get('/get_open_dates', (req, res) => {
+
+router.get('/get_open_dates', (req, res) => {// récupérer toutes les dates d'ouverture
   const query = 'SELECT date, nombre_couverts FROM restaurant';
   db.query(query, (err, results) => {
     if (err) {

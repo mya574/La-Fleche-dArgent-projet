@@ -1,8 +1,10 @@
+//maya
+
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
 
-// Route pour réserver ou modifier une réservation
+//réserver ou modifier une réservation
 router.post('/reserver-ou-modifier-chambre', (req, res) => {
     const { id_reservation_chambre, id_utilisateur, id_chambre, date_debut, date_fin } = req.body;
     console.log(req.body)
@@ -11,7 +13,7 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
         return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
 
-    // Vérification des informations de la chambre choisie
+    
     const queryChambre = 'SELECT nom_chambre, prix_chambre FROM chambres WHERE id_chambre = ?';
     db.query(queryChambre, [id_chambre], (err, results) => {
         if (err) {
@@ -25,7 +27,7 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
 
         const { nom_chambre, prix_chambre } = results[0];
 
-        // Vérification de la disponibilité de la chambre
+        // verifie que la chambre demander est bien disponible 
         const checkAvailabilityQuery = `
             SELECT * 
             FROM reservation_chambres 
@@ -47,7 +49,7 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
             }
 
             if (id_reservation_chambre) {
-                // Mise à jour d'une réservation existante
+                //modification de la reservation par user 
                 const updateReservationQuery = `
                     UPDATE reservation_chambres
                     SET id_chambre = ?, nom_chambre = ?, prix_chambre = ?, date_debut = ?, date_fin = ?
@@ -66,7 +68,7 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
                     return res.status(200).json({ message: 'Votre réservation a été mise à jour avec succès.' });
                 });
             } else {
-                // Création d'une nouvelle réservation
+                //apres modification cree une nouvelle reservation
                 const insertReservationQuery = `
                     INSERT INTO reservation_chambres (id_utilisateur, id_chambre, nom_chambre, prix_chambre, date_debut, date_fin)
                     VALUES (?, ?, ?, ?, ?, ?)
@@ -87,7 +89,7 @@ router.post('/reserver-ou-modifier-chambre', (req, res) => {
     });
 });
 
-// Route pour supprimer une réservation
+//supprimmer la reservation
 router.delete('/supprimer-reservation', (req, res) => {
     const { id_reservation_chambre, id_utilisateur } = req.body;
 
@@ -111,7 +113,7 @@ router.delete('/supprimer-reservation', (req, res) => {
     });
 });
 
-// Route pour récupérer toutes les réservations de chambres
+//récupérer les reservations 
 router.post('/get-all-res-chambres', (req, res) => {
     const { id_utilisateur } = req.body;
    // console.log(req.body)

@@ -1,22 +1,23 @@
+//clemence 
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
-const authMiddleware = require('../middleware/auth'); // import du middleware
+const authMiddleware = require('../middleware/auth'); 
 require('dotenv').config();
 
-const verifyToken = require('../middleware/auth'); // import du middleware
+const verifyToken = require('../middleware/auth');
 
-// ajouter un avis
+
 router.post('/add-avis', authMiddleware, (req, res) => {
     const { contenu} = req.body;
     console.log(req);
-    const id_utilisateur = req.user.id; // id de l'utilisateur extrait du token
+    const id_utilisateur = req.user.id; 
 
-    // verification des donnees envoyees
+  
     if (!id_utilisateur || !contenu  === undefined) {
         return res.status(400).json({ message: 'Données manquantes ou invalides.' });
     }
-    //mettre la date sous le bon format
+   
     const currentDate = new Date();
     
     // jj/mm/aaaa
@@ -109,8 +110,8 @@ router.get('/get-all-avis',  verifyToken,  (req, res) => {
     }
   });
 
-  // Récupérer tous les avis actifs
-router.get('/get-active-avis', authMiddleware, (req, res) => {
+  
+router.get('/get-active-avis', authMiddleware, (req, res) => {//get tous les avis qui sont actif 
     const sql = 'SELECT * FROM avis WHERE is_actif = 1';
     db.query(sql, (err, result) => {
         if (err) {
@@ -121,8 +122,8 @@ router.get('/get-active-avis', authMiddleware, (req, res) => {
     });
 });
 
-  // Route pour récupérer les emails des utilisateurs en fonction de leurs IDs
-router.post('/get-emails', verifyToken, (req, res) => {
+  
+router.post('/get-emails', verifyToken, (req, res) => {//on recupemére les mailes des utilisateur via l'id
     const { userIds } = req.body;
   
     if (!userIds || !Array.isArray(userIds)) {
