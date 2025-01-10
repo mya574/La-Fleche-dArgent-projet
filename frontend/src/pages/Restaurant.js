@@ -42,7 +42,7 @@ const Restaurant = () => {
             <>
               Bienvenue dans notre restaurant, où chaque plat est une œuvre d'art culinaire préparée avec soin. Nous vous offrons une expérience gastronomique unique dans un cadre élégant et moderne.
               <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-                <Link to="/reservation">
+                <Link to="/opendate">
                   <button 
                     style={{
                       backgroundColor: 'green', 

@@ -136,4 +136,20 @@ router.delete('/supprimer-reservation-soin', (req, res) => {
     });
 });
 
+//récupérer toutes les réservations de soins
+router.post('/get-all-res-soins', (req, res) => {
+    const { id_utilisateur } = req.body;
+
+    const query = 'SELECT * FROM reservation_soins WHERE id_utilisateur = ?';
+    db.query(query, [id_utilisateur], (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des réservations de soins :', err);
+            return res.status(500).json({ message: 'Erreur serveur lors de la récupération des réservations de soins.' });
+        }
+
+        res.status(200).json({ reservations: results });
+    });
+});
+
+
 module.exports = router;
