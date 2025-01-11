@@ -3,12 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import video1 from '../assets/video1.mp4';  
 import './Home.css';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'; //bibli pour referencement
 
 function Home() {
   return (
     <div className="home-container">
 
+      {/* référencement */}
       <Helmet>
         <title>Hôtel La Flèche d'Argent - Accueil</title>
         <meta name="description" content="Découvrez notre hôtel haut de gamme à Bordeaux. Réservez votre séjour dès maintenant et profitez de nos services exclusifs." />

@@ -38,7 +38,7 @@ body {
     padding-bottom: 50px;
   }
   
-  /* Le formulaire */
+  /* le formulaire */
   .reservation-soin {
     max-width: 600px;
     width: 100%;
@@ -89,7 +89,7 @@ body {
     box-shadow: 0 0 4px rgba(244, 162, 97, 0.2);
   }
   
-  /* Bouton de soumission */
+  /* bouton de soumission */
   .reservation-soin button {
     padding: 10px 20px;
     font-size: 16px;

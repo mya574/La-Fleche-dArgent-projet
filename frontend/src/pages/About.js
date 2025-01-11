@@ -1,4 +1,4 @@
-/*myriam*/
+/*myriam karlson*/
 import React from 'react';
 import './About.css';
 

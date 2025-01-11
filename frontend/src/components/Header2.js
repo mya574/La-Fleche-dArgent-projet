@@ -5,6 +5,8 @@ import './Header2.css';
 import logo from '../assets/logo.png';
 import { jwtDecode } from 'jwt-decode';
 
+
+//Header spéciale pour users connecté dont admin
 const Header2 = ({ onLogout }) => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);

@@ -1,5 +1,6 @@
-/* Bouton burger par défaut */
 /*myriam*/
+
+
 .burger {
     display: none;
     font-size: 2rem;
@@ -7,41 +8,42 @@
     color: white;
   }
 
-  /* Conteneur pour le statut connecté */
+  /* conteneur pour le statut connecté */
 .status-container {
     margin-top: 6px;
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* Espace entre la pastille et le texte */
+    gap: 0.5rem; /* espace entre pastille et texte */
     color: white;
     font-size: 1rem;
     font-family: 'Georgia', serif;
   }
   
-  /* Pastille verte */
+  /* pastille verte */
   .status-dot {
     width: 10px;
     height: 10px;
-    background-color: #00ff00; /* Vert pour "connecté" */
-    border-radius: 50%; /* Forme circulaire */
+    background-color: #00ff00; 
+    border-radius: 50%; 
     display: inline-block;
   }
-  /* Bouton de déconnexion */
+  /* bouton de déconnexion */
 .logout-button {
-    background-color: transparent; /* Transparent pour s'harmoniser avec le design */
+    background-color: transparent; 
     color: white;
     font-size: 1rem;
     font-family: 'Georgia', serif;
-    border: 2px solid white; /* Bordure blanche pour le contraste */
-    border-radius: 5px; /* Bords arrondis */
-    padding: 0.5rem 1rem; /* Espace interne */
-    cursor: pointer; /* Curseur pointeur au survol */
-    transition: background-color 0.3s, color 0.3s; /* Transition fluide */
+    border: 2px solid white; 
+    border-radius: 5px; /* bords arrondis */
+    padding: 0.5rem 1rem; /* espace interne */
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
   }
   
+  /*au survol du bouton*/
   .logout-button:hover {
-    background-color: rgb(245, 12, 12); /* Fond blanc au survol */
-    color: rgb(15, 15, 15); /* Texte noir au survol */
+    background-color: rgb(245, 12, 12); 
+    color: rgb(15, 15, 15); 
   }
 
   
@@ -50,18 +52,18 @@
   @media screen and (max-width:  1024px) {
     .status-container {
       justify-content: center;
-      margin-bottom: 1rem; /* Espacement sous la pastille */
+      margin-bottom: 1rem; /* espacement sous la pastille */
     }
   
     .logout-button {
-      width: 80%; /* Bouton plus large sur petits écrans */
+      width: 80%; /* bouton plus large sur petits écrans */
       text-align: center;
-      margin: 0 auto; /* Centrer le bouton */
+      margin: 0 auto; /* centrer le bouton */
     }
   }
   
   
-  /* Media query pour les petits écrans */
+  /* pour petits écrans */
   @media screen and (max-width: 500px) {
     .burger {
       display: block;
@@ -97,7 +99,7 @@
     }
   
     .dropdown-content {
-      position: relative; /* Corrige l'affichage pour petits écrans */
+      position: relative; 
       min-width: 100%;
     }
   }
